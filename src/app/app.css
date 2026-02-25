@@ -1,0 +1,14 @@
+:host {
+    display: block;
+    width: 100%;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Ensure the animation container doesn't collapse */
+.route-container {
+    display: block;
+    width: 100%;
+    min-height: 100vh;
+}

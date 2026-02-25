@@ -1,0 +1,239 @@
+<div class="landing-page">
+    <!-- Navbar (Same as Inicio) -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a routerLink="/inicio" class="nav-logo">
+                <img src="assets/images/Logo_ClinicaAleli_-Blanco.png" alt="Logo Clínica Alelí" class="nav-logo-img">
+            </a>
+
+            <ul class="nav-menu">
+                <li><a routerLink="/inicio" routerLinkActive="active">INICIO</a></li>
+                <li><a routerLink="/servicios" routerLinkActive="active">SERVICIOS</a></li>
+                <li><a routerLink="/especialidades" routerLinkActive="active">ESPECIALIDADES</a></li>
+                <li><a routerLink="/nosotros" routerLinkActive="active">NOSOTROS</a></li>
+                <li><a routerLink="/instalaciones" routerLinkActive="active">INSTALACIONES</a></li>
+                <li><a routerLink="/contacto" routerLinkActive="active">CONTACTO</a></li>
+                <li><a routerLink="/blog" routerLinkActive="active">BLOG</a></li>
+            </ul>
+
+            <div class="nav-actions">
+                <a routerLink="/auth" class="user-icon-btn" title="Iniciar Sesión">
+                    <svg viewBox="0 0 24 24" width="35" height="35" fill="currentColor">
+                        <path
+                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6.02-3.22.03-1.99 4.02-3.08 6.02-3.08 1.99 0 5.99 1.09 6.02 3.08-1.31 1.94-3.52 3.22-6.02 3.22z" />
+                    </svg>
+                </a>
+                <button class="cta-button">AGENDAR<br>CITA</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Services Hero Section -->
+    <section class="services-hero">
+        <div class="container">
+            <div class="section-header">
+                <h1 class="main-title">SERVICIOS</h1>
+                <p class="main-description">
+                    En Clínica Alelí, nos especializamos en ofrecer atención médica de alta calidad con un enfoque
+                    personalizado para el bienestar de nuestros pacientes.
+                </p>
+                <div class="header-line"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Specialties Grid Section -->
+    <section class="specialties-section">
+        <div class="container">
+            <div class="specialties-intro">
+                <h2 class="sub-title">Especialidades Médicas</h2>
+                <p class="sub-description">Nuestra clínica ofrece estos servicios médicos</p>
+            </div>
+
+            <div class="services-grid">
+                <!-- Card 1: Cirugía General -->
+                <div class="service-card">
+                    <div class="service-icon-wrapper">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M3 10h18M3 14h18M5 10v4M19 10v4M7 10V7h10v3M9 21v-3M15 21v-3M4 18h16"></path>
+                        </svg>
+                    </div>
+                    <div class="card-body">
+                        <h3>CIRUGÍA GENERAL</h3>
+                        <p>Nuestro equipo de cirujanos altamente capacitados utiliza las técnicas más avanzadas para
+                            ofrecer soluciones efectivas y seguras.</p>
+                        <a href="javascript:void(0)" class="view-more-link">VER MÁS <span class="arrow">→</span></a>
+                    </div>
+                </div>
+
+                <!-- Card 2: Ginecología -->
+                <div class="service-card">
+                    <div class="service-icon-wrapper">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M12 21a9 9 0 100-18 9 9 0 000 18z"></path>
+                            <path d="M12 8v8M8 12h8"></path>
+                            <path d="M12 21v2M10 23h4"></path>
+                        </svg>
+                    </div>
+                    <div class="card-body">
+                        <h3>GINECOLOGÍA Y OBSTETRICIA</h3>
+                        <p>Cuidado integral de la salud de la mujer en todas sus etapas, con un enfoque cálido,
+                            profesional y especializado.</p>
+                        <a href="javascript:void(0)" class="view-more-link">VER MÁS <span class="arrow">→</span></a>
+                    </div>
+                </div>
+
+                <!-- Card 3: Pediatría -->
+                <div class="service-card">
+                    <div class="service-icon-wrapper">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <circle cx="12" cy="7" r="4"></circle>
+                            <path d="M5.5 21c0-4.5 3-7 6.5-7s6.5 2.5 6.5 7"></path>
+                            <circle cx="18" cy="14" r="2"></circle>
+                        </svg>
+                    </div>
+                    <div class="card-body">
+                        <h3>PEDIATRÍA</h3>
+                        <p>Atención médica dedicada al crecimiento y bienestar de los más pequeños, brindando
+                            tranquilidad a toda la familia.</p>
+                        <a href="javascript:void(0)" class="view-more-link">VER MÁS <span class="arrow">→</span></a>
+                    </div>
+                </div>
+
+                <!-- Card 4: Psicología -->
+                <div class="service-card">
+                    <div class="service-icon-wrapper">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M12 2a10 10 0 100 20 10 10 0 000-20z"></path>
+                            <path d="M8 9a3 3 0 016 0c0 3-4 3-4 6M12 18v.01"></path>
+                        </svg>
+                    </div>
+                    <div class="card-body">
+                        <h3>PSICOLOGÍA CLÍNICA</h3>
+                        <p>Apoyo emocional y herramientas profesionales para fortalecer la salud mental y el equilibrio
+                            personal de nuestros pacientes.</p>
+                        <a href="javascript:void(0)" class="view-more-link">VER MÁS <span class="arrow">→</span></a>
+                    </div>
+                </div>
+
+                <!-- Card 5: Otorrino -->
+                <div class="service-card">
+                    <div class="service-icon-wrapper">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                            <path d="M12 8v4M12 16h.01"></path>
+                        </svg>
+                    </div>
+                    <div class="card-body">
+                        <h3>OTORRINOLARINGOLOGÍA</h3>
+                        <p>Especialistas en el diagnóstico y tratamiento de afecciones de oído, nariz y garganta con
+                            tecnología de última generación.</p>
+                        <a href="javascript:void(0)" class="view-more-link">VER MÁS <span class="arrow">→</span></a>
+                    </div>
+                </div>
+
+                <!-- Card 6: Cardiología -->
+                <div class="service-card highlight-card">
+                    <div class="service-icon-wrapper">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                        </svg>
+                    </div>
+                    <div class="card-body">
+                        <h3>CARDIOLOGÍA</h3>
+                        <p>Monitoreo y cuidado avanzado de la salud cardiovascular, previniendo y tratando enfermedades
+                            del corazón.</p>
+                        <a href="javascript:void(0)" class="view-more-link">VER MÁS <span class="arrow">→</span></a>
+                    </div>
+                </div>
+
+                <!-- Card 7: Coloproctología -->
+                <div class="service-card">
+                    <div class="service-icon-wrapper">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M12 8v8M8 12h8"></path>
+                        </svg>
+                    </div>
+                    <div class="card-body">
+                        <h3>CIRUGÍA COLOPROCTOLOGÍA</h3>
+                        <p>Tratamientos especializados para patologías digestivas complejas con procedimientos
+                            mínimamente invasivos.</p>
+                        <a href="javascript:void(0)" class="view-more-link">VER MÁS <span class="arrow">→</span></a>
+                    </div>
+                </div>
+
+                <!-- Card 8: Medicina Familiar -->
+                <div class="service-card">
+                    <div class="service-icon-wrapper">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"></path>
+                        </svg>
+                    </div>
+                    <div class="card-body">
+                        <h3>MEDICINA FAMILIAR</h3>
+                        <p>Atención médica primaria para integrantes de todas las edades, enfocada en la prevención y
+                            bienestar general.</p>
+                        <a href="javascript:void(0)" class="view-more-link">VER MÁS <span class="arrow">→</span></a>
+                    </div>
+                </div>
+
+                <!-- Card 9: Traumatología -->
+                <div class="service-card">
+                    <div class="service-icon-wrapper">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path
+                                d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4">
+                            </path>
+                            <path d="M11 7h4"></path>
+                            <path d="M11 11h4"></path>
+                        </svg>
+                    </div>
+                    <div class="card-body">
+                        <h3>TRAUMATOLOGÍA Y ORTOPEDIA</h3>
+                        <p>Especialistas en el sistema musculoesquelético, tratando lesiones óseas y articulares para
+                            recuperar su movilidad.</p>
+                        <a href="javascript:void(0)" class="view-more-link">VER MÁS <span class="arrow">→</span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Facilities Section -->
+    <section class="facilities-section">
+        <div class="container">
+            <h2 class="section-title">Nuestras Instalaciones</h2>
+            <div class="facilities-grid">
+                <div class="facility-item">
+                    <div class="facility-header">
+                        <span class="facility-icon-circle">✓</span>
+                        <h3>Nuestras Modernas</h3>
+                    </div>
+                    <p>Instalaciones modernas y tecnológicamente avanzadas que garantizan una atenció médica de calidad.
+                    </p>
+                </div>
+                <div class="facility-item">
+                    <div class="facility-header">
+                        <span class="facility-icon-circle">✓</span>
+                        <h3>Especialidades</h3>
+                    </div>
+                    <p>Amplia gama de especialidades y servicios en un entorno cómodo y seguro.</p>
+                </div>
+                <div class="facility-item">
+                    <div class="facility-header">
+                        <span class="facility-icon-circle">✓</span>
+                        <h3>Equipamiento</h3>
+                    </div>
+                    <p>Quirófanos equipados con tecnologías de punta para realizar procedimientos con máxima precisión y
+                        seguridad.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <app-footer></app-footer>
+</div>

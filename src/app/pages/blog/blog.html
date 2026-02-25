@@ -1,0 +1,185 @@
+<div class="blog-page">
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a routerLink="/inicio" class="nav-logo">
+                <img src="assets/images/Logo_ClinicaAleli_-Blanco.png" alt="Logo Clínica Alelí" class="nav-logo-img">
+            </a>
+
+            <ul class="nav-menu">
+                <li><a routerLink="/inicio" routerLinkActive="active">INICIO</a></li>
+                <li><a routerLink="/servicios" routerLinkActive="active">SERVICIOS</a></li>
+                <li><a routerLink="/especialidades" routerLinkActive="active">ESPECIALIDADES</a></li>
+                <li><a routerLink="/nosotros" routerLinkActive="active">NOSOTROS</a></li>
+                <li><a routerLink="/instalaciones" routerLinkActive="active">INSTALACIONES</a></li>
+                <li><a routerLink="/contacto" routerLinkActive="active">CONTACTO</a></li>
+                <li><a routerLink="/blog" routerLinkActive="active">BLOG</a></li>
+            </ul>
+
+            <div class="nav-actions">
+                <a routerLink="/auth" class="user-icon-btn" title="Iniciar Sesión">
+                    <svg viewBox="0 0 24 24" width="35" height="35" fill="currentColor">
+                        <path
+                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6.02-3.22.03-1.99 4.02-3.08 6.02-3.08 1.99 0 5.99 1.09 6.02 3.08-1.31 1.94-3.52 3.22-6.02 3.22z" />
+                    </svg>
+                </a>
+                <button class="cta-button">AGENDAR<br>CITA</button>
+            </div>
+        </div>
+    </nav>
+
+    <header class="blog-header">
+        <div class="header-content">
+            <span class="blog-label">BLOG</span>
+            <h1>ARTICULOS</h1>
+        </div>
+    </header>
+
+    <section class="articles-list">
+        <div class="container">
+            <!-- Article 1 -->
+            <div class="article-row">
+                <div class="article-image-container">
+                    <img src="assets/images/BLOG/imagen1.png" alt="Laboratorios Clínicos" class="article-img">
+                </div>
+                <div class="article-info">
+                    <h2>BENEFICIOS DE REALIZARSE LABORATORIOS CLÍNICOS CON REGULARIDAD</h2>
+                    <p>Cuidar de nuestra salud es una responsabilidad que no debemos tomar a la ligera, y realizarse
+                        laboratorios clínicos con regularidad es una herramienta fundamental para prevenir, diagnosticar
+                        y monitorear diversas condiciones médicas. Conocer el estado de nuestro...</p>
+                    <a [routerLink]="['/blog', 'laboratorios-clinicos']" class="ver-mas-link">VER MAS</a>
+                </div>
+            </div>
+
+            <!-- Article 2 -->
+            <div class="article-row reverse">
+                <div class="article-info">
+                    <h2>VENTAJAS DE LA CIRUGÍA LAPAROSCÓPICA</h2>
+                    <p>La cirugía laparoscópica ha revolucionado el campo de la medicina quirúrgica gracias a sus
+                        múltiples beneficios. En la Clínica Alelí, estamos comprometidos en ofrecer los tratamientos más
+                        avanzados para el bienestar de nuestros pacientes. Este procedimiento se...</p>
+                    <a [routerLink]="['/blog', 'cirugia-laparoscopica']" class="ver-mas-link">VER MAS</a>
+                </div>
+                <div class="article-image-container">
+                    <img src="assets/images/BLOG/imagen2.png" alt="Cirugía Laparoscópica" class="article-img">
+                </div>
+            </div>
+
+            <!-- Article 3 -->
+            <div class="article-row">
+                <div class="article-image-container bordered blue">
+                    <img src="assets/images/BLOG/imagen3.png" alt="Salud Mental" class="article-img">
+                </div>
+                <div class="article-info">
+                    <h2>LA IMPORTANCIA DE LA SALUD MENTAL: ¿CUÁNDO CONSULTAR A UN PSICÓLOGO?</h2>
+                    <p>En la actualidad, la importancia de la salud mental se ha convertido en un tema central para
+                        garantizar una vida plena y equilibrada. En Clínica Alelí, entendemos que cuidar de tu bienestar
+                        emocional es tan importante como cuidar de tu salud física. Pero, ¿Cómo?...</p>
+                    <a [routerLink]="['/blog', 'salud-mental']" class="ver-mas-link">VER MAS</a>
+                </div>
+            </div>
+
+            <!-- Article 4 -->
+            <div class="article-row reverse">
+                <div class="article-info">
+                    <h2>LA IMPORTANCIA DE LA NUTRICIÓN PEDIÁTRICA DESDE EL NACIMIENTO</h2>
+                    <p>La nutrición pediátrica es un pilar fundamental para garantizar el crecimiento y desarrollo
+                        óptimo de los niños desde sus primeros días de vida. Durante los primeros años, el cuerpo y el
+                        cerebro atraviesan etapas críticas de formación que requieren un aporte...</p>
+                    <a [routerLink]="['/blog', 'nutricion-pediatrica']" class="ver-mas-link">VER MAS</a>
+                </div>
+                <div class="article-image-container">
+                    <img src="assets/images/BLOG/imagen4.png" alt="Nutrición Pediátrica" class="article-img">
+                </div>
+            </div>
+
+            <!-- Article 5 -->
+            <div class="article-row">
+                <div class="article-image-container bordered light-blue">
+                    <img src="assets/images/BLOG/imagen5.png" alt="Fisioterapia" class="article-img">
+                </div>
+                <div class="article-info">
+                    <h2>FISIOTERAPIA: EL CAMINO HACIA LA RECUPERACIÓN Y EL BIENESTAR</h2>
+                    <p>La fisioterapia es una de las disciplinas médicas más efectivas y esenciales para tratar una
+                        amplia variedad de afecciones musculoesqueléticas y mejorar la calidad de vida de los pacientes.
+                        En Clínica Alelí, comprendemos la importancia de la fisioterapia en la...</p>
+                    <a [routerLink]="['/blog', 'fisioterapia']" class="ver-mas-link">VER MAS</a>
+                </div>
+            </div>
+
+            <!-- Article 6 -->
+            <div class="article-row reverse">
+                <div class="article-info">
+                    <h2>CUIDADOS PROFESIONALES PARA TUS NIÑOS</h2>
+                    <p>Los cuidados profesionales para tus niños son una de las prioridades más importantes como padres
+                        y médicos. Desde el momento en que nace un bebé, se abre un camino lleno de etapas cruciales
+                        para su desarrollo físico, emocional y social. Una de las mejores maneras...</p>
+                    <a [routerLink]="['/blog', 'cuidados-ninos']" class="ver-mas-link">VER MAS</a>
+                </div>
+                <div class="article-image-container">
+                    <img src="assets/images/BLOG/imagen6.png" alt="Cuidados Niños" class="article-img">
+                </div>
+            </div>
+
+            <!-- Article 7 -->
+            <div class="article-row">
+                <div class="article-image-container">
+                    <img src="assets/images/BLOG/imagen7.png" alt="Cardiología" class="article-img">
+                </div>
+                <div class="article-info">
+                    <h2>CUIDA TU CORAZÓN: TIPS DE CARDIOLOGÍA PARA UNA VIDA SALUDABLE</h2>
+                    <p>Cuida tu corazón y ten una vida saludable. La salud del corazón es esencial para nuestro
+                        bienestar general. Un corazón sano nos permite llevar a cabo nuestras actividades diarias con
+                        energía y vitalidad. En Clínica Alelí, entendemos la importancia de cuidar de este...</p>
+                    <a [routerLink]="['/blog', 'cardiologia']" class="ver-mas-link">VER MAS</a>
+                </div>
+            </div>
+
+            <!-- Article 8 -->
+            <div class="article-row reverse">
+                <div class="article-info">
+                    <h2>LA IMPORTANCIA VITAL DE LAS VISITAS MÉDICAS REGULARES</h2>
+                    <p>Cuidando tu Salud: La Importancia de las Visitas Médicas En el ajetreo de la vida moderna, a
+                        menudo descuidamos lo más valioso: nuestra salud. La importancia de las visitas médicas
+                        regulares reside en mantener un estilo de vida saludable y prevenir problemas de...</p>
+                    <a [routerLink]="['/blog', 'visitas-medicas']" class="ver-mas-link">VER MAS</a>
+                </div>
+                <div class="article-image-container">
+                    <img src="assets/images/BLOG/imagen8.png" alt="Visitas Médicas" class="article-img">
+                </div>
+            </div>
+
+            <!-- Article 9 -->
+            <div class="article-row">
+                <div class="article-image-container">
+                    <img src="assets/images/BLOG/imagen9.png" alt="Cirugía Estética" class="article-img">
+                </div>
+                <div class="article-info">
+                    <h2>CIRUGÍA ESTÉTICA: UN VISTAZO DETALLADO A LA TRANSFORMACIÓN PERSONAL</h2>
+                    <p>Si estás considerando la cirugía estética para lograr una transformación personal, has llegado al
+                        lugar adecuado. En este artículo, exploraremos los aspectos clave de la cirugía estética, desde
+                        sus beneficios hasta los procedimientos más populares y cómo puedes...</p>
+                    <a [routerLink]="['/blog', 'cirugia-estetica']" class="ver-mas-link">VER MAS</a>
+                </div>
+            </div>
+
+            <!-- Article 10 -->
+            <div class="article-row reverse">
+                <div class="article-info">
+                    <h2>LA IMPORTANCIA DE LA NUTRICIÓN PARA UNA VIDA SALUDABLE</h2>
+                    <p>La nutrición es un pilar fundamental para mantener un estilo de vida saludable y lleno de
+                        energía.
+                        En un mundo cada vez más frenético, es esencial prestar atención a lo que consumimos para
+                        garantizar un bienestar óptimo. En este artículo, exploraremos...</p>
+                    <a [routerLink]="['/blog', 'nutricion-saludable']" class="ver-mas-link">VER MAS</a>
+                </div>
+                <div class="article-image-container">
+                    <img src="assets/images/Nutricion_saludable.png" alt="Nutrición Saludable" class="article-img">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <app-footer></app-footer>
+</div>

@@ -1,0 +1,74 @@
+<div class="login-outer-container">
+    <!-- Back Button -->
+    <a routerLink="/inicio" class="back-arrow-btn" title="Volver al inicio">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" />
+        </svg>
+    </a>
+
+    <div class="login-content">
+        <h1 class="clinic-title">Clínica Alelí</h1>
+
+        <div class="login-main-card">
+            @if (isLoginView) {
+            <h2 class="card-title">Iniciar Sesión</h2>
+
+            <form (ngSubmit)="onLogin()" #loginForm="ngForm" class="login-form">
+                <div class="input-field">
+                    <input type="email" name="email" [(ngModel)]="email" placeholder="Correo Electrónico" required
+                        autocomplete="email">
+                </div>
+
+                <div class="input-field">
+                    <input type="password" name="password" [(ngModel)]="password" placeholder="Contraseña" required
+                        autocomplete="current-password">
+                </div>
+
+                <div class="forgot-container">
+                    <a href="#" class="forgot-link">¿Olvidaste tu contraseña?</a>
+                </div>
+
+                @if (errorMsg) { <div class="msg error">{{ errorMsg }}</div> }
+                @if (successMsg) { <div class="msg success">{{ successMsg }}</div> }
+
+                <button type="submit" class="auth-button" [disabled]="!loginForm.valid">
+                    Iniciar Sesión
+                </button>
+            </form>
+
+            <div class="auth-footer">
+                ¿No tienes cuenta? <a (click)="toggleView()" class="toggle-link">Regístrate aquí</a>
+            </div>
+            } @else {
+            <h2 class="card-title">Crea tu cuenta</h2>
+
+            <form (ngSubmit)="onRegister()" #registerForm="ngForm" class="login-form">
+                <div class="input-field">
+                    <input type="text" name="regName" [(ngModel)]="regName" placeholder="Nombre completo" required>
+                </div>
+
+                <div class="input-field">
+                    <input type="email" name="regEmail" [(ngModel)]="regEmail" placeholder="Correo Electrónico" required
+                        autocomplete="email">
+                </div>
+
+                <div class="input-field">
+                    <input type="password" name="regPassword" [(ngModel)]="regPassword" placeholder="Contraseña"
+                        required autocomplete="new-password">
+                </div>
+
+                @if (errorMsg) { <div class="msg error">{{ errorMsg }}</div> }
+                @if (successMsg) { <div class="msg success">{{ successMsg }}</div> }
+
+                <button type="submit" class="auth-button" [disabled]="!registerForm.valid">
+                    Registrarse
+                </button>
+            </form>
+
+            <div class="auth-footer">
+                ¿Ya tienes cuenta? <a (click)="toggleView()" class="toggle-link">Inicia sesión aquí</a>
+            </div>
+            }
+        </div>
+    </div>
+</div>
