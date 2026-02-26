@@ -1,11 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
-
 html {
     scroll-behavior: smooth;
 }
 
 .landing-page {
-    font-family: 'Outfit', sans-serif;
     color: #333;
     background-color: #fff;
     overflow-x: hidden;
@@ -91,63 +88,71 @@ html {
 }
 
 .benefit-card {
-    background: white;
+    background: var(--white);
     padding: 3.5rem 2.5rem;
-    border-radius: 2rem;
+    border-radius: 2.5rem;
     text-align: center;
-    transition: all 0.4s ease;
-    border: 1px solid rgba(0, 0, 0, 0.05);
+    transition: var(--transition);
+    border: 1px solid rgba(106, 76, 139, 0.05);
     display: flex;
     flex-direction: column;
     align-items: center;
+    box-shadow: var(--shadow-sm);
 }
 
 .benefit-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
-    border-color: #26C6B2;
+    transform: translateY(-12px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--accent-color);
 }
 
 .benefit-card.active {
-    background: linear-gradient(135deg, #6A4C8B, #4c3664);
-    color: white;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    color: var(--white);
     border: none;
+    box-shadow: 0 20px 40px rgba(106, 76, 139, 0.3);
 }
 
 .benefit-icon {
-    width: 70px;
-    height: 70px;
-    background: rgba(38, 198, 178, 0.1);
-    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    background: var(--bg-light);
+    border-radius: 24px;
     display: flex;
     align-items: center;
     justify-content: center;
     margin-bottom: 2rem;
-    color: #26C6B2;
-    transition: all 0.3s ease;
+    color: var(--primary-color);
+    transition: var(--transition);
 }
 
 .benefit-card.active .benefit-icon {
     background: rgba(255, 255, 255, 0.15);
-    color: white;
+    color: var(--white);
+}
+
+.benefit-card:hover .benefit-icon {
+    transform: scale(1.1) rotate(5deg);
+    background: var(--primary-color);
+    color: var(--white);
 }
 
 .benefit-icon svg {
-    width: 32px;
-    height: 32px;
+    width: 35px;
+    height: 35px;
 }
 
 .benefit-card h3 {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     font-weight: 800;
-    margin-bottom: 1rem;
+    margin-bottom: 1.2rem;
     color: inherit;
 }
 
 .benefit-card p {
-    font-size: 1rem;
-    line-height: 1.6;
-    color: #666;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--text-light);
 }
 
 .benefit-card.active p {
@@ -212,6 +217,7 @@ html {
     font-weight: 800;
     margin-bottom: 1.2rem;
     line-height: 1.1;
+    color: inherit;
 }
 
 .action-card p {
@@ -405,14 +411,13 @@ html {
 /* Hero Banner Section */
 .hero {
     position: relative;
-    min-height: calc(100vh - 80px);
+    min-height: 100vh;
     display: flex;
     justify-content: flex-start;
     align-items: center;
     overflow: hidden;
-    padding: 2rem 5%;
-    background-color: #ffffff;
-    /* Pure white base */
+    padding: 0 5%;
+    background-color: var(--white);
 }
 
 /* Background image enlarged and shifted up to hide desk/furniture */
@@ -432,16 +437,38 @@ html {
 .hero::after {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    inset: 0;
     background: linear-gradient(to right,
-            rgba(255, 255, 255, 1) 0%,
-            rgba(255, 255, 255, 1) 40%,
-            rgba(255, 255, 255, 0.8) 55%,
+            var(--white) 0%,
+            var(--white) 35%,
+            rgba(255, 255, 255, 0.9) 50%,
             rgba(255, 255, 255, 0) 100%);
     z-index: 2;
+}
+
+.hero-shape {
+    position: absolute;
+    top: -10%;
+    left: -10%;
+    width: 40%;
+    height: 60%;
+    background: radial-gradient(circle, rgba(106, 76, 139, 0.05) 0%, transparent 70%);
+    z-index: 1;
+    border-radius: 50%;
+    filter: blur(50px);
+    animation: floating 10s infinite ease-in-out;
+}
+
+@keyframes floating {
+
+    0%,
+    100% {
+        transform: translate(0, 0);
+    }
+
+    50% {
+        transform: translate(5%, 5%);
+    }
 }
 
 /* Removed overlay for full image visibility */
@@ -467,26 +494,37 @@ html {
 }
 
 .hero-welcome h1 {
-    font-size: 3rem;
-    line-height: 1.2;
-    color: #333;
-    /* Darker, cleaner text like example */
+    font-size: 4.2rem;
+    line-height: 1.1;
+    color: var(--text-main);
     font-weight: 800;
-    margin-bottom: 1.5rem;
-    letter-spacing: -1px;
+    margin-bottom: 2rem;
+    letter-spacing: -2px;
 }
 
 .hero-welcome .highlight {
-    color: #6A4C8B;
-    /* Secondary color for contrast */
+    color: var(--primary-color);
+    position: relative;
+}
+
+.hero-welcome .highlight::after {
+    content: '';
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    width: 100%;
+    height: 12px;
+    background: rgba(38, 198, 178, 0.2);
+    z-index: -1;
+    border-radius: 4px;
 }
 
 .hero-description {
-    font-size: 1.1rem;
-    color: #555;
-    line-height: 1.6;
-    margin: 0 0 2.5rem;
-    max-width: 100%;
+    font-size: 1.25rem;
+    color: var(--text-light);
+    line-height: 1.7;
+    margin: 0 0 3.5rem;
+    max-width: 90%;
     font-weight: 500;
 }
 
@@ -934,6 +972,66 @@ html {
     letter-spacing: 1px;
 }
 
+/* FAQ Section */
+.faq-section {
+    padding: 100px 0;
+    background-color: #fcfaff;
+}
+
+.faq-grid {
+    max-width: 800px;
+    margin: 3rem auto 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.faq-item {
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(106, 76, 139, 0.05);
+    border: 1px solid rgba(106, 76, 139, 0.03);
+    transition: all 0.3s ease;
+}
+
+.faq-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(106, 76, 139, 0.1);
+    border-color: #d1c4e9;
+}
+
+.faq-question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.faq-question span {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #2d3436;
+    letter-spacing: -0.5px;
+}
+
+.faq-question svg {
+    color: #6a1b9a;
+    transition: transform 0.3s ease;
+}
+
+.faq-answer {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #f1f2f6;
+}
+
+.faq-answer p {
+    color: #636e72;
+    line-height: 1.8;
+    font-size: 1.05rem;
+}
+
 /* Social Section */
 .social-section {
     padding: 5rem 0;
@@ -987,9 +1085,11 @@ html {
     border-radius: 50%;
 }
 
-.social-icon-box svg {
-    width: 28px;
-    height: 28px;
+.social-icon-box svg,
+.social-icon-img-inicio {
+    width: 35px;
+    height: 35px;
+    object-fit: contain;
 }
 
 .social-item span {

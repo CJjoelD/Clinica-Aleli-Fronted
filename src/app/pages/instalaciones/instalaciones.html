@@ -1,32 +1,6 @@
 <div class="instalaciones-page">
     <!-- Navbar -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <a routerLink="/inicio" class="nav-logo">
-                <img src="assets/images/Logo_ClinicaAleli_-Blanco.png" alt="Logo Clínica Alelí" class="nav-logo-img">
-            </a>
-
-            <ul class="nav-menu">
-                <li><a routerLink="/inicio" routerLinkActive="active">INICIO</a></li>
-                <li><a routerLink="/servicios" routerLinkActive="active">SERVICIOS</a></li>
-                <li><a routerLink="/especialidades" routerLinkActive="active">ESPECIALIDADES</a></li>
-                <li><a routerLink="/nosotros" routerLinkActive="active">NOSOTROS</a></li>
-                <li><a routerLink="/instalaciones" routerLinkActive="active">INSTALACIONES</a></li>
-                <li><a routerLink="/contacto" routerLinkActive="active">CONTACTO</a></li>
-                <li><a routerLink="/blog" routerLinkActive="active">BLOG</a></li>
-            </ul>
-
-            <div class="nav-actions">
-                <a routerLink="/auth" class="user-icon-btn" title="Iniciar Sesión">
-                    <svg viewBox="0 0 24 24" width="35" height="35" fill="currentColor">
-                        <path
-                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6.02-3.22.03-1.99 4.02-3.08 6.02-3.08 1.99 0 5.99 1.09 6.02 3.08-1.31 1.94-3.52 3.22-6.02 3.22z" />
-                    </svg>
-                </a>
-                <button class="cta-button">AGENDAR<br>CITA</button>
-            </div>
-        </div>
-    </nav>
+    <app-navbar></app-navbar>
 
     <!-- Header Section -->
     <header class="page-header">

@@ -1,0 +1,166 @@
+<app-navbar></app-navbar>
+
+<main class="resultados-page">
+    <div class="container">
+        <!-- LOOKUP VIEW -->
+        <div class="lookup-container" *ngIf="viewState === 'LOOKUP'">
+            <div class="card main-lookup-card">
+                <div class="lookup-header">
+                    <img src="assets/images/Logo-negro-aleli.png" alt="Aleli Logo" class="header-logo">
+                    <h2>Portal de Resultados</h2>
+                    <p class="subtitle">Clínica de especialidades</p>
+                    <div class="title-accent"></div>
+                </div>
+
+                <div class="instructions">
+                    <p>Para acceder a los resultados de sus exámenes:</p>
+                    <ul>
+                        <li><span class="step-num">1</span> Digite su número de cédula</li>
+                        <li><span class="step-num">2</span> Digite su número de orden</li>
+                        <li><span class="step-num">3</span> Presione el botón "Confirmar"</li>
+                    </ul>
+                </div>
+
+                <form class="lookup-form">
+                    <div class="input-group">
+                        <label for="cedula">Cédula de Identidad</label>
+                        <div class="input-wrapper">
+                            <input type="text" id="cedula" name="cedula" [(ngModel)]="cedula" placeholder="010XXXXXXX"
+                                maxlength="10">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="order">Número de Orden</label>
+                        <div class="input-wrapper">
+                            <input type="text" id="order" name="order" [(ngModel)]="orderNumber"
+                                placeholder="ORD-XXXX-XXX">
+                        </div>
+                    </div>
+
+                    <div class="actions">
+                        <button type="button" class="btn-confirmar" (click)="confirmLookup()"
+                            [disabled]="!cedula || !orderNumber">
+                            CONFIRMAR IDENTIDAD
+                        </button>
+
+                        <div class="results-action-wrapper" *ngIf="isConfirmed">
+                            <button type="button" class="btn-ver-resultados" (click)="viewResults()"
+                                [disabled]="isLoading">
+                                <span *ngIf="!isLoading">VER RESULTADOS ONLINE</span>
+                                <div class="spinner" *ngIf="isLoading"></div>
+                            </button>
+                            <p class="success-hint">¡Identidad confirmada exitosamente!</p>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- LOADING OVERLAY -->
+        <div class="loading-overlay" *ngIf="isLoading">
+            <div class="search-loader">
+                <div class="search-circle"></div>
+                <p>Buscando sus resultados en la base de datos...</p>
+            </div>
+        </div>
+
+        <!-- RESULTS VIEW -->
+        <div class="results-view-container" *ngIf="viewState === 'RESULTS'">
+            <div class="print-actions">
+                <button (click)="printResults()" class="btn-action print">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 6 2 18 2 18 9"></polyline>
+                        <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+                        <rect x="6" y="14" width="12" height="8"></rect>
+                    </svg>
+                    DESCARGAR RESULTADOS
+                </button>
+                <button (click)="goBack()" class="btn-action exit">
+                    CERRAR SESIÓN
+                </button>
+            </div>
+
+            <div class="results-content card doc-style">
+                <div class="results-header-doc">
+                    <div class="header-left">
+                        <img src="assets/images/Logo-negro-aleli.png" alt="Aleli Logo" class="header-logo-small">
+                        <div class="clinic-text">
+                            <h3>Clínica Alelí</h3>
+                            <p>Especialidades Médicas & Laboratorio</p>
+                        </div>
+                    </div>
+                    <div class="header-right">
+                        <div class="doc-tag">INFORME DE LABORATORIO</div>
+                    </div>
+                </div>
+
+                <div class="patient-card">
+                    <div class="patient-header">
+                        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        INFORMACIÓN DEL PACIENTE
+                    </div>
+                    <div class="patient-info-grid">
+                        <div class="info-item"><span class="label">NOMBRE EXPLICADO:</span><span class="value">{{
+                                patient.name }}</span></div>
+                        <div class="info-item"><span class="label">CÉDULA/ID:</span><span class="value">{{ patient.id
+                                }}</span></div>
+                        <div class="info-item"><span class="label">FECHA NACIMIENTO:</span><span class="value">{{
+                                patient.birthDate }}</span></div>
+                        <div class="info-item"><span class="label">EDAD ACTUAL:</span><span class="value">{{ patient.age
+                                }}</span></div>
+                        <div class="info-item"><span class="label">NÚMERO ORDEN:</span><span class="value">{{
+                                patient.orderNumber }}</span></div>
+                        <div class="info-item"><span class="label">MÉDICO TRATANTE:</span><span class="value">{{
+                                patient.doctor }}</span></div>
+                        <div class="info-item"><span class="label">SERVICIO/DEPTO:</span><span class="value">{{
+                                patient.service }}</span></div>
+                        <div class="info-item"><span class="label">FECHA REPORTE:</span><span class="value">{{
+                                patient.date }}</span></div>
+                    </div>
+                </div>
+
+                <div class="results-table-main">
+                    <table class="results-table">
+                        <thead>
+                            <tr>
+                                <th>PRUEBA / ANÁLISIS</th>
+                                <th>RESULTADO OBTENIDO</th>
+                                <th>VALORES DE REFERENCIA</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let res of results">
+                                <td class="item-name">{{ res.item }}</td>
+                                <td class="item-value highlight">{{ res.result }}</td>
+                                <td class="item-ref">{{ res.reference }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="doc-footer">
+                    <div class="qr-placeholder">
+                        <div class="qr-box">Validar Documento</div>
+                    </div>
+                    <div class="signatures">
+                        <div class="sign-line">Firma del Responsable Médico</div>
+                        <p>Documento digital emitido por Clínica Alelí</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="print-actions footer-actions">
+                <button (click)="printResults()" class="btn-action print">IMPRIMIR INFORME</button>
+                <button (click)="goBack()" class="btn-action exit">SALIR DEL PORTAL</button>
+            </div>
+        </div>
+    </div>
+</main>
+
+<app-footer></app-footer>

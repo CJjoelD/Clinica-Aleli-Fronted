@@ -1,10 +1,5 @@
-/* Contacto Page Styles */
-
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
-
 :host {
     display: block;
-    font-family: 'Outfit', sans-serif;
 }
 
 .contacto-page {
@@ -157,17 +152,17 @@
 
 /* Contact Info Side */
 .contact-info h1 {
-    font-size: 4rem;
+    font-size: 5rem;
     font-weight: 800;
-    color: #333;
-    margin-bottom: 0.5rem;
-    letter-spacing: -1px;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    letter-spacing: -3px;
 }
 
 .contact-info .subtitle {
-    font-size: 1.5rem;
-    color: #666;
-    margin-bottom: 4rem;
+    font-size: 1.6rem;
+    color: var(--text-light);
+    margin-bottom: 5rem;
     font-weight: 400;
 }
 
@@ -184,52 +179,53 @@
 }
 
 .icon-box {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
+    width: 65px;
+    height: 65px;
+    border-radius: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
 }
 
-.icon-box svg {
-    width: 28px;
-    height: 28px;
+.info-item:hover .icon-box {
+    transform: scale(1.1) rotate(5deg);
 }
 
 .red-icon {
-    background-color: #FFF0F0;
-    color: #FF4D4D;
+    background-color: #fff5f5;
+    color: #ff5e5e;
 }
 
 .black-icon {
-    background-color: #F5F5F5;
-    color: #333;
+    background-color: #f8f9fa;
+    color: #1a1a1a;
 }
 
 .whatsapp-icon {
-    background-color: #E8F9F1;
-    color: #25D366;
+    background-color: #f0fff4;
+    color: #22c35e;
 }
 
 .blue-icon {
-    background-color: #EBF5FF;
-    color: #4A90E2;
+    background-color: #f0f7ff;
+    color: #3b82f6;
 }
 
 .item-text h3 {
-    font-size: 1.8rem;
+    font-size: 1.4rem;
     font-weight: 800;
-    color: #333;
-    margin-bottom: 0.3rem;
+    color: var(--text-main);
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.5px;
 }
 
 .item-text p {
-    font-size: 1.2rem;
-    color: #666;
-    line-height: 1.4;
+    font-size: 1.15rem;
+    color: var(--text-light);
+    line-height: 1.5;
 }
 
 .flex-text {
@@ -258,79 +254,49 @@
 
 /* Form Side */
 .form-card {
-    background: #fff;
-    padding: 4rem;
+    background: var(--white);
+    padding: 5rem;
     border-radius: 40px;
-    box-shadow: 0 40px 100px rgba(106, 76, 139, 0.08);
-}
-
-.form-card h2 {
-    font-size: 1.8rem;
-    font-weight: 800;
-    color: #333;
-    margin-bottom: 3rem;
-    letter-spacing: 0.5px;
-}
-
-.form-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-}
-
-.form-group {
-    margin-bottom: 2rem;
-}
-
-.form-group label {
-    display: block;
-    font-size: 1rem;
-    font-weight: 700;
-    color: #333;
-    margin-bottom: 0.8rem;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid rgba(106, 76, 139, 0.05);
 }
 
 .form-group input,
 .form-group textarea {
     width: 100%;
-    padding: 1.2rem 1.5rem;
-    background-color: #F8F8F8;
-    border: 1px solid #000000;
-    border-radius: 12px;
+    padding: 1.4rem 1.8rem;
+    background-color: var(--bg-light);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 18px;
     font-family: inherit;
-    font-size: 1rem;
-    transition: all 0.3s ease;
+    font-size: 1.05rem;
+    transition: var(--transition);
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
     outline: none;
-    border-color: rgba(106, 76, 139, 0.3);
-    background-color: #fff;
-    box-shadow: 0 10px 20px rgba(106, 76, 139, 0.05);
-}
-
-.form-actions {
-    margin-top: 1rem;
+    border-color: var(--primary-color);
+    background-color: var(--white);
+    box-shadow: var(--shadow-md);
 }
 
 .submit-btn {
-    background-color: #6A4C8B;
-    color: white;
-    padding: 1.2rem 4rem;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    color: var(--white);
+    padding: 1.4rem 5rem;
     border: none;
     border-radius: 50px;
     font-weight: 800;
-    font-size: 1.1rem;
+    font-size: 1.15rem;
     cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 15px 30px rgba(106, 76, 139, 0.2);
+    transition: var(--transition);
+    box-shadow: 0 15px 30px rgba(106, 76, 139, 0.25);
 }
 
 .submit-btn:hover {
-    transform: translateY(-5px);
-    background-color: #5a4176;
-    box-shadow: 0 20px 40px rgba(106, 76, 139, 0.3);
+    transform: translateY(-8px);
+    box-shadow: 0 25px 50px rgba(106, 76, 139, 0.4);
 }
 
 /* Responsive */

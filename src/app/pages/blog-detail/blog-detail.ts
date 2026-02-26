@@ -3,11 +3,12 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { BLOG_DATA, Article } from '../blog/blog-data';
 import { FooterComponent } from '../../shared/components/footer/footer.component';
+import { NavbarComponent } from '../../shared/components/navbar/navbar';
 
 @Component({
   selector: 'app-blog-detail',
   standalone: true,
-  imports: [CommonModule, RouterLink, FooterComponent],
+  imports: [CommonModule, RouterLink, FooterComponent, NavbarComponent],
   templateUrl: './blog-detail.html',
   styleUrl: './blog-detail.css'
 })

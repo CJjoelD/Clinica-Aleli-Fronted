@@ -1,34 +1,9 @@
 <div class="landing-page">
     <!-- Navbar -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <a routerLink="/inicio" class="nav-logo">
-                <img src="assets/images/Logo_ClinicaAleli_-Blanco.png" alt="Logo Clínica Alelí" class="nav-logo-img">
-            </a>
-
-            <ul class="nav-menu">
-                <li><a routerLink="/inicio" routerLinkActive="active">INICIO</a></li>
-                <li><a routerLink="/servicios" routerLinkActive="active">SERVICIOS</a></li>
-                <li><a routerLink="/especialidades" routerLinkActive="active">ESPECIALIDADES</a></li>
-                <li><a routerLink="/nosotros" routerLinkActive="active">NOSOTROS</a></li>
-                <li><a routerLink="/instalaciones" routerLinkActive="active">INSTALACIONES</a></li>
-                <li><a routerLink="/contacto" routerLinkActive="active">CONTACTO</a></li>
-                <li><a routerLink="/blog" routerLinkActive="active">BLOG</a></li>
-            </ul>
-
-            <div class="nav-actions">
-                <a routerLink="/auth" class="user-icon-btn" title="Iniciar Sesión">
-                    <svg viewBox="0 0 24 24" width="35" height="35" fill="currentColor">
-                        <path
-                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6.02-3.22.03-1.99 4.02-3.08 6.02-3.08 1.99 0 5.99 1.09 6.02 3.08-1.31 1.94-3.52 3.22-6.02 3.22z" />
-                    </svg>
-                </a>
-                <button class="cta-button">AGENDAR<br>CITA</button>
-            </div>
-        </div>
-    </nav>
+    <app-navbar></app-navbar>
 
     <header class="hero">
+        <div class="hero-shape"></div>
         <div class="hero-container full-width-hero">
             <div class="hero-welcome centered-hero-content">
                 <h1>Bienvenidos a la <span class="highlight">Clínica Alelí</span></h1>
@@ -178,7 +153,7 @@
                         <span class="action-tag">ONLINE</span>
                         <h3>Resultados Médicos</h3>
                         <p>Acceda a sus informes de laboratorio e imágenes desde la comodidad de su hogar.</p>
-                        <button class="action-btn">VER RESULTADOS</button>
+                        <button class="action-btn" routerLink="/resultados">VER RESULTADOS</button>
                     </div>
                     <div class="action-decoration">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -301,6 +276,71 @@
 
 
 
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-subtitle">RESOLVEMOS TUS DUDAS</span>
+                <h2>Preguntas Frecuentes</h2>
+                <div class="header-line"></div>
+            </div>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>¿Cómo puedo agendar una cita médica?</span>
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+                            stroke-width="3">
+                            <path d="M6 9l6 6 6-6"></path>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Puede agendar su cita haciendo clic en el botón "AGENDAR CITA" en nuestra web, enviándonos un
+                            mensaje por WhatsApp al 098 493 2129 o llamando directamente a nuestra recepción.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>¿Cuáles son los horarios de atención?</span>
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+                            stroke-width="3">
+                            <path d="M6 9l6 6 6-6"></path>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Atendemos de Lunes a Viernes de 08:00 a 19:00 y Sábados de 09:00 a 13:00. Contamos con
+                            médicos de guardia para emergencias.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>¿Cómo retiro mis resultados de laboratorio?</span>
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+                            stroke-width="3">
+                            <path d="M6 9l6 6 6-6"></path>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Ahora puede consultar sus resultados directamente desde nuestro portal web en la sección
+                            "RESULTADOS" ingresando su número de cédula y número de orden.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>¿Aceptan seguros médicos?</span>
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+                            stroke-width="3">
+                            <path d="M6 9l6 6 6-6"></path>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Sí, mantenemos convenios con las principales aseguradoras del país. Consulte con recepción si
+                            su plan específico tiene cobertura directa con nosotros.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Social Media Section -->
     <section class="social-section">
         <div class="container">
@@ -308,30 +348,19 @@
             <div class="social-grid">
                 <a href="#" class="social-item">
                     <div class="social-icon-box instagram">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                            stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                        </svg>
+                        <img src="assets/images/SOCIALES/INTAGRAM.png" alt="Instagram" class="social-icon-img-inicio">
                     </div>
                     <span>@clinicaaleli</span>
                 </a>
                 <a href="#" class="social-item">
                     <div class="social-icon-box facebook">
-                        <svg viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
-                        </svg>
+                        <img src="assets/images/SOCIALES/FACEBOOK.png" alt="Facebook" class="social-icon-img-inicio">
                     </div>
                     <span>Clínica Alelí</span>
                 </a>
                 <a href="#" class="social-item">
                     <div class="social-icon-box tiktok">
-                        <svg viewBox="0 0 24 24" fill="currentColor">
-                            <path
-                                d="M12.525.02c1.31 0 2.57.54 3.47 1.47.45-.09.91-.14 1.37-.14v2.74c-.46 0-.91.04-1.37.12v.02c0 1.51-.81 2.82-2.02 3.53v8.01c0 4.54-3.68 8.23-8.23 8.23C2.55 24 0 21.45 0 18.27s2.55-5.73 5.73-5.73c.48 0 .94.06 1.38.17v2.85c-.44-.19-.92-.31-1.42-.31-1.74 0-3.15 1.41-3.15 3.15 0 1.74 1.41 3.15 3.15 3.15s3.15-1.41 3.15-3.15V0h3.69z">
-                            </path>
-                        </svg>
+                        <img src="assets/images/SOCIALES/TIKTOK.png" alt="TikTok" class="social-icon-img-inicio">
                     </div>
                     <span>@clinicaaleli.ec</span>
                 </a>

@@ -1,0 +1,69 @@
+<app-navbar></app-navbar>
+
+<main class="medico-detail-page" *ngIf="doctor">
+    <div class="container">
+        <!-- Back Link -->
+        <a routerLink="/especialidades" class="back-link">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 12H5M12 19l-7-7 7-7"></path>
+            </svg>
+            VOLVER A ESPECIALIDADES
+        </a>
+
+        <!-- Profile Card -->
+        <section class="profile-card">
+            <div class="profile-image">
+                <img [src]="doctor.image" [alt]="doctor.name">
+            </div>
+            <div class="profile-info">
+                <h1>{{ doctor.name }}</h1>
+
+                <div class="info-grid">
+                    <div class="info-row">
+                        <span class="info-label">ESPECIALIDAD</span>
+                        <span class="info-value">{{ doctor.specialty }}</span>
+                    </div>
+                    <div class="info-row" *ngIf="doctor.contact">
+                        <span class="info-label">CONTACTO</span>
+                        <span class="info-value">{{ doctor.contact }}</span>
+                    </div>
+                    <div class="info-row" *ngIf="doctor.email">
+                        <span class="info-label">CORREO</span>
+                        <span class="info-value lowercase">{{ doctor.email }}</span>
+                    </div>
+                </div>
+
+                <div class="appointment-box">
+                    <span class="agenda-tag">AGENDA TU CITA</span>
+                    <p>Escríbenos para que puedas generar tu cita con nuestro especialista.</p>
+                    <a href="https://wa.me/593984932129" target="_blank" class="btn-agendar">AGENDAR CITA</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Details Grid -->
+        <div class="details-grid">
+            <!-- Quien Soy section -->
+            <section class="bio-section detail-box">
+                <h2 class="box-title">QUIEN SOY?</h2>
+                <div class="box-content">
+                    <p>{{ doctor.bio }}</p>
+                </div>
+            </section>
+
+            <!-- Services section -->
+            <section class="services-section detail-box" *ngIf="doctor.services && doctor.services.length > 0">
+                <h2 class="box-title">SERVICIOS</h2>
+                <div class="box-content">
+                    <ul class="services-list">
+                        <li *ngFor="let service of doctor.services">
+                            <span class="bullet">•</span> {{ service }}
+                        </li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+    </div>
+</main>
+
+<app-footer></app-footer>

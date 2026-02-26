@@ -1,10 +1,7 @@
 /* Services Page Styles */
 
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
-
 :host {
     display: block;
-    font-family: 'Outfit', sans-serif;
 }
 
 .landing-page {
@@ -143,33 +140,45 @@
 
 /* Services Hero */
 .services-hero {
-    padding: 12rem 0 6rem;
+    padding: 14rem 0 8rem;
     text-align: center;
-    background-color: #fff;
+    background: linear-gradient(135deg, var(--white) 0%, var(--bg-light) 100%);
+    position: relative;
+}
+
+.services-hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background: linear-gradient(to top, var(--white), transparent);
 }
 
 .main-title {
-    font-size: 3rem;
-    color: #6A4C8B;
+    font-size: 4.5rem;
+    color: var(--primary-color);
     font-weight: 800;
     margin-bottom: 2rem;
-    letter-spacing: -1px;
+    letter-spacing: -3px;
+    text-transform: uppercase;
 }
 
 .main-description {
-    font-size: 1.2rem;
-    color: #666;
+    font-size: 1.3rem;
+    color: var(--text-light);
     max-width: 800px;
     margin: 0 auto 3rem;
-    line-height: 1.6;
+    line-height: 1.8;
 }
 
 .header-line {
-    width: 60px;
-    height: 4px;
-    background-color: #26C6B2;
+    width: 80px;
+    height: 5px;
+    background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
     margin: 0 auto;
-    border-radius: 2px;
+    border-radius: 50px;
 }
 
 /* Specialties Section */
@@ -203,83 +212,55 @@
 }
 
 .service-card {
-    background: white;
-    padding: 3rem 2.5rem;
-    border-radius: 2rem;
-    border: 1px solid #f0f0f0;
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    background: var(--white);
+    padding: 3.5rem 2.5rem;
+    border-radius: 2.5rem;
+    border: 1px solid rgba(106, 76, 139, 0.05);
+    transition: var(--transition);
     display: flex;
     flex-direction: column;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
-}
-
-.service-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 4px;
-    background: linear-gradient(90deg, #6A4C8B, #26C6B2);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.5s ease;
+    box-shadow: var(--shadow-sm);
 }
 
 .service-card:hover {
-    transform: translateY(-12px);
-    box-shadow: 0 20px 40px rgba(106, 76, 139, 0.1);
-    border-color: rgba(106, 76, 139, 0.2);
-}
-
-.service-card:hover::before {
-    transform: scaleX(1);
+    transform: translateY(-15px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--accent-light);
 }
 
 .service-icon-wrapper {
-    width: 64px;
-    height: 64px;
-    background-color: #f8f9fa;
-    border-radius: 16px;
+    width: 70px;
+    height: 70px;
+    background-color: var(--bg-light);
+    border-radius: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #6A4C8B;
+    color: var(--primary-color);
     margin-bottom: 2.5rem;
-    transition: all 0.4s ease;
-    border: 1px solid #eee;
+    transition: var(--transition);
 }
 
 .service-card:hover .service-icon-wrapper {
-    background-color: #6A4C8B;
-    color: white;
-    transform: rotate(10deg);
-}
-
-.service-icon-wrapper svg {
-    width: 32px;
-    height: 32px;
+    background-color: var(--primary-color);
+    color: var(--white);
+    transform: rotate(10deg) scale(1.1);
 }
 
 .service-card h3 {
-    font-size: 1.25rem;
-    color: #333;
+    font-size: 1.5rem;
+    color: var(--text-main);
     font-weight: 800;
     margin-bottom: 1.2rem;
-    letter-spacing: -0.2px;
-    transition: color 0.3s ease;
-}
-
-.service-card:hover h3 {
-    color: #6A4C8B;
+    letter-spacing: -0.5px;
 }
 
 .service-card p {
-    font-size: 0.95rem;
+    font-size: 1.05rem;
     line-height: 1.7;
-    color: #666;
+    color: var(--text-light);
     margin-bottom: 2.5rem;
     flex-grow: 1;
 }

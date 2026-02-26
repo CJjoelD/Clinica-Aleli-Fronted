@@ -1,0 +1,97 @@
+<div class="landing-page" *ngIf="service">
+    <!-- Navbar -->
+    <app-navbar></app-navbar>
+
+    <div class="detail-container">
+        <a routerLink="/servicios" class="back-link">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 12H5M12 19l-7-7 7-7"></path>
+            </svg>
+            VOLVER A SERVICIOS
+        </a>
+
+        <div class="content-wrapper">
+            <div class="text-section">
+                <span class="category-tag">{{ service.category }}</span>
+                <h1 class="service-title">{{ service.title }}</h1>
+                <p class="service-description">{{ service.description }}</p>
+
+                <div class="image-section-mobile">
+                    <img [src]="service.image" [alt]="service.title" class="service-img">
+                </div>
+
+                <div class="atencion-section">
+                    <h3>{{ service.pointsTitle }}</h3>
+                    <ul class="points-list">
+                        <li *ngFor="let point of service.points">
+                            <span class="bullet">•</span> {{ point }}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="image-section-desktop">
+                <img [src]="service.image" [alt]="service.title" class="service-img">
+            </div>
+        </div>
+
+        <!-- Reusable sections based on images -->
+        <section class="installations-section">
+            <h2 class="section-title">Nuestras Instalaciones</h2>
+            <div class="facilities-row">
+                <div class="facility">
+                    <span class="check-icon">✓</span>
+                    <div>
+                        <h4>Nuestas Modernas</h4>
+                        <p>Instalaciones modernas y tecnológicamente avanzadas que garantizan una atención médica de
+                            calidad.</p>
+                    </div>
+                </div>
+                <div class="facility">
+                    <span class="check-icon">✓</span>
+                    <div>
+                        <h4>Especialidades</h4>
+                        <p>Amplia gama de especialidades y servicios en un entorno cómodo y seguro.</p>
+                    </div>
+                </div>
+                <div class="facility">
+                    <span class="check-icon">✓</span>
+                    <div>
+                        <h4>Equipamiento</h4>
+                        <p>Quirófanos equipados con tecnologías de punta para realizar procedimientos con máxima
+                            precisión y seguridad.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="doctors-section">
+            <h2 class="section-title">NUESTROS MEDICOS</h2>
+            <div class="doctors-grid">
+                <div class="doctor-min-card">
+                    <img src="assets/images/Dr.-Alvaro-Bunay-R-1.jpg" alt="Dr. Alvaro Bunay">
+                    <h4>Dr. Alvaro Buñay R.</h4>
+                    <span class="code">EF02480</span>
+                    <span class="spec">Cardiología</span>
+                    <button class="ver-mas" routerLink="/especialidades">Ver Mas</button>
+                </div>
+                <div class="doctor-min-card">
+                    <img src="assets/images/DR.-PABLO-ADRIAN-CHICA-ALVARRACIN.jpg" alt="Dr. Pablo Adrian">
+                    <h4>Dr. Pablo Adrian Chica Alvarado</h4>
+                    <span class="code">EF03490</span>
+                    <span class="spec">Cirujano general y laparoscópico</span>
+                    <button class="ver-mas" routerLink="/especialidades">Ver Mas</button>
+                </div>
+                <div class="doctor-min-card">
+                    <img src="assets/images/DRA-LIGIA.jpg" alt="Dra. Ligia Naranjo">
+                    <h4>Dra. Ligia Naranjo Bernal</h4>
+                    <span class="code">EF04290</span>
+                    <span class="spec">Anestesiología</span>
+                    <button class="ver-mas" routerLink="/especialidades">Ver Mas</button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <app-footer></app-footer>
+</div>

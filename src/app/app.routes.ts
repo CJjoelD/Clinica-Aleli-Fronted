@@ -55,5 +55,20 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/blog-detail/blog-detail').then(m => m.BlogDetailComponent),
         data: { animation: 'BlogDetailPage' }
     },
+    {
+        path: 'servicio/:id',
+        loadComponent: () => import('./pages/servicio-detail/servicio-detail').then(m => m.ServicioDetailComponent),
+        data: { animation: 'ServicioDetailPage' }
+    },
+    {
+        path: 'medico/:id',
+        loadComponent: () => import('./pages/medico-detail/medico-detail').then(m => m.MedicoDetailComponent),
+        data: { animation: 'MedicoDetailPage' }
+    },
+    {
+        path: 'resultados',
+        loadComponent: () => import('./pages/resultados/resultados').then(m => m.ResultadosComponent),
+        data: { animation: 'ResultadosPage' }
+    },
     { path: '', redirectTo: 'inicio', pathMatch: 'full' },
 ];

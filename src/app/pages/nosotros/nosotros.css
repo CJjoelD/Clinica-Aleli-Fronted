@@ -1,10 +1,5 @@
-/* Nosotros Page Styles */
-
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
-
 :host {
     display: block;
-    font-family: 'Outfit', sans-serif;
 }
 
 .nosotros-page {
@@ -144,9 +139,9 @@
 
 /* Page Header */
 .nosotros-header {
-    padding: 12rem 0 6rem;
-    background: linear-gradient(135deg, #6A4C8B 0%, #5a4176 100%);
-    color: white;
+    padding: 14rem 0 10rem;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    color: var(--white);
     text-align: center;
     position: relative;
     overflow: hidden;
@@ -155,26 +150,63 @@
 .nosotros-header::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle at 70% 20%, rgba(38, 198, 178, 0.15) 0%, transparent 60%);
+    inset: 0;
+    background: radial-gradient(circle at 70% 20%, rgba(38, 198, 178, 0.2) 0%, transparent 60%);
+    animation: pulseGlow 15s infinite alternate ease-in-out;
+}
+
+@keyframes pulseGlow {
+    from {
+        opacity: 0.5;
+        transform: scale(1);
+    }
+
+    to {
+        opacity: 0.8;
+        transform: scale(1.1);
+    }
 }
 
 .header-content h1 {
-    font-size: 4rem;
+    font-size: 5rem;
     font-weight: 800;
-    margin-bottom: 1.5rem;
-    letter-spacing: -1px;
+    margin-bottom: 2rem;
+    letter-spacing: -3px;
+    color: var(--white);
+    animation: fadeInDown 1s ease-out;
 }
 
 .header-content p {
-    font-size: 1.4rem;
+    font-size: 1.5rem;
     opacity: 0.9;
     font-weight: 400;
-    max-width: 600px;
+    max-width: 700px;
     margin: 0 auto;
+    animation: fadeInUp 1s ease-out 0.3s backwards;
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Legacy Section */
@@ -232,11 +264,12 @@
 }
 
 .legacy-text h2 {
-    font-size: 2.8rem;
-    color: #6A4C8B;
+    font-size: 3.2rem;
+    color: var(--primary-color);
     font-weight: 800;
-    margin-bottom: 2rem;
+    margin-bottom: 2.5rem;
     line-height: 1.1;
+    letter-spacing: -1.5px;
 }
 
 .legacy-text p {
@@ -340,46 +373,50 @@
 }
 
 .value-card {
-    background: #fff;
-    padding: 3rem 2rem;
-    border-radius: 24px;
-    border: 1px solid #f0f0f0;
-    transition: all 0.4s ease;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(10px);
+    padding: 3.5rem 2rem;
+    border-radius: 30px;
+    border: 1px solid rgba(106, 76, 139, 0.1);
+    transition: var(--transition);
 }
 
 .value-card:hover {
-    transform: translateY(-10px);
-    border-color: rgba(38, 198, 178, 0.3);
-    box-shadow: 0 20px 40px rgba(106, 76, 139, 0.08);
+    transform: translateY(-15px);
+    background: var(--white);
+    border-color: var(--accent-color);
+    box-shadow: var(--shadow-lg);
 }
 
 .value-icon-wrapper {
-    width: 80px;
-    height: 80px;
-    background: #fbf9ff;
-    border-radius: 20px;
+    width: 90px;
+    height: 90px;
+    background: var(--bg-light);
+    border-radius: 28px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto 2rem;
-    color: #6A4C8B;
-    transition: all 0.4s ease;
+    margin: 0 auto 2.5rem;
+    color: var(--primary-color);
+    transition: var(--transition);
 }
 
 .value-card:hover .value-icon-wrapper {
-    background: #6A4C8B;
-    color: #fff;
+    background: var(--primary-color);
+    color: var(--white);
+    transform: rotateY(180deg);
 }
 
 .value-icon-wrapper svg {
-    width: 35px;
-    height: 35px;
+    width: 40px;
+    height: 40px;
 }
 
 .value-card h3 {
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: #333;
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--text-main);
+    letter-spacing: -0.5px;
 }
 
 /* Responsive */
