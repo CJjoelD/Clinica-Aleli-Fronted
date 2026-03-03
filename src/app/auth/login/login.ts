@@ -11,14 +11,12 @@ import { Router, RouterModule } from '@angular/router';
   styleUrl: './login.css',
 })
 export class LoginComponent {
-  // Estado para alternar entre Login y Registro
+
   isLoginView = true;
 
-  // Campos de Login
   email = '';
   password = '';
 
-  // Campos de Registro
   regName = '';
   regEmail = '';
   regPassword = '';

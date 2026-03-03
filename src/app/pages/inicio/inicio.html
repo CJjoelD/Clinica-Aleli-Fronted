@@ -2,175 +2,123 @@
     <!-- Navbar -->
     <app-navbar></app-navbar>
 
-    <header class="hero">
-        <div class="hero-shape"></div>
-        <div class="hero-container full-width-hero">
+    <!-- Hero Section Dinámico -->
+    <header class="hero" *ngIf="getSection('hero') as section">
+        <div class="hero-shape" *ngIf="section.enabled"></div>
+        <div class="hero-container full-width-hero" *ngIf="section.enabled">
             <div class="hero-welcome centered-hero-content">
-                <h1>Bienvenidos a la <span class="highlight">Clínica Alelí</span></h1>
+                <h1>{{section.content.title}}</h1>
                 <p class="hero-description">
-                    Cuidamos de ti con profesionalismo y calidez. Especialidades médicas de alto nivel, tecnología
-                    avanzada y atención personalizada para el bienestar de su familia.
+                    {{section.content.description}}
                 </p>
                 <div class="hero-btns">
-                    <button class="cta-button">AGENDAR CITA</button>
-                    <button class="hero-secondary-btn" routerLink="/nosotros">CONÓCENOS</button>
+                    <button class="cta-button">{{section.content.buttonText}}</button>
+                    <button class="hero-secondary-btn"
+                        routerLink="/nosotros">{{section.content.secondaryButtonText}}</button>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- Info Cards Section -->
-    <section id="servicios" class="info-section">
-        <div class="section-header">
-            <h2>NUESTROS SERVICIOS</h2>
+    <!-- Info Cards Section Dinámico -->
+    <section id="servicios" class="info-section" *ngIf="getSection('servicios') as section">
+        <div class="section-header" *ngIf="section.enabled">
+            <h2>{{section.content.title}}</h2>
             <div class="header-line"></div>
         </div>
-        <div class="cards-container">
-            <!-- Card 1 -->
-            <div class="info-card">
+        <div class="cards-container" *ngIf="section.enabled">
+            <div class="info-card" *ngFor="let item of section.content.items">
                 <div class="card-image">
-                    <img src="assets/images/Dra.-Ligia-Naranjo-Bernal.jpg" alt="Servicios Médicos"
-                        class="img-top-focus">
+                    <img [src]="item.imageUrl" [alt]="item.title"
+                        [class.img-top-focus]="item.id === 1 || item.id === 3">
                 </div>
-                <h3>SERVICIOS MÉDICOS</h3>
-                <p>Nuestro equipo altamente capacitado utiliza las técnicas más avanzadas para ofrecer soluciones
-                    efectivas y seguras a sus necesidades de salud.</p>
-                <button class="view-more-btn" routerLink="/servicios">VER MÁS</button>
-            </div>
-
-            <!-- Card 2 -->
-            <div class="info-card">
-                <div class="card-image">
-                    <img src="assets/images/Clinica_Aleli_cuarto.jpg" alt="Instalaciones">
-                </div>
-                <h3>INSTALACIONES</h3>
-                <p>Nuestra clínica ofrece instalaciones de primer nivel con tecnología avanzada y un ambiente moderno y
-                    cómodo, brindando atención integral.</p>
-                <button class="view-more-btn" routerLink="/instalaciones">VER MÁS</button>
-            </div>
-
-            <!-- Card 3 -->
-            <div class="info-card">
-                <div class="card-image">
-                    <img src="assets/images/Servicios.webp" alt="Especialidades" class="img-top-focus">
-                </div>
-                <h3>ESPECIALIDADES</h3>
-                <p>Nos especializamos en ofrecer atención médica de alta calidad con un enfoque personalizado para el
-                    bienestar de nuestros pacientes.</p>
-                <button class="view-more-btn" routerLink="/especialidades">VER MÁS</button>
+                <h3>{{item.title}}</h3>
+                <p>{{item.description}}</p>
+                <button class="view-more-btn" [routerLink]="item.link">VER MÁS</button>
             </div>
         </div>
     </section>
 
-    <!-- About Section -->
-    <section id="nosotros" class="about-section">
-        <div class="container">
+    <!-- About Section Dinámico -->
+    <section id="nosotros" class="about-section" *ngIf="getSection('nosotros') as section">
+        <div class="container" *ngIf="section.enabled">
             <div class="centered-about">
-                <h2>Comprometidos con tu salud, con el cuidado que mereces</h2>
+                <h2>{{section.content.title}}</h2>
 
                 <div class="team-image-wrapper">
-                    <img src="assets/images/Imagen_general.webp" alt="Equipo Médico" class="team-main-img">
+                    <img [src]="section.content.imageUrl" alt="Equipo Médico" class="team-main-img">
                 </div>
 
                 <p class="team-description">
-                    Te brindamos los mejores servicios médicos en el Austro cuencano, con personal altamente capacitado
-                    y disponibles para tus necesidades.
+                    {{section.content.description}}
                 </p>
             </div>
         </div>
     </section>
 
-    <section class="benefits-section">
-        <div class="container">
+    <!-- Benefits Section Dinámico -->
+    <section class="benefits-section" *ngIf="getSection('beneficios') as section">
+        <div class="container" *ngIf="section.enabled">
             <div class="section-header">
-                <span class="section-subtitle">LO QUE NOS DIFERENCIA</span>
-                <h2>¿Por qué elegir Clínica Alelí?</h2>
+                <span class="section-subtitle">{{section.content.subtitle}}</span>
+                <h2>{{section.content.title}}</h2>
                 <div class="header-line"></div>
             </div>
             <div class="benefits-grid">
-                <!-- Beneficio 1 -->
-                <div class="benefit-card">
+                <div class="benefit-card" *ngFor="let item of section.content.items; let i = index"
+                    [class.active]="item.id === 2">
                     <div class="benefit-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            *ngIf="item.icon === 'hospital'">
                             <path
                                 d="M3 21h18M3 10h18M5 10V7a2 2 0 012-2h10a2 2 0 012 2v3M7 21V10m10 11V10M9 21v-4a2 2 0 012-2h2a2 2 0 012 2v4">
                             </path>
                         </svg>
-                    </div>
-                    <h3>Instalaciones Modernas</h3>
-                    <p>Contamos con ambientes diseñados para su comodidad y equipados con tecnología de vanguardia.</p>
-                </div>
-
-                <!-- Beneficio 2 -->
-                <div class="benefit-card active">
-                    <div class="benefit-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            *ngIf="item.icon === 'user'">
                             <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                         </svg>
-                    </div>
-                    <h3>Especialidades</h3>
-                    <p>Una amplia gama de especialistas médicos comprometidos con un diagnóstico preciso y humano.</p>
-                </div>
-
-                <!-- Beneficio 3 -->
-                <div class="benefit-card">
-                    <div class="benefit-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            *ngIf="item.icon === 'shield'">
                             <path
                                 d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z">
                             </path>
                         </svg>
                     </div>
-                    <h3>Atención de Calidad</h3>
-                    <p>Equipamiento moderno y procesos certificados para garantizar la seguridad de su familia.</p>
+                    <h3>{{item.title}}</h3>
+                    <p>{{item.description}}</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="quick-actions-section">
-        <div class="container">
+    <!-- Quick Actions Section Dinámico -->
+    <section class="quick-actions-section" *ngIf="getSection('acciones_rapidas') as section">
+        <div class="container" *ngIf="section.enabled">
             <div class="actions-wrapper">
-                <div class="action-card cta-primary">
+                <div class="action-card" *ngFor="let item of section.content.items"
+                    [class.cta-primary]="item.type === 'primary'" [class.cta-secondary]="item.type === 'secondary'"
+                    [class.cta-tertiary]="item.type === 'tertiary'">
                     <div class="action-content">
-                        <span class="action-tag">RÁPIDO</span>
-                        <h3>Agendar Cita Médica</h3>
-                        <p>Atención inmediata y personalizada. Elija su especialista hoy mismo.</p>
-                        <button class="action-btn">AGENDAR AHORA</button>
+                        <span class="action-tag">{{item.tag}}</span>
+                        <h3>{{item.title}}</h3>
+                        <p>{{item.description}}</p>
+                        <button class="action-btn" [routerLink]="item.link">{{item.buttonText}}</button>
                     </div>
                     <div class="action-decoration">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            *ngIf="item.type === 'primary'">
                             <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
                             <line x1="16" y1="2" x2="16" y2="6"></line>
                             <line x1="8" y1="2" x2="8" y2="6"></line>
                             <line x1="3" y1="10" x2="21" y2="10"></line>
                         </svg>
-                    </div>
-                </div>
-
-                <div class="action-card cta-secondary">
-                    <div class="action-content">
-                        <span class="action-tag">ONLINE</span>
-                        <h3>Resultados Médicos</h3>
-                        <p>Acceda a sus informes de laboratorio e imágenes desde la comodidad de su hogar.</p>
-                        <button class="action-btn" routerLink="/resultados">VER RESULTADOS</button>
-                    </div>
-                    <div class="action-decoration">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            *ngIf="item.type === 'secondary'">
                             <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
                         </svg>
-                    </div>
-                </div>
-
-                <div class="action-card cta-tertiary">
-                    <div class="action-content">
-                        <span class="action-tag">SERVICIOS</span>
-                        <h3>Cartera de Servicios</h3>
-                        <p>Explore todas las soluciones de salud que tenemos disponibles para usted.</p>
-                        <button class="action-btn" routerLink="/servicios">EXPLORAR</button>
-                    </div>
-                    <div class="action-decoration">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            *ngIf="item.type === 'tertiary'">
                             <path d="M12 21a9 9 0 100-18 9 9 0 000 18z"></path>
                             <path d="M12 8v4l3 3"></path>
                         </svg>
@@ -180,50 +128,29 @@
         </div>
     </section>
 
-    <!-- Specialists Section -->
-    <section id="especialidades" class="specialists-section">
-        <div class="container">
+    <!-- Specialists Section Dinámico -->
+    <section id="especialidades" class="specialists-section" *ngIf="getSection('especialidades_destacadas') as section">
+        <div class="container" *ngIf="section.enabled">
             <div class="section-header">
-                <h2>NUESTROS ESPECIALISTAS</h2>
-                <p>Expertos en diversas áreas de la medicina a su servicio</p>
+                <h2>{{section.content.title}}</h2>
+                <p>{{section.content.subtitle}}</p>
                 <div class="header-line"></div>
             </div>
             <div class="specialists-grid">
-                <div class="specialist-card">
+                <div class="specialist-card" *ngFor="let item of section.content.items">
                     <div class="specialist-image-container">
-                        <img src="assets/images/Dr.-Alvaro-Bunay-R-1.jpg" alt="Dr. Alvaro Buñay" class="specialist-img">
+                        <img [src]="item.imageUrl" [alt]="item.name" class="specialist-img">
                     </div>
-                    <h3>Dr. Alvaro Buñay R.</h3>
-                    <span class="specialty">Cardiología</span>
-                    <p>Especialista en diagnóstico y tratamiento de enfermedades del corazón con amplia trayectoria en
-                        el Austro.</p>
-                    <button class="view-more-btn" routerLink="/especialidades">VER MÁS</button>
-                </div>
-                <div class="specialist-card">
-                    <div class="specialist-image-container">
-                        <img src="assets/images/DR.-PABLO-ADRIAN-CHICA-ALVARRACIN.jpg" alt="Dr. Pablo Chica"
-                            class="specialist-img">
-                    </div>
-                    <h3>Dr. Pablo Adrian Chica</h3>
-                    <span class="specialty">Cirujano General</span>
-                    <p>Experto en procedimientos quirúrgicos avanzados y atención de urgencias con calidez humana.</p>
-                    <button class="view-more-btn" routerLink="/especialidades">VER MÁS</button>
-                </div>
-                <div class="specialist-card">
-                    <div class="specialist-image-container">
-                        <img src="assets/images/DRA-LIGIA.jpg" alt="Dra. Ligia Naranjo" class="specialist-img">
-                    </div>
-                    <h3>Dra. Ligia Naranjo Bernal</h3>
-                    <span class="specialty">Anestesiología</span>
-                    <p>Dedicada a proporcionar el máximo confort y seguridad a nuestros pacientes durante cada
-                        intervención.</p>
+                    <h3>{{item.name}}</h3>
+                    <span class="specialty">{{item.specialty}}</span>
+                    <p>{{item.description}}</p>
                     <button class="view-more-btn" routerLink="/especialidades">VER MÁS</button>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Blog Section -->
+    <!-- Blog Section (Static as per original repo state) -->
     <section class="blog-section">
         <div class="container">
             <div class="section-header">
@@ -266,7 +193,7 @@
                     <div class="blog-content">
                         <h4>LA IMPORTANCIA DE LA NUTRICIÓN PARA UNA VIDA SALUDABLE</h4>
                         <p>La nutrición es un pilar fundamental para mantener un estilo de vida saludable y lleno de
-                            energía. Es esencial prestar atención a lo que consumimos...</p>
+                            energía...</p>
                         <a [routerLink]="['/blog', 'nutricion-pediatrica']" class="read-more">Leer Más →</a>
                     </div>
                 </div>
@@ -274,74 +201,32 @@
         </div>
     </section>
 
-
-
-    <!-- FAQ Section -->
-    <section class="faq-section">
-        <div class="container">
+    <!-- FAQ Section Dinámico -->
+    <section class="faq-section" *ngIf="getSection('faq') as section">
+        <div class="container" *ngIf="section.enabled">
             <div class="section-header">
-                <span class="section-subtitle">RESOLVEMOS TUS DUDAS</span>
-                <h2>Preguntas Frecuentes</h2>
+                <span class="section-subtitle">{{section.content.subtitle}}</span>
+                <h2>{{section.content.title}}</h2>
                 <div class="header-line"></div>
             </div>
             <div class="faq-grid">
-                <div class="faq-item">
+                <div class="faq-item" *ngFor="let item of section.content.items">
                     <div class="faq-question">
-                        <span>¿Cómo puedo agendar una cita médica?</span>
+                        <span>{{item.question}}</span>
                         <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
                             stroke-width="3">
                             <path d="M6 9l6 6 6-6"></path>
                         </svg>
                     </div>
                     <div class="faq-answer">
-                        <p>Puede agendar su cita haciendo clic en el botón "AGENDAR CITA" en nuestra web, enviándonos un
-                            mensaje por WhatsApp al 098 493 2129 o llamando directamente a nuestra recepción.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <span>¿Cuáles son los horarios de atención?</span>
-                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
-                            stroke-width="3">
-                            <path d="M6 9l6 6 6-6"></path>
-                        </svg>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Atendemos de Lunes a Viernes de 08:00 a 19:00 y Sábados de 09:00 a 13:00. Contamos con
-                            médicos de guardia para emergencias.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <span>¿Cómo retiro mis resultados de laboratorio?</span>
-                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
-                            stroke-width="3">
-                            <path d="M6 9l6 6 6-6"></path>
-                        </svg>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Ahora puede consultar sus resultados directamente desde nuestro portal web en la sección
-                            "RESULTADOS" ingresando su número de cédula y número de orden.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <span>¿Aceptan seguros médicos?</span>
-                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
-                            stroke-width="3">
-                            <path d="M6 9l6 6 6-6"></path>
-                        </svg>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Sí, mantenemos convenios con las principales aseguradoras del país. Consulte con recepción si
-                            su plan específico tiene cobertura directa con nosotros.</p>
+                        <p>{{item.answer}}</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Social Media Section -->
+    <!-- Social Media Section (Static) -->
     <section class="social-section">
         <div class="container">
             <h3 class="social-title">Siguenos</h3>

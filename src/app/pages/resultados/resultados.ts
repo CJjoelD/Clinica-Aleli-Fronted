@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NavbarComponent } from '../../shared/components/navbar/navbar';
 import { FooterComponent } from '../../shared/components/footer/footer.component';
+import { PaginaService } from '../../services/pagina.service';
 
 interface LabResult {
     item: string;
@@ -29,6 +30,14 @@ interface PatientInfo {
     styleUrl: './resultados.css'
 })
 export class ResultadosComponent {
+    private paginaService = inject(PaginaService);
+
+    pageConfig = computed(() => this.paginaService.getPage('resultados'));
+
+    getSection(id: string) {
+        return this.pageConfig()?.sections.find(s => s.id === id);
+    }
+
     viewState: 'LOOKUP' | 'RESULTS' = 'LOOKUP';
     cedula: string = '';
     orderNumber: string = '';

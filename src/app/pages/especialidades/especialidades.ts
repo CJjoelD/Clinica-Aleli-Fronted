@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, inject, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { FooterComponent } from '../../shared/components/footer/footer.component';
 import { NavbarComponent } from '../../shared/components/navbar/navbar';
 import { DOCTORS, Doctor } from '../../data/doctor-data';
+import { PaginaService } from '../../services/pagina.service';
 
 interface Category {
   name: string;
@@ -12,14 +13,35 @@ interface Category {
   subCategories?: { name: string; count: number }[];
 }
 
+import { trigger, transition, style, animate } from '@angular/animations';
+
 @Component({
   selector: 'app-especialidades',
   standalone: true,
   imports: [CommonModule, FooterComponent, NavbarComponent, RouterLink],
   templateUrl: './especialidades.html',
   styleUrl: './especialidades.css',
+  animations: [
+    trigger('fadeInOut', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'translateY(-10px)' }),
+        animate('200ms ease-out', style({ opacity: 1, transform: 'translateY(0)' }))
+      ]),
+      transition(':leave', [
+        animate('200ms ease-in', style({ opacity: 0, transform: 'translateY(-10px)' }))
+      ])
+    ])
+  ]
 })
 export class EspecialidadesComponent {
+  private paginaService = inject(PaginaService);
+
+  pageConfig = computed(() => this.paginaService.getPage('especialidades'));
+
+  getSection(id: string) {
+    return this.pageConfig()?.sections.find(s => s.id === id);
+  }
+
   selectedCategory: string = 'all';
   selectedSubCategory: string = 'all';
 
@@ -83,10 +105,32 @@ export class EspecialidadesComponent {
     });
   }
 
-  toggleCategory(category: Category) {
-    category.isOpen = !category.isOpen;
-    this.selectedCategory = category.name;
+  isFilterActive(): boolean {
+    return this.selectedCategory !== 'all' || this.selectedSubCategory !== 'all';
+  }
+
+  selectCategory(categoryName: string) {
+    if (this.selectedCategory === categoryName && this.selectedSubCategory === 'all') {
+      this.resetFilters();
+      return;
+    }
+
+    this.selectedCategory = categoryName;
     this.selectedSubCategory = 'all';
+
+    // Auto-open the selected category
+    this.categories.forEach(cat => {
+      if (cat.name === categoryName) {
+        cat.isOpen = true;
+      } else {
+        cat.isOpen = false;
+      }
+    });
+  }
+
+  toggleCategory(event: Event, category: Category) {
+    event.stopPropagation();
+    category.isOpen = !category.isOpen;
   }
 
   selectSubCategory(event: Event, category: string, subCategory: string) {

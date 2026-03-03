@@ -85,3 +85,48 @@ h6 {
 ::-webkit-scrollbar-thumb:hover {
     background: var(--primary-color);
 }
+
+/* Global Button Styles */
+.cta-button,
+.btn-primary,
+.submit-btn,
+.btn-confirmar,
+.btn-ver-resultados,
+.ver-mas-link,
+.btn-read-more,
+.btn-action {
+    background: linear-gradient(135deg, #26C6B2 0%, #1ea897 100%) !important;
+    color: white !important;
+    border: none !important;
+    padding: 1rem 3rem !important;
+    border-radius: 100px !important;
+    font-weight: 800 !important;
+    font-size: 1rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1.5px !important;
+    cursor: pointer !important;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+    box-shadow: 0 12px 25px rgba(38, 198, 178, 0.25) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-decoration: none !important;
+    white-space: nowrap !important;
+    width: fit-content !important;
+}
+
+.cta-button:hover,
+.btn-primary:hover,
+.submit-btn:hover,
+.btn-confirmar:hover,
+.btn-ver-resultados:hover,
+.btn-action:hover {
+    transform: translateY(-6px) scale(1.03) !important;
+    box-shadow: 0 20px 40px rgba(38, 198, 178, 0.4) !important;
+    filter: brightness(1.05) !important;
+}
+
+.cta-button:active,
+.btn-primary:active {
+    transform: translateY(-2px) scale(0.98) !important;
+}

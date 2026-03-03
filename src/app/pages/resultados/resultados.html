@@ -5,19 +5,18 @@
         <!-- LOOKUP VIEW -->
         <div class="lookup-container" *ngIf="viewState === 'LOOKUP'">
             <div class="card main-lookup-card">
-                <div class="lookup-header">
-                    <img src="assets/images/Logo-negro-aleli.png" alt="Aleli Logo" class="header-logo">
-                    <h2>Portal de Resultados</h2>
-                    <p class="subtitle">Clínica de especialidades</p>
-                    <div class="title-accent"></div>
+                <div class="lookup-header" *ngIf="getSection('lookup_header') as section" [hidden]="!section.enabled">
+                    <img [src]="section.content.logoUrl" alt="Aleli Logo" class="header-logo">
+                    <h2>{{section.content.title}}</h2>
+                    <p class="subtitle">{{section.content.subtitle}}</p>
                 </div>
 
-                <div class="instructions">
-                    <p>Para acceder a los resultados de sus exámenes:</p>
+                <div class="instructions" *ngIf="getSection('instructions') as section" [hidden]="!section.enabled">
+                    <p>{{section.content.title}}</p>
                     <ul>
-                        <li><span class="step-num">1</span> Digite su número de cédula</li>
-                        <li><span class="step-num">2</span> Digite su número de orden</li>
-                        <li><span class="step-num">3</span> Presione el botón "Confirmar"</li>
+                        <li *ngFor="let step of section.content.steps">
+                            <span class="step-num">{{step.num}}</span> {{step.text}}
+                        </li>
                     </ul>
                 </div>
 

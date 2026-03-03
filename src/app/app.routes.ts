@@ -23,7 +23,7 @@ export const routes: Routes = [
     },
     {
         path: 'admin',
-        loadChildren: () => import('./admin/dashboard/dashboard.routes').then((m) => m.default),
+        loadChildren: () => import('./admin/admin.routes').then((m) => m.default),
         data: { animation: 'AdminPage' }
     },
     {
