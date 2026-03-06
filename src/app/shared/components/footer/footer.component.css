@@ -57,11 +57,18 @@
     margin-bottom: 1rem;
 }
 
-.footer-item-horizontal p {
+.footer-item-horizontal p,
+.link-reset {
     color: white;
+    text-decoration: none;
     font-size: 1rem;
     font-weight: 500;
     margin: 0;
+    transition: all 0.3s ease;
+}
+
+.link-reset:hover {
+    color: #26C6B2;
 }
 
 

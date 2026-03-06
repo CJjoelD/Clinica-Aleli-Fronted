@@ -2,220 +2,84 @@
     <!-- Navbar -->
     <app-navbar></app-navbar>
 
-    <!-- Services Hero Section -->
-    <section class="services-hero">
-        <div class="container">
-            <div class="section-header">
-                <h1 class="main-title">SERVICIOS</h1>
-                <p class="main-description">
-                    En Clínica Alelí, nos especializamos en ofrecer atención médica de alta calidad con un enfoque
-                    personalizado para el bienestar de nuestros pacientes.
-                </p>
-                <div class="header-line"></div>
-            </div>
-        </div>
-    </section>
+    <!-- Dynamic Sections -->
+    <ng-container *ngIf="pageConfig() as page">
 
-    <!-- Specialties Grid Section -->
-    <section class="specialties-section">
-        <div class="container">
-            <div class="specialties-intro">
-                <h2 class="sub-title">Especialidades Médicas</h2>
-                <p class="sub-description">Nuestra clínica ofrece estos servicios médicos</p>
-            </div>
-
-            <div class="services-grid">
-                <!-- Card 1: Cirugía General -->
-                <div class="service-card">
-                    <div class="service-icon-wrapper">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <path d="M3 10h18M3 14h18M5 10v4M19 10v4M7 10V7h10v3M9 21v-3M15 21v-3M4 18h16"></path>
+        <!-- Services Hero Section -->
+        <section class="services-hero" *ngIf="getSection('hero') as section">
+            <div class="container" *ngIf="section.enabled">
+                <div class="section-header">
+                    <div class="header-icon-wrapper">
+                        <svg viewBox="0 0 24 24" class="header-icon" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2"></path>
+                            <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+                            <path d="M12 11h.01M12 15h.01M8 11h.01M8 15h.01M16 11h.01M16 15h.01"></path>
                         </svg>
                     </div>
-                    <div class="card-body">
-                        <h3>CIRUGÍA GENERAL</h3>
-                        <p>Nuestro equipo de cirujanos altamente capacitados utiliza las técnicas más avanzadas para
-                            ofrecer soluciones efectivas y seguras.</p>
-                        <a [routerLink]="['/servicio', 'cirugia-general']" class="view-more-link">VER MÁS <span
-                                class="arrow">→</span></a>
-                    </div>
-                </div>
-
-                <!-- Card 2: Ginecología -->
-                <div class="service-card">
-                    <div class="service-icon-wrapper">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <path d="M12 21a9 9 0 100-18 9 9 0 000 18z"></path>
-                            <path d="M12 8v8M8 12h8"></path>
-                            <path d="M12 21v2M10 23h4"></path>
-                        </svg>
-                    </div>
-                    <div class="card-body">
-                        <h3>GINECOLOGÍA Y OBSTETRICIA</h3>
-                        <p>Cuidado integral de la salud de la mujer en todas sus etapas, con un enfoque cálido,
-                            profesional y especializado.</p>
-                        <a [routerLink]="['/servicio', 'ginecologia-y-obstetricia']" class="view-more-link">VER MÁS
-                            <span class="arrow">→</span></a>
-                    </div>
-                </div>
-
-                <!-- Card 3: Pediatría -->
-                <div class="service-card">
-                    <div class="service-icon-wrapper">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <circle cx="12" cy="7" r="4"></circle>
-                            <path d="M5.5 21c0-4.5 3-7 6.5-7s6.5 2.5 6.5 7"></path>
-                            <circle cx="18" cy="14" r="2"></circle>
-                        </svg>
-                    </div>
-                    <div class="card-body">
-                        <h3>PEDIATRÍA</h3>
-                        <p>Atención médica dedicada al crecimiento y bienestar de los más pequeños, brindando
-                            tranquilidad a toda la familia.</p>
-                        <a [routerLink]="['/servicio', 'pediatria']" class="view-more-link">VER MÁS <span
-                                class="arrow">→</span></a>
-                    </div>
-                </div>
-
-                <!-- Card 4: Psicología -->
-                <div class="service-card">
-                    <div class="service-icon-wrapper">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <path d="M12 2a10 10 0 100 20 10 10 0 000-20z"></path>
-                            <path d="M8 9a3 3 0 016 0c0 3-4 3-4 6M12 18v.01"></path>
-                        </svg>
-                    </div>
-                    <div class="card-body">
-                        <h3>PSICOLOGÍA CLÍNICA</h3>
-                        <p>Apoyo emocional y herramientas profesionales para fortalecer la salud mental y el equilibrio
-                            personal de nuestros pacientes.</p>
-                        <a [routerLink]="['/servicio', 'psicologia-clinica']" class="view-more-link">VER MÁS <span
-                                class="arrow">→</span></a>
-                    </div>
-                </div>
-
-                <!-- Card 5: Otorrino -->
-                <div class="service-card">
-                    <div class="service-icon-wrapper">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                            <path d="M12 8v4M12 16h.01"></path>
-                        </svg>
-                    </div>
-                    <div class="card-body">
-                        <h3>OTORRINOLARINGOLOGÍA</h3>
-                        <p>Especialistas en el diagnóstico y tratamiento de afecciones de oído, nariz y garganta con
-                            tecnología de última generación.</p>
-                        <a [routerLink]="['/servicio', 'otorrinolaringologia']" class="view-more-link">VER MÁS <span
-                                class="arrow">→</span></a>
-                    </div>
-                </div>
-
-                <!-- Card 6: Cardiología -->
-                <div class="service-card highlight-card">
-                    <div class="service-icon-wrapper">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
-                        </svg>
-                    </div>
-                    <div class="card-body">
-                        <h3>CARDIOLOGÍA</h3>
-                        <p>Monitoreo y cuidado avanzado de la salud cardiovascular, previniendo y tratando enfermedades
-                            del corazón.</p>
-                        <a [routerLink]="['/servicio', 'cardiologia']" class="view-more-link">VER MÁS <span
-                                class="arrow">→</span></a>
-                    </div>
-                </div>
-
-                <!-- Card 7: Coloproctología -->
-                <div class="service-card">
-                    <div class="service-icon-wrapper">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <path d="M12 8v8M8 12h8"></path>
-                        </svg>
-                    </div>
-                    <div class="card-body">
-                        <h3>CIRUGÍA COLOPROCTOLOGÍA</h3>
-                        <p>Tratamientos especializados para patologías digestivas complejas con procedimientos
-                            mínimamente invasivos.</p>
-                        <a [routerLink]="['/servicio', 'cirugia-coloproctologia']" class="view-more-link">VER MÁS <span
-                                class="arrow">→</span></a>
-                    </div>
-                </div>
-
-                <!-- Card 8: Medicina Familiar -->
-                <div class="service-card">
-                    <div class="service-icon-wrapper">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path>
-                            <circle cx="9" cy="7" r="4"></circle>
-                            <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"></path>
-                        </svg>
-                    </div>
-                    <div class="card-body">
-                        <h3>MEDICINA FAMILIAR</h3>
-                        <p>Atención médica primaria para integrantes de todas las edades, enfocada en la prevención y
-                            bienestar general.</p>
-                        <a [routerLink]="['/servicio', 'medicina-familiar']" class="view-more-link">VER MÁS <span
-                                class="arrow">→</span></a>
-                    </div>
-                </div>
-
-                <!-- Card 9: Traumatología -->
-                <div class="service-card">
-                    <div class="service-icon-wrapper">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <path
-                                d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4">
-                            </path>
-                            <path d="M11 7h4"></path>
-                            <path d="M11 11h4"></path>
-                        </svg>
-                    </div>
-                    <div class="card-body">
-                        <h3>TRAUMATOLOGÍA Y ORTOPEDIA</h3>
-                        <p>Especialistas en el sistema musculoesquelético, tratando lesiones óseas y articulares para
-                            recuperar su movilidad.</p>
-                        <a [routerLink]="['/servicio', 'traumatologia-y-ortopedia']" class="view-more-link">VER MÁS
-                            <span class="arrow">→</span></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Facilities Section -->
-    <section class="facilities-section">
-        <div class="container">
-            <h2 class="section-title">Nuestras Instalaciones</h2>
-            <div class="facilities-grid">
-                <div class="facility-item">
-                    <div class="facility-header">
-                        <span class="facility-icon-circle">✓</span>
-                        <h3>Nuestras Modernas</h3>
-                    </div>
-                    <p>Instalaciones modernas y tecnológicamente avanzadas que garantizan una atenció médica de calidad.
+                    <h1 class="main-title">{{section.content.title}}</h1>
+                    <p class="main-description">
+                        {{section.content.description}}
                     </p>
-                </div>
-                <div class="facility-item">
-                    <div class="facility-header">
-                        <span class="facility-icon-circle">✓</span>
-                        <h3>Especialidades</h3>
-                    </div>
-                    <p>Amplia gama de especialidades y servicios en un entorno cómodo y seguro.</p>
-                </div>
-                <div class="facility-item">
-                    <div class="facility-header">
-                        <span class="facility-icon-circle">✓</span>
-                        <h3>Equipamiento</h3>
-                    </div>
-                    <p>Quirófanos equipados con tecnologías de punta para realizar procedimientos con máxima precisión y
-                        seguridad.</p>
+                    <div class="header-line"></div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+
+        <!-- Specialties Grid Section -->
+        <section class="specialties-section" *ngIf="getSection('servicios') as section">
+            <div class="container" *ngIf="section.enabled">
+                <div class="specialties-intro">
+                    <h2 class="sub-title">{{section.content.title}}</h2>
+                    <p class="sub-description">{{section.content.subtitle}}</p>
+                </div>
+
+                <div class="services-grid">
+                    <div class="service-card" *ngFor="let item of section.content.items; let i = index"
+                        [class.highlight-card]="i === 5">
+                        <div class="service-icon-wrapper">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M22 12h-4l-3 9L9 3l-3 9H2" *ngIf="i === 5"></path>
+                                <path d="M12 21a9 9 0 100-18 9 9 0 000 18z M12 8v8M8 12h8" *ngIf="i !== 5"></path>
+                            </svg>
+                        </div>
+                        <div class="card-body">
+                            <h3>{{item.title}}</h3>
+                            <p>{{item.description}}</p>
+                            <a [routerLink]="['/servicio', item.link || item.id]" class="view-more-link">VER MÁS <span
+                                    class="arrow">→</span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Facilities Section -->
+        <section class="facilities-section" *ngIf="getSection('nosotros_hero') as section">
+            <div class="container" *ngIf="section.enabled">
+                <h2 class="section-title">{{section.content.title}}</h2>
+                <p class="sub-description text-center mb-5">{{section.content.description}}</p>
+                <div class="facilities-grid">
+                    <div class="facility-item" *ngFor="let item of (section.content.items || [
+                        {title: 'Instalaciones Modernas', description: 'Instalaciones modernas y tecnológicamente avanzadas.'},
+                        {title: 'Especialidades', description: 'Amplia gama de especialidades y servicios en un entorno cómodo.'},
+                        {title: 'Equipamiento', description: 'Quirófanos equipados con tecnologías de punta.'}
+                    ])">
+                        <div class="facility-header">
+                            <span class="facility-icon-circle">
+                                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor"
+                                    stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </span>
+                            <h3>{{item.title}}</h3>
+                        </div>
+                        <p>{{item.description}}</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </ng-container>
 
     <!-- Footer -->
     <app-footer></app-footer>

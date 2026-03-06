@@ -13,7 +13,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './inicio.css',
 })
 export class InicioComponent {
-  private paginaService = inject(PaginaService);
+  public paginaService = inject(PaginaService);
 
   pageConfig = computed(() => this.paginaService.getPage('inicio'));
 

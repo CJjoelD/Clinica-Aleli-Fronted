@@ -2,131 +2,85 @@
     <!-- Navbar -->
     <app-navbar></app-navbar>
 
-    <!-- Header Section -->
-    <header class="page-header">
-        <div class="container container-content">
-            <h1 class="page-title">Instalaciones</h1>
-            <p class="page-subtitle">Espacios diseñados para tu bienestar</p>
-        </div>
-    </header>
+    <!-- Dynamic Sections -->
+    <ng-container *ngIf="pageConfig() as page">
 
-    <!-- Top Gallery Section -->
-    <section class="gallery-intro">
-        <div class="container gallery-container">
-            <div class="gallery-staggered">
-                <div class="gallery-item large">
-                    <img src="assets/images/INSTALACIONES/ESPACIODETRABAJO.png" alt="Quirófano">
-                </div>
-                <div class="gallery-item vertical">
-                    <img src="assets/images/INSTALACIONES/ACENSOR.png" alt="Pasillo Clínica">
-                </div>
-                <div class="gallery-item medium">
-                    <img src="assets/images/INSTALACIONES/CAMILLAMORADA.png" alt="Habitación">
-                </div>
-                <div class="gallery-item medium">
-                    <img src="assets/images/INSTALACIONES/PEOPLE.png" alt="Área de espera">
-                </div>
+        <!-- Header Section -->
+        <header class="page-header" *ngIf="getSection('hero') as section">
+            <div class="container container-content" *ngIf="section.enabled">
+                <h1 class="page-title">{{section.content.title}}</h1>
+                <p class="page-subtitle">{{section.content.description}}</p>
             </div>
-        </div>
-    </section>
+        </header>
 
-    <!-- Detailed Sections -->
-    <section class="details-section">
-        <div class="container">
-            <!-- Section 1: Quirófanos -->
-            <div class="detail-row">
-                <div class="detail-image">
-                    <img src="assets/images/INSTALACIONES/ESPACIODETRABAJO.png" alt="Quirófanos">
-                </div>
-                <div class="detail-text">
-                    <h2>NUESTROS QUIRÓFANOS EN LA CLÍNICA ALELÍ EN CUENCA</h2>
-                    <ul>
-                        <li>Equipados con tecnología de última generación para garantizar precisión y seguridad en cada
-                            procedimiento.</li>
-                        <li>Personal médico altamente capacitado y especializado en diversas áreas quirúrgicas.</li>
-                        <li>Estrictos protocolos de higiene y esterilización para asegurar un entorno seguro.</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Section 2: Salas de Recuperación -->
-            <div class="detail-row">
-                <div class="detail-image">
-                    <img src="assets/images/INSTALACIONES/CAMILLAMORADA.png" alt="Salas de Recuperación">
-                </div>
-                <div class="detail-text">
-                    <h2>SALAS DE RECUPERACION</h2>
-                    <ul>
-                        <li>Equipamiento avanzado para el monitoreo continuo de los pacientes.</li>
-                        <li>Ambientes diseñados para favorecer el descanso y la pronta recuperación.</li>
-                        <li>Espacios confortables y privados para una recuperación tranquila y segura.</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Section 3: Consultorios -->
-            <div class="detail-row">
-                <div class="detail-image">
-                    <img src="assets/images/INSTALACIONES/CONSULTA.png" alt="Consultorios">
-                </div>
-                <div class="detail-text">
-                    <h2>CONSULTORIOS DE PRIMERA</h2>
-                    <ul>
-                        <li>Consultorios modernos y equipados con tecnología avanzada para un diagnóstico preciso.</li>
-                        <li>Amplia variedad de especialidades médicas en un solo lugar.</li>
-                        <li>Gestión eficiente de citas para minimizar los tiempos de espera.</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Section 4: Sonrisa (Placeholder image) -->
-            <div class="detail-row">
-                <div class="detail-image">
-                    <img src="assets/images/INSTALACIONES/SONRISA.png" alt="Odontología">
-                </div>
-                <div class="detail-text">
-                    <h2>TEN LA MEJOR SONRISA</h2>
-                    <ul>
-                        <li>Consultorios modernos y equipados con tecnología avanzada para un diagnóstico preciso.</li>
-                        <li>Amplia variedad de especialidades médicas en un solo lugar.</li>
-                        <li>Gestión eficiente de citas para minimizar los tiempos de espera.</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Bottom Summary Section -->
-    <section class="facilities-summary">
-        <div class="container">
-            <h2 class="section-main-title">Nuestras Instalaciones</h2>
-            <div class="summary-grid">
-                <div class="summary-item">
-                    <div class="summary-header">
-                        <span class="check-icon">✓</span>
-                        <h3>Nuestas Modernas</h3>
+        <!-- Gallery Section -->
+        <section class="gallery-intro" *ngIf="getSection('galeria_instalaciones') as section">
+            <div class="container gallery-container" *ngIf="section.enabled">
+                <div class="gallery-staggered">
+                    <div class="gallery-item large" *ngIf="section.content.items[0]">
+                        <img [src]="section.content.items[0].imageUrl" [alt]="section.content.items[0].title">
                     </div>
-                    <p>Instalaciones modernas y tecnológicamente avanzadas que garantizan una atenció médica de calidad.
-                    </p>
-                </div>
-                <div class="summary-item">
-                    <div class="summary-header">
-                        <span class="check-icon">✓</span>
-                        <h3>Especialidades</h3>
+                    <div class="gallery-item vertical" *ngIf="section.content.items[1]">
+                        <img [src]="section.content.items[1].imageUrl" [alt]="section.content.items[1].title">
                     </div>
-                    <p>Amplia gama de especialidades y servicios en un entorno cómodo y seguro.</p>
-                </div>
-                <div class="summary-item">
-                    <div class="summary-header">
-                        <span class="check-icon">✓</span>
-                        <h3>Equipamiento</h3>
+                    <div class="gallery-item medium" *ngIf="section.content.items[2]">
+                        <img [src]="section.content.items[2].imageUrl" [alt]="section.content.items[2].title">
                     </div>
-                    <p>Quirófanos equipados con tecnologías de punta para realizar procedimientos con máxima precisión y
-                        seguridad.</p>
+                    <div class="gallery-item medium" *ngIf="section.content.items[3]">
+                        <img [src]="section.content.items[3].imageUrl" [alt]="section.content.items[3].title">
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+
+        <!-- Detailed Sections (Using hero contents if needed or standard text) -->
+        <section class="details-section" *ngIf="getSection('hero') as hero">
+            <div class="container" *ngIf="hero.enabled">
+                <div class="detail-row">
+                    <div class="detail-image">
+                        <img [src]="hero.content.imageUrl" [alt]="hero.content.title">
+                    </div>
+                    <div class="detail-text">
+                        <h2>{{hero.content.title}}</h2>
+                        <p>{{hero.content.description}}</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Summary Section (Dynamic with Mision/Vision) -->
+        <section class="facilities-summary" *ngIf="getSection('mision_vision') as section">
+            <div class="container" *ngIf="section.enabled">
+                <h2 class="section-main-title">Valores y Metas</h2>
+                <div class="summary-grid">
+                    <div class="summary-item">
+                        <div class="summary-header">
+                            <span class="check-icon">
+                                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+                                    stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </span>
+                            <h3>{{section.content.mision_title}}</h3>
+                        </div>
+                        <p>{{section.content.mision_text}}</p>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-header">
+                            <span class="check-icon">
+                                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+                                    stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </span>
+                            <h3>{{section.content.vision_title}}</h3>
+                        </div>
+                        <p>{{section.content.vision_text}}</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </ng-container>
 
     <!-- Footer -->
     <app-footer></app-footer>

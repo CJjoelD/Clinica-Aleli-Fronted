@@ -10,58 +10,149 @@
             VOLVER A ESPECIALIDADES
         </a>
 
-        <!-- Profile Card -->
-        <section class="profile-card">
-            <div class="profile-image">
-                <img [src]="doctor.image" [alt]="doctor.name">
+        <!-- Hero Profile Section -->
+        <section class="profile-hero-card">
+            <div class="profile-image-container">
+                <div class="profile-image-wrapper">
+                    <img [src]="doctor.image || doctor.imageUrl" [alt]="doctor.name" class="main-doctor-img">
+                </div>
             </div>
-            <div class="profile-info">
+
+            <div class="profile-main-info">
+                <span class="specialty-badge">{{ doctor.specialty }}</span>
                 <h1>{{ doctor.name }}</h1>
 
-                <div class="info-grid">
-                    <div class="info-row">
-                        <span class="info-label">ESPECIALIDAD</span>
-                        <span class="info-value">{{ doctor.specialty }}</span>
+                <p class="doctor-brief-desc">
+                    Comprometido/a con brindar una atención médica de excelencia
+                </p>
+
+                <div class="doctor-features">
+                    <div class="feature-item">
+                        <span class="dot"></span>
+                        Consultas especializadas
                     </div>
-                    <div class="info-row" *ngIf="doctor.contact">
-                        <span class="info-label">CONTACTO</span>
-                        <span class="info-value">{{ doctor.contact }}</span>
+                    <div class="feature-item">
+                        <span class="dot"></span>
+                        Procedimientos modernos
                     </div>
-                    <div class="info-row" *ngIf="doctor.email">
-                        <span class="info-label">CORREO</span>
-                        <span class="info-value lowercase">{{ doctor.email }}</span>
+                    <div class="feature-item">
+                        <span class="dot"></span>
+                        Seguimiento personalizado
                     </div>
                 </div>
 
-                <div class="appointment-box">
-                    <span class="agenda-tag">AGENDA TU CITA</span>
-                    <p>Escríbenos para que puedas generar tu cita con nuestro especialista.</p>
-                    <a href="https://wa.me/593984932129" target="_blank" class="btn-agendar">AGENDAR CITA</a>
+                <div class="action-box-refined">
+                    <div class="action-text">
+                        <span class="agenda-title">AGENDA TU CITA</span>
+                        <p>Atención inmediata y personalizada.</p>
+                    </div>
+                    <a href="https://api.whatsapp.com/send?phone=+593995500139&text=Hola.%20Quiero%20agendar%20una%20cita%20con%20el%20{{doctor.name}}"
+                        target="_blank" class="btn-agendar-action">
+                        RESERVAR AHORA
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+                            stroke-width="2.5">
+                            <path d="M5 12h14M12 5l7 7-7 7"></path>
+                        </svg>
+                    </a>
                 </div>
             </div>
         </section>
 
-        <!-- Details Grid -->
-        <div class="details-grid">
-            <!-- Quien Soy section -->
-            <section class="bio-section detail-box">
-                <h2 class="box-title">QUIEN SOY?</h2>
-                <div class="box-content">
-                    <p>{{ doctor.bio }}</p>
-                </div>
-            </section>
+        <!-- Content Grid -->
+        <div class="profile-content-grid">
+            <!-- Left Column: Bio -->
+            <div class="content-column">
+                <section class="info-card bio-card">
+                    <div class="card-header">
+                        <div class="icon-box">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                        </div>
+                        <h2>¿Quién soy?</h2>
+                    </div>
+                    <div class="card-body">
+                        <p>{{ doctor.bio }}</p>
+                    </div>
+                </section>
 
-            <!-- Services section -->
-            <section class="services-section detail-box" *ngIf="doctor.services && doctor.services.length > 0">
-                <h2 class="box-title">SERVICIOS</h2>
-                <div class="box-content">
-                    <ul class="services-list">
-                        <li *ngFor="let service of doctor.services">
-                            <span class="bullet">•</span> {{ service }}
-                        </li>
-                    </ul>
+                <section class="info-card education-card" *ngIf="doctor.education?.length">
+                    <div class="card-header">
+                        <div class="icon-box">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                                <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                            </svg>
+                        </div>
+                        <h2>Formación Académica</h2>
+                    </div>
+                    <div class="card-body">
+                        <ul class="timeline-list">
+                            <li *ngFor="let edu of doctor.education">
+                                <div class="timeline-dot"></div>
+                                {{ edu }}
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Right Column: Services & Experience -->
+            <div class="content-column">
+                <section class="info-card services-card" *ngIf="doctor.services?.length">
+                    <div class="card-header">
+                        <div class="icon-box">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                            </svg>
+                        </div>
+                        <h2>Servicios Ofrecidos</h2>
+                    </div>
+                    <div class="card-body">
+                        <ul class="premium-list">
+                            <li *ngFor="let service of doctor.services">
+                                <span class="check"></span>
+                                {{ service }}
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section class="info-card experience-card" *ngIf="doctor.experience?.length">
+                    <div class="card-header">
+                        <div class="icon-box">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                            </svg>
+                        </div>
+                        <h2>Experiencia Profesional</h2>
+                    </div>
+                    <div class="card-body">
+                        <ul class="timeline-list">
+                            <li *ngFor="let exp of doctor.experience">
+                                <div class="timeline-dot alternate"></div>
+                                {{ exp }}
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Patient Rating (Simplified) -->
+                <div class="rating-mini-card" *ngIf="doctor.rating">
+                    <div class="stars">
+                        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                    </div>
+                    <span class="rating-val">{{ doctor.rating }} / 5.0</span>
+                    <span class="rating-text">Valoración de pacientes</span>
                 </div>
-            </section>
+            </div>
         </div>
     </div>
 </main>

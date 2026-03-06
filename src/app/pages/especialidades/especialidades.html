@@ -2,101 +2,150 @@
     <!-- Navbar -->
     <app-navbar></app-navbar>
 
-    <!-- Especialidades Banner -->
+    <!-- Especialidades Banner Mejorado -->
     <section class="especialidades-header" *ngIf="getSection('banner') as section" [hidden]="!section.enabled">
-        <div class="container container-wide">
-            <div class="banner-wrapper">
-                <img [src]="section.content.imageUrl" [alt]="section.content.alt" class="banner-img">
+        <div class="banner-dynamic-container">
+            <div class="banner-content-overlay">
+                <!-- Se mantiene el overlay para el degradado, pero sin texto ya que está en la imagen -->
+                <div class="container text-less-banner">
+                </div>
             </div>
+            <img [src]="section.content.imageUrl" [alt]="section.content.alt" class="banner-img-premium">
         </div>
     </section>
 
     <!-- Specialists Search Section -->
     <section class="specialists-search">
         <div class="container">
-            <div class="search-header-intro" *ngIf="getSection('search_header') as section" [hidden]="!section.enabled">
-                <h2 class="search-title">{{section.content.title}}</h2>
-                <p class="search-subtitle">{{section.content.subtitle}}</p>
-            </div>
-
             <div class="search-layout">
-                <!-- Sidebar: Categorías -->
+                <!-- Sidebar: Filtros y Buscador -->
                 <aside class="search-sidebar">
-                    <div class="sidebar-group">
-                        <div class="sidebar-header-main">
-                            <h3>CATEGORÍAS</h3>
-                            <button class="btn-clear-filters" *ngIf="isFilterActive()" (click)="resetFilters()"
-                                [@fadeInOut]>
-                                Limpiar filtros
-                            </button>
+                    <div class="sidebar-sticky-content">
+                        <!-- Buscador en tiempo real -->
+                        <div class="sidebar-search-box">
+                            <div class="search-input-wrapper">
+                                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                </svg>
+                                <input type="text" [(ngModel)]="searchTerm"
+                                    placeholder="Buscar médico o especialidad...">
+                                <button class="clear-search" *ngIf="searchTerm" (click)="searchTerm = ''">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                                    </svg>
+                                </button>
+                            </div>
                         </div>
 
-                        <ul class="category-list">
-                            <!-- All Categories Option -->
-                            <li class="all-cats-item" (click)="resetFilters()"
-                                [class.active-all]="selectedCategory === 'all'">
-                                <div class="dept-row">
-                                    <div class="dept-icon-box">
-                                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none"
-                                            stroke="currentColor" stroke-width="2">
-                                            <path d="M4 6h16M4 12h16M4 18h16"></path>
-                                        </svg>
-                                    </div>
-                                    <span class="dept-name">Todas las Especialidades</span>
-                                    <span class="dept-count">{{doctors.length}}</span>
-                                </div>
-                            </li>
+                        <div class="sidebar-group">
+                            <div class="sidebar-header-main">
+                                <h3>ESPECIALIDADES</h3>
+                                <button class="btn-clear-filters" *ngIf="isFilterActive()" (click)="resetFilters()"
+                                    [@fadeInOut]>
+                                    Limpiar
+                                </button>
+                            </div>
 
-                            <div class="sidebar-divider"></div>
-
-                            <!-- Dynamic Categories -->
-                            <li *ngFor="let cat of categories" class="cat-item-wrapper">
-                                <div class="dept-row" (click)="selectCategory(cat.name)"
-                                    [class.active-cat]="selectedCategory === cat.name">
-                                    <span class="dept-name">{{cat.name}}</span>
-                                    <span class="dept-count">{{cat.count}}</span>
-                                    <div class="toggle-icon" *ngIf="cat.subCategories"
-                                        (click)="toggleCategory($event, cat)">
-                                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none"
-                                            stroke="currentColor" stroke-width="2.5" [class.rotated]="cat.isOpen">
-                                            <path d="M6 9l6 6 6-6"></path>
-                                        </svg>
+                            <ul class="category-list">
+                                <!-- Todas las Especialidades -->
+                                <li class="cat-item-wrapper" (click)="resetFilters()">
+                                    <div class="dept-row" [class.active-all]="selectedCategory === 'all'">
+                                        <div class="dept-icon-box">
+                                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none"
+                                                stroke="currentColor" stroke-width="2">
+                                                <path d="M4 6h16M4 12h16M4 18h16"></path>
+                                            </svg>
+                                        </div>
+                                        <span class="dept-name">Todas</span>
+                                        <span class="dept-count">{{doctors.length}}</span>
                                     </div>
-                                </div>
-                                <ul class="sub-category-list" [class.show]="cat.isOpen" *ngIf="cat.subCategories">
-                                    <li *ngFor="let sub of cat.subCategories"
-                                        (click)="selectSubCategory($event, cat.name, sub.name)"
-                                        [class.active-sub]="selectedSubCategory === sub.name">
-                                        <span class="sub-dot"></span>
-                                        <span class="sub-name">{{sub.name}}</span>
-                                        <span class="sub-count">{{sub.count}}</span>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
+                                </li>
+
+                                <div class="sidebar-divider"></div>
+
+                                <!-- Categorías Dinámicas -->
+                                <li *ngFor="let cat of categories" class="cat-item-wrapper">
+                                    <div class="dept-row" (click)="selectCategory(cat.name)"
+                                        [class.active-cat]="selectedCategory === cat.name">
+                                        <span class="dept-name">{{cat.name}}</span>
+                                        <span class="dept-count">{{cat.count}}</span>
+                                        <div class="toggle-icon" *ngIf="cat.subCategories"
+                                            (click)="toggleCategory($event, cat)">
+                                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none"
+                                                stroke="currentColor" stroke-width="2.5" [class.rotated]="cat.isOpen">
+                                                <path d="M6 9l6 6 6-6"></path>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    <ul class="sub-category-list" [class.show]="cat.isOpen" *ngIf="cat.subCategories">
+                                        <li *ngFor="let sub of cat.subCategories"
+                                            (click)="selectSubCategory($event, cat.name, sub.name)"
+                                            [class.active-sub]="selectedSubCategory === sub.name">
+                                            <span class="sub-dot"></span>
+                                            <span class="sub-name">{{sub.name}}</span>
+                                            <span class="sub-count">{{sub.count}}</span>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </aside>
 
                 <!-- Specialists Grid -->
                 <div class="specialists-results">
-                    <div class="specialists-grid-custom">
-                        <div class="doctor-card" *ngFor="let doctor of filteredDoctors">
-                            <div class="doctor-image">
-                                <img [src]="doctor.image" [alt]="doctor.name">
-                            </div>
-                            <div class="doctor-info">
-                                <h3>{{doctor.name}}</h3>
-                                <div class="doctor-specialty">
-                                    <span class="label">ESPECIALIDAD</span>
-                                    <span class="value">{{doctor.specialty}}</span>
+                    <div class="results-header" *ngIf="searchTerm || isFilterActive()">
+                        <p>Mostrando {{filteredDoctors.length}} especialistas</p>
+                    </div>
+
+                    <div class="specialists-grid-premium" [@listAnimation]="filteredDoctors.length">
+                        <div class="doctor-card-modern" *ngFor="let doctor of filteredDoctors">
+                            <div class="doctor-card-inner">
+                                <div class="doctor-image-wrapper">
+                                    <img [src]="doctor.image || doctor.imageUrl" [alt]="doctor.name"
+                                        class="doctor-main-img">
+                                    <div class="doctor-overlay">
+                                        <button class="btn-ver-perfil-overlay" [routerLink]="['/medico', doctor.id]">
+                                            VER PERFIL
+                                        </button>
+                                    </div>
                                 </div>
-                                <button class="btn-perfil" [routerLink]="['/medico', doctor.id]">Ver Perfil</button>
+                                <div class="doctor-card-body">
+                                    <div class="specialty-tag">{{doctor.specialty}}</div>
+                                    <h3>{{doctor.name}}</h3>
+                                    <div class="doctor-card-footer">
+                                        <button class="btn-perfil-link" [routerLink]="['/medico', doctor.id]">
+                                            Ver Perfil
+                                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none"
+                                                stroke="currentColor" stroke-width="2.5">
+                                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                <polyline points="12 5 19 12 12 19"></polyline>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="no-results" *ngIf="filteredDoctors.length === 0">
-                        <p>No se encontraron especialistas en esta categoría.</p>
-                        <button class="btn-reset" (click)="resetFilters()">Ver todos</button>
+
+                    <!-- No Results -->
+                    <div class="no-results-premium" *ngIf="filteredDoctors.length === 0" [@fadeInOut]>
+                        <div class="no-results-icon">
+                            <svg viewBox="0 0 24 24" width="64" height="64" fill="none" stroke="currentColor"
+                                stroke-width="1.5">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                <line x1="8" y1="11" x2="14" y2="11"></line>
+                            </svg>
+                        </div>
+                        <h3>No encontramos especialistas</h3>
+                        <p>Intenta ajustar tus filtros o buscar con un término diferente.</p>
+                        <button class="btn-reset-premium" (click)="resetFilters(); searchTerm = ''">Mostrar
+                            todos</button>
                     </div>
                 </div>
             </div>

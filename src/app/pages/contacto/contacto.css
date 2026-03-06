@@ -172,10 +172,18 @@
     gap: 3rem;
 }
 
-.info-item {
+.info-item,
+.link-reset-contact {
     display: flex;
     align-items: flex-start;
     gap: 1.5rem;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s ease;
+}
+
+.link-reset-contact:hover .item-text h3 {
+    color: #26C6B2;
 }
 
 .icon-box {

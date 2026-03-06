@@ -40,7 +40,12 @@
             <h2 class="section-title">Nuestras Instalaciones</h2>
             <div class="facilities-row">
                 <div class="facility">
-                    <span class="check-icon">✓</span>
+                    <span class="check-icon">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor"
+                            stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                    </span>
                     <div>
                         <h4>Nuestas Modernas</h4>
                         <p>Instalaciones modernas y tecnológicamente avanzadas que garantizan una atención médica de
@@ -48,14 +53,24 @@
                     </div>
                 </div>
                 <div class="facility">
-                    <span class="check-icon">✓</span>
+                    <span class="check-icon">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor"
+                            stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                    </span>
                     <div>
                         <h4>Especialidades</h4>
                         <p>Amplia gama de especialidades y servicios en un entorno cómodo y seguro.</p>
                     </div>
                 </div>
                 <div class="facility">
-                    <span class="check-icon">✓</span>
+                    <span class="check-icon">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor"
+                            stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                    </span>
                     <div>
                         <h4>Equipamiento</h4>
                         <p>Quirófanos equipados con tecnologías de punta para realizar procedimientos con máxima
@@ -65,30 +80,37 @@
             </div>
         </section>
 
-        <section class="doctors-section">
-            <h2 class="section-title">NUESTROS MEDICOS</h2>
-            <div class="doctors-grid">
-                <div class="doctor-min-card">
-                    <img src="assets/images/Dr.-Alvaro-Bunay-R-1.jpg" alt="Dr. Alvaro Bunay">
-                    <h4>Dr. Alvaro Buñay R.</h4>
-                    <span class="code">EF02480</span>
-                    <span class="spec">Cardiología</span>
-                    <button class="ver-mas" routerLink="/especialidades">Ver Mas</button>
+        <!-- Specialists Premium Section -->
+        <section class="doctors-section-premium">
+            <h2 class="section-title-premium">Nuestros Especialistas</h2>
+            <div class="doctors-grid-premium">
+                <div class="doctor-card-premium" *ngFor="let doctor of doctors">
+                    <div class="card-inner-box">
+                        <div class="img-box">
+                            <img [src]="doctor.image" [alt]="doctor.name">
+                            <div class="overlay-hover">
+                                <a [routerLink]="['/medico', doctor.id]" class="btn-profile">VER PERFIL</a>
+                            </div>
+                        </div>
+                        <div class="info-content">
+                            <span class="spec-tag">{{ doctor.specialty }}</span>
+                            <h4>{{ doctor.name }}</h4>
+                            <div class="card-footer-action">
+                                <a [routerLink]="['/medico', doctor.id]" class="link-more">
+                                    Conocer más
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor"
+                                        stroke-width="3">
+                                        <path d="M5 12h14M12 5l7 7-7 7"></path>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="doctor-min-card">
-                    <img src="assets/images/DR.-PABLO-ADRIAN-CHICA-ALVARRACIN.jpg" alt="Dr. Pablo Adrian">
-                    <h4>Dr. Pablo Adrian Chica Alvarado</h4>
-                    <span class="code">EF03490</span>
-                    <span class="spec">Cirujano general y laparoscópico</span>
-                    <button class="ver-mas" routerLink="/especialidades">Ver Mas</button>
-                </div>
-                <div class="doctor-min-card">
-                    <img src="assets/images/DRA-LIGIA.jpg" alt="Dra. Ligia Naranjo">
-                    <h4>Dra. Ligia Naranjo Bernal</h4>
-                    <span class="code">EF04290</span>
-                    <span class="spec">Anestesiología</span>
-                    <button class="ver-mas" routerLink="/especialidades">Ver Mas</button>
-                </div>
+            </div>
+
+            <div class="view-all-box">
+                <a routerLink="/especialidades" class="btn-view-all">VER TODOS LOS ESPECIALISTAS</a>
             </div>
         </section>
     </div>

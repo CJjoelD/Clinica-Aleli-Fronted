@@ -2,16 +2,18 @@
     <!-- Navbar -->
     <app-navbar></app-navbar>
 
-    <div class="container main-content">
+    <div class="container main-content" *ngIf="getSection('datos_contacto') as section">
         <div class="contact-grid">
             <!-- Left Side: Information -->
-            <div class="contact-info">
+            <div class="contact-info" *ngIf="section.enabled">
                 <h1>Contacto</h1>
                 <p class="subtitle">Estamos aquí para ayudarte</p>
 
                 <div class="info-items">
                     <!-- Dirección -->
-                    <div class="info-item">
+                    <!-- Link a Ubicación en Google Maps (solicitado) -->
+                    <a href="https://maps.app.goo.gl/LT7YiRDuB6ZrzUKLA" target="_blank"
+                        class="info-item link-reset-contact">
                         <div class="icon-box red-icon">
                             <svg viewBox="0 0 24 24" fill="currentColor">
                                 <path
@@ -20,9 +22,9 @@
                         </div>
                         <div class="item-text">
                             <h3>Dirección</h3>
-                            <p>Av. Ricardo Duran</p>
+                            <p>{{section.content.address}}</p>
                         </div>
-                    </div>
+                    </a>
 
                     <!-- Teléfono -->
                     <div class="info-item">
@@ -34,7 +36,7 @@
                         </div>
                         <div class="item-text">
                             <h3>Teléfono</h3>
-                            <p>0995500139</p>
+                            <p>{{section.content.phone}}</p>
                         </div>
                     </div>
 
@@ -48,10 +50,9 @@
                         </div>
                         <div class="item-text flex-text">
                             <div class="text-content">
-                                <h3>Whatsapp</h3>
-                                <p>0995500139</p>
+                                <h3>Email</h3>
+                                <p>{{section.content.email}}</p>
                             </div>
-                            <button class="cta-button mini-btn">AGENDAR CITA</button>
                         </div>
                     </div>
 
@@ -66,8 +67,7 @@
                         </div>
                         <div class="item-text">
                             <h3>Horarios</h3>
-                            <p class="small-label">lunes a viernes</p>
-                            <p class="time">08:00 - 18:00</p>
+                            <p class="time">{{section.content.schedule}}</p>
                         </div>
                     </div>
                 </div>

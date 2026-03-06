@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { SERVICES_DATA, ServiceInfo } from '../servicios/servicios-data';
 import { FooterComponent } from '../../shared/components/footer/footer.component';
 import { NavbarComponent } from '../../shared/components/navbar/navbar';
+import { DOCTORS } from '../../data/doctor-data';
 
 @Component({
     selector: 'app-servicio-detail',
@@ -14,6 +15,7 @@ import { NavbarComponent } from '../../shared/components/navbar/navbar';
 })
 export class ServicioDetailComponent implements OnInit {
     service: ServiceInfo | undefined;
+    doctors = DOCTORS.slice(0, 3); // Just show top 3 for demo or use logic to filter by specialty if possible.
 
     constructor(
         private route: ActivatedRoute,

@@ -30,12 +30,12 @@ import { ActivatedRoute, Router } from '@angular/router';
             <h4>Páginas</h4>
           </div>
           <div 
-            *ngFor="let page of pages()" 
+            *ngFor="let page of filteredPages()" 
             class="page-selector"
             [class.active]="selectedPage()?.id === page.id"
             (click)="selectPage(page)">
             <span class="page-dot"></span>
-            {{page.title}}
+            {{ page.id === 'nosotros' ? 'Instalaciones' : page.title }}
           </div>
         </aside>
 
@@ -69,19 +69,23 @@ import { ActivatedRoute, Router } from '@angular/router';
             <div class="section-body" *ngIf="section.enabled">
               <!-- Renderiza diferentes campos según el ID de la sección -->
               
-              <!-- Caso: Hero / Banner Genérico -->
+              <!-- Caso: Hero / Banner Genérico (Instalaciones) -->
               <div *ngIf="['hero', 'banner', 'nosotros_hero'].includes(section.id)" class="edit-mode-container">
                 <div class="form-group">
-                  <label>Título Principal</label>
+                  <label>{{ section.id === 'nosotros_hero' ? 'Nombre del Área / Instalación' : 'Título Principal' }}</label>
                   <input type="text" [(ngModel)]="section.content.title" (change)="saveChange()" class="form-control" placeholder="Escribe el título aquí...">
                   
                   <div *ngIf="section.content.description !== undefined">
                     <label>Descripción</label>
                     <textarea [(ngModel)]="section.content.description" (change)="saveChange()" class="form-control" rows="3" placeholder="Descripción detallada..."></textarea>
                   </div>
+                  <div *ngIf="section.content.subtitle !== undefined">
+                    <label>Subtítulo</label>
+                    <textarea [(ngModel)]="section.content.subtitle" (change)="saveChange()" class="form-control" rows="3" placeholder="Subtítulo..."></textarea>
+                  </div>
                   
                   <div *ngIf="section.content.imageUrl !== undefined" class="image-field">
-                    <label>URL de Imagen</label>
+                    <label>Imagen (URL)</label>
                     <div class="image-input-wrapper">
                       <input type="text" [(ngModel)]="section.content.imageUrl" (change)="saveChange()" class="form-control">
                       <img [src]="section.content.imageUrl" class="field-preview-img" *ngIf="section.content.imageUrl">
@@ -90,131 +94,121 @@ import { ActivatedRoute, Router } from '@angular/router';
                 </div>
               </div>
 
-              <!-- Caso: Artículos del Blog -->
-              <div *ngIf="section.id === 'articulos'" class="items-grid-container">
-                 <div class="items-header">
+              <!-- Caso: Datos de Contacto -->
+              <div *ngIf="section.id === 'datos_contacto'" class="edit-mode-container">
+                <div class="contact-edit-grid">
+                  <div class="form-group">
+                    <label>Dirección Física</label>
+                    <input type="text" [(ngModel)]="section.content.address" (change)="saveChange()" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label>Teléfono de Contacto</label>
+                    <input type="text" [(ngModel)]="section.content.phone" (change)="saveChange()" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label>Correo Electrónico</label>
+                    <input type="text" [(ngModel)]="section.content.email" (change)="saveChange()" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label>Horario de Atención</label>
+                    <textarea [(ngModel)]="section.content.schedule" (change)="saveChange()" class="form-control" rows="2"></textarea>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Caso: Grilla de Items Genéricos (Blog, Galería, etc) -->
+              <div *ngIf="['articulos', 'lista_especialidades', 'galeria_instalaciones'].includes(section.id) || section.content.items" class="items-grid-container">
+                 <div class="items-header" *ngIf="section.id === 'articulos'">
                     <h4>Gestión de Entradas del Blog</h4>
                     <p>Agrega, edita o elimina artículos publicados.</p>
                  </div>
+                 <div class="items-header" *ngIf="section.id === 'lista_especialidades'">
+                    <h4>Departamentos Médicos</h4>
+                    <p>Gestiona las especialidades y departamentos de la clínica.</p>
+                 </div>
+                 <div class="items-header" *ngIf="section.id === 'galeria_instalaciones'">
+                    <h4>Galería de Instalaciones</h4>
+                    <p>Sube y gestiona las fotos de la clínica.</p>
+                 </div>
                  
                  <div class="visual-items-grid">
                     <div *ngFor="let item of section.content.items; let j = index" class="visual-item-card">
-                       <div class="item-preview">
-                          <img [src]="item.imageUrl || 'assets/images/placeholder.jpg'" alt="Preview" class="item-img">
+                       <!-- Preview para Contenido con Imagen -->
+                       <div class="item-preview" *ngIf="item.imageUrl || item.image">
+                          <img [src]="item.imageUrl || item.image || 'assets/images/placeholder.jpg'" alt="Preview" class="item-img">
                           <div class="item-overlay-info">
-                             <h5>{{item.title}}</h5>
-                             <p class="truncate">{{item.excerpt}}</p>
+                             <h5>{{item.title || item.name}}</h5>
+                             <p class="truncate">{{item.excerpt || item.description || item.specialty}}</p>
                           </div>
                        </div>
                        
-                       <div class="item-edit-form" *ngIf="isEditingItem(section.id, j)">
-                          <div class="form-group p-3">
-                             <label>Título</label>
-                             <input type="text" [(ngModel)]="item.title" (change)="saveChange()" class="form-control">
-                             <label>Resumen</label>
-                             <textarea [(ngModel)]="item.excerpt" (change)="saveChange()" class="form-control" rows="2"></textarea>
-                             <label>Imagen URL</label>
-                             <input type="text" [(ngModel)]="item.imageUrl" (change)="saveChange()" class="form-control">
-                             <label>Link / ID</label>
-                             <input type="text" [(ngModel)]="item.id" (change)="saveChange()" class="form-control">
-                             <button class="btn-done" (click)="stopEditing()">Listo</button>
-                          </div>
-                       </div>
-
-                       <div class="visual-card-actions">
-                          <button class="btn-visual-edit" (click)="startEditing(section.id, j)">EDITAR</button>
-                          <button class="btn-visual-delete" (click)="removeItem(section, j)">ELIMINAR</button>
-                       </div>
-                    </div>
-
-                    <div class="add-item-empty" (click)="addItem(section, 'articulo')">
-                       <div class="empty-plus">+</div>
-                       <span>NUEVA ENTRADA</span>
-                    </div>
-                 </div>
-              </div>
-
-              <!-- Caso: Servicios -->
-              <div *ngIf="section.id === 'servicios'" class="items-grid-container">
-                 <div class="items-header">
-                    <h4>Tarjetas de Servicios</h4>
-                    <p>Gestiona los servicios que se muestran en esta sección.</p>
-                 </div>
-                 
-                 <div class="visual-items-grid">
-                    <div *ngFor="let item of section.content.items; let j = index" class="visual-item-card">
-                       <div class="item-preview">
+                       <!-- Preview para Contenido sin Imagen (Servicios) -->
+                       <div class="item-preview" *ngIf="!item.imageUrl && !item.image">
                           <div class="service-preview-header">
                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="service-icon"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
-                             <h5>{{item.title}}</h5>
+                             <h5>{{item.title || item.name}}</h5>
                           </div>
-                          <p class="p-3">{{item.description}}</p>
+                          <p class="p-3">{{item.description || item.excerpt}}</p>
                        </div>
                        
+                       <!-- Formulario de Edición (Modal/Inline) -->
                        <div class="item-edit-form" *ngIf="isEditingItem(section.id, j)">
                           <div class="form-group p-3">
-                             <label>Título del Servicio</label>
-                             <input type="text" [(ngModel)]="item.title" (change)="saveChange()" class="form-control">
-                             <label>Descripción</label>
-                             <textarea [(ngModel)]="item.description" (change)="saveChange()" class="form-control" rows="3"></textarea>
-                             <button class="btn-done" (click)="stopEditing()">Listo</button>
+                              <div *ngIf="item.imageUrl !== undefined">
+                                <label>URL de Imagen</label>
+                                <input type="text" [(ngModel)]="item.imageUrl" (change)="saveChange()" class="form-control">
+                              </div>
+                              <div *ngIf="item.image !== undefined">
+                                <label>Ruta de Imagen (assets/...)</label>
+                                <input type="text" [(ngModel)]="item.image" (change)="saveChange()" class="form-control">
+                              </div>
+
+                              <div *ngIf="item.specialty !== undefined">
+                                <label>Especialidad</label>
+                                <input type="text" [(ngModel)]="item.specialty" (change)="saveChange()" class="form-control">
+                              </div>
+                              
+                              <div *ngIf="item.title !== undefined">
+                                 <label>Título</label>
+                                 <input type="text" [(ngModel)]="item.title" (change)="saveChange()" class="form-control">
+                              </div>
+                              <div *ngIf="item.name !== undefined">
+                                 <label>Nombre</label>
+                                 <input type="text" [(ngModel)]="item.name" (change)="saveChange()" class="form-control">
+                              </div>
+                              
+                              <div *ngIf="item.description !== undefined">
+                                 <label>Descripción</label>
+                                 <textarea [(ngModel)]="item.description" (change)="saveChange()" class="form-control" rows="3"></textarea>
+                              </div>
+                              <div *ngIf="item.excerpt !== undefined">
+                                 <label>Resumen</label>
+                                 <textarea [(ngModel)]="item.excerpt" (change)="saveChange()" class="form-control" rows="3"></textarea>
+                              </div>
+                              <div *ngIf="item.bio !== undefined">
+                                 <label>Biografía Professional</label>
+                                 <textarea [(ngModel)]="item.bio" (change)="saveChange()" class="form-control" rows="3"></textarea>
+                              </div>
+                             
+                             <button class="btn-done" (click)="stopEditing()">Guardar Cambios</button>
                           </div>
                        </div>
 
                        <div class="visual-card-actions">
-                          <button class="btn-visual-edit" (click)="startEditing(section.id, j)">EDITAR</button>
+                          <button class="btn-visual-edit" (click)="startEditing(section.id, j)">{{ isEditingItem(section.id, j) ? 'CERRAR' : 'EDITAR' }}</button>
                           <button class="btn-visual-delete" (click)="removeItem(section, j)">ELIMINAR</button>
                        </div>
                     </div>
 
-                    <div class="add-item-empty" (click)="addItem(section, 'servicio')">
+                    <div class="add-item-empty" (click)="addItem(section, section.id)">
                        <div class="empty-plus">+</div>
-                       <span>AGREGAR SERVICIO</span>
+                       <span>AGREGAR NUEVO</span>
                     </div>
                  </div>
               </div>
 
-              <!-- Caso: Directorio (Médicos) -->
-              <div *ngIf="section.id === 'lista_medicos'" class="items-grid-container">
-                 <div class="items-header">
-                    <h4>Directorio Médico</h4>
-                    <p>Personaliza el staff de especialistas.</p>
-                 </div>
-                 
-                 <div class="visual-items-grid">
-                    <div *ngFor="let item of section.content.items; let j = index" class="visual-item-card doctor-card">
-                       <div class="item-preview doctor-preview">
-                          <img [src]="item.imageUrl || 'assets/images/placeholder.jpg'" alt="Doctor" class="doctor-img">
-                          <div class="doctor-info">
-                             <h5>{{item.name}}</h5>
-                             <span class="specialty">{{item.specialty}}</span>
-                          </div>
-                       </div>
-                       
-                       <div class="item-edit-form" *ngIf="isEditingItem(section.id, j)">
-                          <div class="form-group p-3">
-                             <label>Nombre</label>
-                             <input type="text" [(ngModel)]="item.name" (change)="saveChange()" class="form-control">
-                             <label>Especialidad</label>
-                             <input type="text" [(ngModel)]="item.specialty" (change)="saveChange()" class="form-control">
-                             <label>Biografía</label>
-                             <textarea [(ngModel)]="item.bio" (change)="saveChange()" class="form-control" rows="3"></textarea>
-                             <button class="btn-done" (click)="stopEditing()">Listo</button>
-                          </div>
-                       </div>
+              <!-- Los casos especializados fueron integrados en la grilla genérica superior -->
 
-                       <div class="visual-card-actions">
-                          <button class="btn-visual-edit" (click)="startEditing(section.id, j)">EDITAR</button>
-                          <button class="btn-visual-delete" (click)="removeItem(section, j)">ELIMINAR</button>
-                       </div>
-                    </div>
-
-                    <div class="add-item-empty" (click)="addItem(section, 'medico_detalle')">
-                       <div class="empty-plus">+</div>
-                       <span>NUEVO MÉDICO</span>
-                    </div>
-                 </div>
-              </div>
 
               <!-- Caso: FAQ -->
               <div *ngIf="section.id === 'faq'" class="form-group">
@@ -235,7 +229,7 @@ import { ActivatedRoute, Router } from '@angular/router';
               </div>
 
               <!-- Caso Genérico / Otros -->
-              <div *ngIf="!['hero', 'banner', 'nosotros_hero', 'articulos', 'lista_medicos', 'servicios', 'faq'].includes(section.id)" class="generic-content">
+              <div *ngIf="!['hero', 'banner', 'nosotros_hero', 'articulos', 'lista_medicos', 'servicios', 'faq', 'datos_contacto'].includes(section.id)" class="generic-content">
                 <div *ngIf="section.content.title !== undefined" class="form-group">
                     <label>Título</label>
                     <input type="text" [(ngModel)]="section.content.title" (change)="saveChange()" class="form-control">
@@ -259,24 +253,28 @@ import { ActivatedRoute, Router } from '@angular/router';
     </div>
   `,
   styles: [`
-    .editor-container { padding: 1.5rem; transition: all 0.3s ease; }
+    .editor-container { padding: 1.5rem; transition: all 0.3s ease; font-family: 'Outfit', sans-serif; }
     
     .page-header { 
       margin-bottom: 2.5rem; 
       display: flex; 
       justify-content: space-between; 
       align-items: center; 
+      background: white;
+      padding: 1.5rem 2rem;
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.03);
     }
     .header-left { display: flex; align-items: center; gap: 1.5rem; }
     
     .toggle-pages-btn {
-      background: white; border: 1px solid #e2e8f0; border-radius: 8px;
-      padding: 10px; cursor: pointer; color: #64748b; transition: all 0.2s;
+      background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px;
+      padding: 12px; cursor: pointer; color: #6a1b9a; transition: all 0.2s;
     }
-    .toggle-pages-btn:hover { background: #f8fafc; color: #1e293b; border-color: #cbd5e1; }
+    .toggle-pages-btn:hover { background: #6a1b9a; color: white; border-color: #6a1b9a; transform: scale(1.05); }
 
-    .page-header h1 { color: #0f172a; font-size: 1.75rem; font-weight: 800; margin: 0; }
-    .page-header p { color: #64748b; font-size: 1rem; margin: 0; }
+    .page-header h1 { color: #1e293b; font-size: 1.8rem; font-weight: 800; margin: 0; }
+    .page-header p { color: #64748b; font-size: 0.95rem; margin: 0.25rem 0 0 0; font-weight: 500; }
     
     .editor-layout {
       display: flex;
@@ -287,13 +285,14 @@ import { ActivatedRoute, Router } from '@angular/router';
     .pages-list {
       width: 280px;
       background: white;
-      border-radius: 16px;
-      padding: 1.25rem;
-      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+      border-radius: 24px;
+      padding: 1.5rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.04);
       position: sticky;
       top: 1.5rem;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       overflow: hidden;
+      border: 1px solid #f1f5f9;
     }
 
     .pages-list.collapsed {
@@ -304,173 +303,193 @@ import { ActivatedRoute, Router } from '@angular/router';
       pointer-events: none;
     }
 
-    .sidebar-header-simple { margin-bottom: 1rem; border-bottom: 1px solid #f1f5f9; padding-bottom: 0.5rem; }
+    .sidebar-header-simple { margin-bottom: 1.5rem; border-bottom: 1px solid #f1f5f9; padding-bottom: 1rem; }
     .sidebar-header-simple h4 {
       font-size: 0.75rem;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      letter-spacing: 1px;
       color: #94a3b8;
       margin: 0;
       padding-left: 0.75rem;
+      font-weight: 800;
     }
 
     .page-selector {
       display: flex;
       align-items: center;
       gap: 0.75rem;
-      padding: 0.875rem 1rem;
-      border-radius: 10px;
+      padding: 1rem;
+      border-radius: 16px;
       cursor: pointer;
-      margin-bottom: 0.25rem;
-      transition: all 0.2s;
+      margin-bottom: 0.5rem;
+      transition: all 0.3s ease;
       color: #475569;
-      font-weight: 500;
-      font-size: 0.9rem;
+      font-weight: 600;
+      font-size: 0.95rem;
     }
 
-    .page-dot { width: 6px; height: 6px; border-radius: 50%; background: #cbd5e1; }
-    .page-selector:hover { background: #f1f5f9; color: #0f172a; }
-    .page-selector.active { background: #eff6ff; color: #2563eb; }
-    .page-selector.active .page-dot { background: #2563eb; transform: scale(1.5); }
+    .page-dot { width: 8px; height: 8px; border-radius: 50%; background: #e2e8f0; transition: all 0.3s; }
+    .page-selector:hover { background: #f8fafc; color: #6a1b9a; }
+    .page-selector.active { background: #f5edfa; color: #6a1b9a; }
+    .page-selector.active .page-dot { background: #6a1b9a; transform: scale(1.5); box-shadow: 0 0 10px rgba(106, 27, 154, 0.4); }
 
     .sections-editor { flex: 1; display: flex; flex-direction: column; gap: 2rem; }
 
     .page-info-header {
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
       background: white;
-      padding: 1.5rem 2rem;
-      border-radius: 20px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      padding: 1.8rem 2.5rem;
+      border-radius: 24px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+      border: 1px solid #f1f5f9;
     }
-    .title-area { display: flex; align-items: center; gap: 1rem; }
-    .page-info-header h2 { margin: 0; font-size: 1.5rem; color: #0f172a; }
-    .page-status { font-size: 0.7rem; background: #fef3c7; color: #b45309; padding: 4px 10px; border-radius: 20px; font-weight: 700; text-transform: uppercase; }
-    .page-id { font-family: monospace; font-size: 0.8rem; color: #94a3b8; }
+    .title-area { display: flex; align-items: center; gap: 1.2rem; }
+    .page-info-header h2 { margin: 0; font-size: 1.6rem; color: #1e293b; font-weight: 800; }
+    .page-status { font-size: 0.75rem; background: #f5edfa; color: #6a1b9a; padding: 6px 14px; border-radius: 20px; font-weight: 800; text-transform: uppercase; }
+    .page-id { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #94a3b8; font-weight: 600; }
 
     .section-card {
       background: white;
-      border-radius: 20px;
-      border: 1px solid #e2e8f0;
+      border-radius: 24px;
+      border: 1px solid #f1f5f9;
       overflow: hidden;
-      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
-      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.03);
+      transition: all 0.3s ease;
     }
-    .section-card:hover { box-shadow: 0 10px 15px -3px rgba(0,0,0,0.04); }
+    .section-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.06); }
 
     .section-header {
-      padding: 1.25rem 2rem;
-      background: #fafafc;
-      border-bottom: 1px solid #e2e8f0;
+      padding: 1.5rem 2.5rem;
+      background: #fafafa;
+      border-bottom: 1px solid #f1f5f9;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
-    .header-main { display: flex; align-items: center; gap: 1rem; }
-    .drag-handle { color: #cbd5e1; cursor: grab; font-weight: 900; }
-    .header-main h3 { margin: 0; font-size: 1.1rem; color: #1e293b; font-weight: 700; }
-    .header-actions { display: flex; align-items: center; gap: 1rem; }
+    .header-main { display: flex; align-items: center; gap: 1.2rem; }
+    .drag-handle { color: #cbd5e1; cursor: grab; font-weight: 900; font-size: 1.2rem; opacity: 0.5; }
+    .header-main h3 { margin: 0; font-size: 1.2rem; color: #1e293b; font-weight: 800; }
+    
+    .header-actions { display: flex; align-items: center; gap: 1.5rem; }
 
     .delete-btn {
-      background: transparent; border: none; color: #94a3b8; cursor: pointer;
-      padding: 6px; border-radius: 6px; transition: all 0.2s;
+      background: #fff1f2; border: none; color: #f43f5e; cursor: pointer;
+      width: 38px; height: 38px; border-radius: 12px; display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s;
     }
-    .delete-btn:hover { color: #ef4444; background: #fee2e2; }
+    .delete-btn:hover { background: #f43f5e; color: white; transform: scale(1.1); }
 
-    .section-body { padding: 2rem; }
+    .section-body { padding: 3rem; }
 
     /* Visual Item Cards */
     .visual-items-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 1.5rem;
-      margin-top: 1.5rem;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
     }
 
     .visual-item-card {
-      background: white; border: 1px solid #e2e8f0; border-radius: 16px;
+      background: white; border: 1px solid #f1f5f9; border-radius: 20px;
       overflow: hidden; display: flex; flex-direction: column;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.02); transition: all 0.2s;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.02); transition: all 0.4s ease;
     }
-    .visual-item-card:hover { transform: translateY(-4px); box-shadow: 0 12px 20px rgba(0,0,0,0.05); border-color: #3b82f6; }
+    .visual-item-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); border-color: #6a1b9a; }
 
-    .item-preview { position: relative; height: 160px; }
+    .item-preview { position: relative; height: 180px; display: flex; flex-direction: column; }
     .item-img { width: 100%; height: 100%; object-fit: cover; }
     .item-overlay-info {
       position: absolute; bottom: 0; left: 0; right: 0;
-      padding: 1rem; background: linear-gradient(transparent, rgba(0,0,0,0.8));
+      padding: 1.5rem; background: linear-gradient(transparent, rgba(0,0,0,0.85));
       color: white;
     }
-    .item-overlay-info h5 { margin: 0; font-size: 1rem; }
-    .item-overlay-info p { margin: 4px 0 0; font-size: 0.8rem; opacity: 0.9; }
+    .item-overlay-info h5 { margin: 0; font-size: 1.1rem; font-weight: 800; }
+    .item-overlay-info p { margin: 6px 0 0; font-size: 0.85rem; opacity: 0.8; font-weight: 500; }
 
     .visual-card-actions {
-      display: flex; padding: 1rem; gap: 1rem; background: #f8fafc;
-      border-top: 1px solid #e2e8f0;
+      display: flex; padding: 1.2rem; gap: 1rem; background: #fafafa;
+      border-top: 1px solid #f1f5f9;
     }
     .btn-visual-edit, .btn-visual-delete {
-      flex: 1; padding: 10px; border-radius: 8px; font-weight: 700; font-size: 0.8rem;
+      flex: 1; padding: 12px; border-radius: 12px; font-weight: 800; font-size: 0.8rem;
       cursor: pointer; border: none; transition: all 0.2s;
     }
-    .btn-visual-edit { background: #e2e8f0; color: #1e293b; }
-    .btn-visual-edit:hover { background: #cbd5e1; }
-    .btn-visual-delete { background: #e2e8f0; color: #1e293b; }
-    .btn-visual-delete:hover { background: #fee2e2; color: #ef4444; }
+    .btn-visual-edit { background: #f1f5f9; color: #475569; }
+    .btn-visual-edit:hover { background: #6a1b9a; color: white; }
+    .btn-visual-delete { background: #fef2f2; color: #ef4444; }
+    .btn-visual-delete:hover { background: #ef4444; color: white; }
 
     .add-item-empty {
-      border: 2px dashed #cbd5e1; border-radius: 16px;
+      border: 2px dashed #e2e8f0; border-radius: 20px;
       display: flex; flex-direction: column; align-items: center; justify-content: center;
-      gap: 1rem; cursor: pointer; transition: all 0.2s; color: #94a3b8;
-      min-height: 200px;
+      gap: 1rem; cursor: pointer; transition: all 0.3s; color: #94a3b8;
+      min-height: 220px; background: #fafafa;
     }
-    .add-item-empty:hover { border-color: #3b82f6; color: #3b82f6; background: #eff6ff; }
-    .empty-plus { font-size: 2rem; font-weight: 300; }
-    .add-item-empty span { font-weight: 700; font-size: 0.8rem; letter-spacing: 0.05em; }
+    .add-item-empty:hover { border-color: #6a1b9a; color: #6a1b9a; background: #f5edfa; }
+    .empty-plus { font-size: 3rem; font-weight: 200; }
+    .add-item-empty span { font-weight: 800; font-size: 0.85rem; letter-spacing: 1px; }
+
+    /* Contact Grid */
+    .contact-edit-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+    }
 
     /* Doctor specific */
-    .doctor-preview { height: auto; padding: 1.5rem; display: flex; gap: 1rem; align-items: center; }
-    .doctor-img { width: 64px; height: 64px; border-radius: 50%; }
-    .doctor-info h5 { margin: 0; color: #1e293b; }
-    .specialty { font-size: 0.8rem; color: #3b82f6; font-weight: 600; }
+    .doctor-preview { height: auto; padding: 2rem; display: flex; flex-direction: column; align-items: center; background: white; text-align: center; }
+    .doctor-img { width: 90px; height: 90px; border-radius: 24px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); margin-bottom: 1.5rem; }
+    .doctor-info h5 { margin: 0; color: #1e293b; font-size: 1.1rem; font-weight: 800; }
+    .specialty { font-size: 0.85rem; color: #6a1b9a; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; }
 
-    .service-preview-header { padding: 1.5rem 1.5rem 0.5rem; display: flex; align-items: center; gap: 1rem; }
-    .service-icon { color: #3b82f6; }
+    .service-preview-header { padding: 2rem 2rem 1rem; display: flex; align-items: center; gap: 1.2rem; }
+    .service-icon { color: #6a1b9a; width: 32px; height: 32px; }
 
     /* Form and general Utils */
-    .form-group { display: flex; flex-direction: column; gap: 0.75rem; }
-    .form-group label { font-size: 0.85rem; font-weight: 700; color: #475569; }
+    .form-group { display: flex; flex-direction: column; gap: 0.8rem; }
+    .form-group label { font-size: 0.9rem; font-weight: 800; color: #475569; letter-spacing: -0.2px; }
     .form-control {
-      padding: 0.75rem 1rem; border: 1px solid #e2e8f0; border-radius: 12px;
-      font-size: 0.9rem; background: #fafafa; transition: all 0.2s;
+      padding: 1rem 1.2rem; border: 1px solid #e2e8f0; border-radius: 14px;
+      font-size: 1rem; background: #f8fafc; transition: all 0.3s ease;
+      color: #1e293b;
     }
-    .form-control:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1); background: white; }
+    .form-control:focus { outline: none; border-color: #6a1b9a; box-shadow: 0 0 0 5px rgba(106, 27, 154, 0.1); background: white; }
 
-    .field-preview-img { width: 100px; height: 60px; object-fit: cover; border-radius: 8px; margin-left: 1rem; }
+    .field-preview-img { width: 120px; height: 70px; object-fit: cover; border-radius: 12px; margin-left: 1.5rem; border: 2px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
     .image-input-wrapper { display: flex; align-items: center; }
 
-    .switch { position: relative; display: inline-block; width: 44px; height: 22px; }
+    .switch { position: relative; display: inline-block; width: 50px; height: 26px; }
     .switch input { opacity: 0; width: 0; height: 0; }
     .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #e2e8f0; transition: .4s; border-radius: 34px; }
-    .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
-    input:checked + .slider { background-color: #3b82f6; }
-    input:checked + .slider:before { transform: translateX(22px); }
+    .slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    input:checked + .slider { background-color: #6a1b9a; }
+    input:checked + .slider:before { transform: translateX(24px); }
 
-    .btn-done { background: #0f172a; color: white; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: 600; width: 100%; }
+    .btn-done { background: #6a1b9a; color: white; border: none; padding: 12px; border-radius: 14px; cursor: pointer; font-weight: 800; width: 100%; transition: all 0.2s; box-shadow: 0 4px 10px rgba(106, 27, 154, 0.2); }
+    .btn-done:hover { background: #4a148c; transform: scale(0.98); }
+
     .add-section-btn {
-       padding: 1.25rem 2.5rem; background: #0f172a; color: white;
-       border: none; border-radius: 16px; cursor: pointer;
-       font-weight: 700; display: flex; align-items: center; gap: 0.75rem; align-self: center;
-       box-shadow: 0 10px 25px rgba(0,0,0,0.1); transition: all 0.2s;
+       padding: 1.5rem 3rem; background: #1e293b; color: white;
+       border: none; border-radius: 20px; cursor: pointer;
+       font-weight: 800; display: flex; align-items: center; gap: 1rem; align-self: center;
+       box-shadow: 0 10px 30px rgba(0,0,0,0.15); transition: all 0.3s ease;
     }
-    .add-section-btn:hover { background: #1e293b; transform: translateY(-2px); box-shadow: 0 15px 30px rgba(0,0,0,0.15); }
+    .add-section-btn:hover { background: #6a1b9a; transform: translateY(-3px); box-shadow: 0 20px 40px rgba(106, 27, 154, 0.25); }
 
     .truncate { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-    .p-3 { padding: 1rem; }
-    .mb-2 { margin-bottom: 0.5rem; }
-    .mt-2 { margin-top: 0.5rem; }
+    .p-3 { padding: 1.5rem; }
+    .mb-2 { margin-bottom: 0.8rem; }
+    .mt-2 { margin-top: 0.8rem; }
+    
+    @media (max-width: 1024px) {
+      .editor-layout { flex-direction: column; }
+      .pages-list { width: 100%; position: static; }
+      .contact-edit-grid { grid-template-columns: 1fr; }
+    }
   `]
 })
 export class PaginaEditorComponent {
@@ -479,6 +498,9 @@ export class PaginaEditorComponent {
   private router = inject(Router);
 
   pages = this.paginaService.pages;
+  mainPageIds = ['inicio', 'servicios', 'especialidades', 'nosotros', 'contacto'];
+  filteredPages = computed(() => this.pages().filter(p => this.mainPageIds.includes(p.id)));
+
   selectedPage = signal<PageConfig | null>(null);
   isSidebarVisible = signal(true);
   editingItemId = signal<string | null>(null);
@@ -506,11 +528,11 @@ export class PaginaEditorComponent {
   }
 
   startEditing(sectionId: string, index: number) {
-    this.editingItemId.set(`${sectionId}-${index}`);
+    this.editingItemId.set(`${sectionId} - ${index}`);
   }
 
   isEditingItem(sectionId: string, index: number): boolean {
-    return this.editingItemId() === `${sectionId}-${index}`;
+    return this.editingItemId() === `${sectionId} - ${index}`;
   }
 
   stopEditing() {
@@ -558,12 +580,14 @@ export class PaginaEditorComponent {
 
     let newItem: any = { id: Date.now() };
 
-    if (type === 'servicio') {
-      newItem = { ...newItem, title: 'Nuevo Servicio', description: 'Descripción breve para la tarjeta.' };
-    } else if (type === 'articulo') {
-      newItem = { ...newItem, id: 'post-' + Date.now(), title: 'Nuevo Artículo', excerpt: 'Resumen de la noticia...', imageUrl: 'assets/images/BLOG/placeholder.png' };
-    } else if (type === 'medico_detalle') {
-      newItem = { ...newItem, name: 'Nombre Apellido', specialty: 'Especialidad', bio: 'Bio...', imageUrl: 'assets/images/ESPECIALIDADES/placeholder.png' };
+    if (type === 'servicios' || type === 'lista_especialidades') {
+      newItem = { ...newItem, title: 'Nuevo Item', description: 'Descripción breve.' };
+    } else if (type === 'articulos') {
+      newItem = { ...newItem, id: 'post-' + Date.now(), title: 'Nuevo Artículo', excerpt: 'Resumen...', imageUrl: 'assets/images/placeholder.jpg' };
+    } else if (type === 'lista_medicos') {
+      newItem = { ...newItem, name: 'Nombre Apellido', specialty: 'Especialidad', bio: 'Bio...', image: 'assets/images/placeholder.jpg' };
+    } else if (type === 'galeria_instalaciones') {
+      newItem = { ...newItem, title: 'Nueva Instalación', excerpt: 'Descripción...', imageUrl: 'assets/images/placeholder.jpg' };
     } else if (type === 'faq') {
       newItem = { question: 'Nueva Pregunta', answer: 'Nueva Respuesta' };
     } else {

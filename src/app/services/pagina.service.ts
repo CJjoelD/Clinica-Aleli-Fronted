@@ -23,11 +23,13 @@ export class PaginaService {
         const saved = localStorage.getItem(this.STORAGE_KEY);
         const initialConfig = [
             this.getInitialInicioConfig(),
+            this.getInitialServiciosConfig(),
             this.getInitialEspecialidadesConfig(),
             this.getInitialDirectorioConfig(),
             this.getInitialBlogConfig(),
             this.getInitialResultadosConfig(),
-            this.getInitialNosotrosConfig()
+            this.getInitialNosotrosConfig(),
+            this.getInitialContactoConfig()
         ];
 
         if (saved) {
@@ -41,8 +43,8 @@ export class PaginaService {
                     if (index !== -1) {
                         // Special merge for blog articles to ensure new ones appear
                         if (savedPage.id === 'blog') {
-                            const initialArticulos = mergedPages[index].sections.find(s => s.id === 'articulos');
-                            const savedArticulos = savedPage.sections.find(s => s.id === 'articulos');
+                            const initialArticulos = mergedPages[index].sections.find((s: SectionConfig) => s.id === 'articulos');
+                            const savedArticulos = savedPage.sections.find((s: SectionConfig) => s.id === 'articulos');
 
                             if (initialArticulos && savedArticulos) {
                                 // Keep saved items but add any new ones from initial that aren't there
@@ -167,16 +169,16 @@ export class PaginaService {
     getInitialNosotrosConfig(): PageConfig {
         return {
             id: 'nosotros',
-            title: 'Sobre Nosotros',
+            title: 'Instalaciones',
             sections: [
                 {
                     id: 'nosotros_hero',
                     name: 'Banner Nosotros',
                     enabled: true,
                     content: {
-                        title: 'Nuestra Historia',
-                        description: 'Más de 20 años al servicio de la salud de nuestra comunidad.',
-                        imageUrl: 'assets/images/NOSOTROS/banner.png'
+                        title: 'Nosotros',
+                        subtitle: 'Cuidamos tu salud con compromiso y vocación',
+                        imageUrl: 'assets/images/NOSOTROS/nosotros_banner.webp'
                     }
                 },
                 {
@@ -188,6 +190,19 @@ export class PaginaService {
                         mision_text: 'Brindar atención médica de excelencia con calidez humana.',
                         vision_title: 'Visión',
                         vision_text: 'Ser la clínica líder en especialidades médicas en la región.'
+                    }
+                },
+                {
+                    id: 'galeria_instalaciones',
+                    name: 'Galería de Fotos',
+                    enabled: true,
+                    content: {
+                        items: [
+                            { title: 'Quirófano', imageUrl: 'assets/images/INSTALACIONES/ESPACIODETRABAJO.png' },
+                            { title: 'Entrada', imageUrl: 'assets/images/INSTALACIONES/ACENSOR.png' },
+                            { title: 'Habitación', imageUrl: 'assets/images/INSTALACIONES/CAMILLAMORADA.png' },
+                            { title: 'Recepción', imageUrl: 'assets/images/INSTALACIONES/PEOPLE.png' }
+                        ]
                     }
                 }
             ]
@@ -308,6 +323,50 @@ export class PaginaService {
         };
     }
 
+    getInitialServiciosConfig(): PageConfig {
+        return {
+            id: 'servicios',
+            title: 'Servicios Médicos',
+            sections: [
+                {
+                    id: 'hero',
+                    name: 'Sección Hero',
+                    enabled: true,
+                    content: {
+                        title: 'SERVICIO',
+                        description: 'En Clínica Alelí, nos especializamos en ofrecer atención médica de alta calidad con un enfoque personalizado para el bienestar de nuestros pacientes.'
+                    }
+                },
+                {
+                    id: 'servicios',
+                    name: 'Lista de Servicios',
+                    enabled: true,
+                    content: {
+                        title: 'Especialidades Médicas',
+                        subtitle: 'Nuestra clínica ofrece estos servicios médicos',
+                        items: [
+                            { title: 'CIRUGÍA GENERAL', description: 'Nuestro equipo de cirujanos altamente capacitados utiliza las técnicas más avanzadas para ofrecer soluciones efectivas y seguras.' },
+                            { title: 'GINECOLOGÍA Y OBSTETRICIA', description: 'Cuidado integral de la salud de la mujer en todas sus etapas, con un enfoque cálido, profesional y especializado.' },
+                            { title: 'PEDIATRÍA', description: 'Atención médica dedicada al crecimiento y bienestar de los más pequeños, brindando tranquilidad a toda la familia.' },
+                            { title: 'PSICOLOGÍA CLÍNICA', description: 'Apoyo emocional y herramientas profesionales para fortalecer la salud mental y el equilibrio personal.' },
+                            { title: 'OTORRINOLARINGOLOGÍA', description: 'Especialistas en el diagnóstico y tratamiento de afecciones de oído, nariz y garganta.' },
+                            { title: 'CARDIOLOGÍA', description: 'Monitoreo y cuidado avanzado de la salud cardiovascular, previniendo enfermedades del corazón.' }
+                        ]
+                    }
+                },
+                {
+                    id: 'nosotros_hero',
+                    name: 'Espacios / Instalaciones',
+                    enabled: true,
+                    content: {
+                        title: 'Nuestras Instalaciones',
+                        description: 'Contamos con espacios modernos y equipados para tu comodidad y seguridad.'
+                    }
+                }
+            ]
+        };
+    }
+
     getInitialEspecialidadesConfig(): PageConfig {
         return {
             id: 'especialidades',
@@ -329,6 +388,19 @@ export class PaginaService {
                     content: {
                         title: 'ESPECIALIDADES',
                         subtitle: 'Encuentra al especialista ideal para ti'
+                    }
+                },
+                {
+                    id: 'servicios',
+                    name: 'Listado de Especialidades',
+                    enabled: true,
+                    content: {
+                        items: [
+                            { title: 'CIRUGÍA GENERAL', description: 'Especialidad médica que abarca las operaciones del aparato digestivo.' },
+                            { title: 'GINECOLOGÍA', description: 'Atención a la salud del sistema reproductor femenino.' },
+                            { title: 'PEDIATRÍA', description: 'Especialidad médica que estudia al niño y sus enfermedades.' },
+                            { title: 'CARDIOLOGÍA', description: 'Rama de la medicina que se encarga del estudio del corazón.' }
+                        ]
                     }
                 }
             ]
@@ -379,7 +451,7 @@ export class PaginaService {
         this.pages.update(pages => {
             const page = pages.find(p => p.id === pageId);
             if (page) {
-                const section = page.sections.find(s => s.id === sectionId);
+                const section = page.sections.find((s: SectionConfig) => s.id === sectionId);
                 if (section) {
                     section.content = content;
                 }
@@ -392,7 +464,7 @@ export class PaginaService {
         this.pages.update(pages => {
             const page = pages.find(p => p.id === pageId);
             if (page) {
-                const section = page.sections.find(s => s.id === sectionId);
+                const section = page.sections.find((s: SectionConfig) => s.id === sectionId);
                 if (section) {
                     section.enabled = enabled;
                 }
@@ -423,10 +495,31 @@ export class PaginaService {
                                 name: 'Dr. Pablo Adrian Chica Alvarracin',
                                 specialty: 'Cirujano general y Laparoscópico',
                                 bio: 'El Dr. Chica Alvarracín comprende la importancia de brindar un cuidado centrado en el paciente...',
+                                image: 'assets/images/DR.-PABLO-ADRIAN-CHICA-ALVARRACIN.jpg',
                                 imageUrl: 'assets/images/ESPECIALIDADES/DR_PABLO_ADRIA_CHICA_ALVARACIN.png',
                                 services: ['Cirugía de la vesícula', 'Hernias abdominales']
                             }
                         ]
+                    }
+                }
+            ]
+        };
+    }
+
+    getInitialContactoConfig(): PageConfig {
+        return {
+            id: 'contacto',
+            title: 'Información de Contacto',
+            sections: [
+                {
+                    id: 'datos_contacto',
+                    name: 'Datos Principales',
+                    enabled: true,
+                    content: {
+                        address: 'Av. Gran Colombia y Calle Larga, Cuenca, Ecuador',
+                        phone: '099 550 0139',
+                        email: 'info@clinicaaleli.com',
+                        schedule: 'Lunes a Viernes: 08:00 - 19:00 | Sábados: 09:00 - 13:00'
                     }
                 }
             ]

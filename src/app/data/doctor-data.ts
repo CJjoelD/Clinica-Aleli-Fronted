@@ -3,12 +3,17 @@ export interface Doctor {
     name: string;
     specialty: string;
     image: string;
+    imageUrl?: string;
     category: string;
     subCategory?: string;
     contact?: string;
     email?: string;
     bio?: string;
     services?: string[];
+    experience?: string[];
+    education?: string[];
+    schedules?: string;
+    rating?: number;
     website?: string;
 }
 
@@ -17,12 +22,13 @@ export const DOCTORS: Doctor[] = [
         id: 'pablo-chica',
         name: 'Dr. Pablo Adrian Chica Alvarracin',
         specialty: 'Cirujano general y Laparoscópico',
-        image: 'assets/images/ESPECIALIDADES/DR_PABLO_ADRIA_CHICA_ALVARACIN.png',
+        image: 'assets/images/DR.-PABLO-ADRIAN-CHICA-ALVARRACIN.jpg',
+        imageUrl: 'assets/images/ESPECIALIDADES/DR_PABLO_ADRIA_CHICA_ALVARACIN.png',
         category: 'Departamento de Cirugía',
         subCategory: 'Cirugía Laparoscópica',
         contact: '0995812026',
         email: 'Pchicaaczs5@gmail.com',
-        bio: 'El Dr. Chica Alvarracín comprende la importancia de brindar un cuidado centrado en el paciente. Trabaja en estrecha colaboración con cada paciente para desarrollar planes de tratamiento personalizados y brindar apoyo durante todo el proceso de recuperación. Su empatía y comunicación efectiva crean una relación médico-paciente sólida y confiable. Su habilidad en técnicas avanzadas, su enfoque centrado en el paciente y su dedicación a la excelencia hacen que sea la elección perfecta para brindarte atención quirúrgica de alta calidad y resultados exitosos.',
+        bio: 'El Dr. Chica Alvarracin comprende la importancia de brindar un cuidado centrado en el paciente. Trabaja en estrecha colaboración con cada paciente para desarrollar planes de tratamiento personalizados y brindar apoyo durante todo el proceso quirúrgico y de recuperación. Su empatía y comunicación efectiva crean una relación médico-paciente sólida y confiable. Su habilidad en técnicas avanzadas, su enfoque centrado en el paciente y su dedicación a la excelencia hacen que sea la elección perfecta para brindarte atención quirúrgica de alta calidad y resultados exitosos.',
         services: [
             'Cirugía de la vesícula',
             'Cirugía de Apéndice',
@@ -30,7 +36,19 @@ export const DOCTORS: Doctor[] = [
             'Cirugía de emergencia',
             'Manejo inicial del politrauma',
             'Cirugía menor (lipomas)'
-        ]
+        ],
+        experience: [
+            'Más de 10 años de experiencia en Cirugía Laparoscópica Avanzada.',
+            'Médico Tratante en Centros de Trauma Nivel I.',
+            'Especialista en Cirugía de Emergencias y Control de Daños.'
+        ],
+        education: [
+            'Especialidad en Cirugía General y Laparoscopía - Universidad de Cuenca.',
+            'Diplomado en Cirugía Mínimamente Invasiva.',
+            'Certificaciones internacionales en Soporte Vital Avanzado en Trauma (ATLS).'
+        ],
+        schedules: 'Lunes a Viernes: 08:00 - 18:00',
+        rating: 4.9
     },
     {
         id: 'ligia-naranjo',

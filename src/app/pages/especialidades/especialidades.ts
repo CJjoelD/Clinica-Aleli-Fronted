@@ -13,12 +13,13 @@ interface Category {
   subCategories?: { name: string; count: number }[];
 }
 
-import { trigger, transition, style, animate } from '@angular/animations';
+import { FormsModule } from '@angular/forms';
+import { trigger, transition, style, animate, query, stagger } from '@angular/animations';
 
 @Component({
   selector: 'app-especialidades',
   standalone: true,
-  imports: [CommonModule, FooterComponent, NavbarComponent, RouterLink],
+  imports: [CommonModule, FooterComponent, NavbarComponent, RouterLink, FormsModule],
   templateUrl: './especialidades.html',
   styleUrl: './especialidades.css',
   animations: [
@@ -29,6 +30,14 @@ import { trigger, transition, style, animate } from '@angular/animations';
       ]),
       transition(':leave', [
         animate('200ms ease-in', style({ opacity: 0, transform: 'translateY(-10px)' }))
+      ])
+    ]),
+    trigger('listAnimation', [
+      transition('* <=> *', [
+        query(':enter', [
+          style({ opacity: 0, transform: 'translateY(20px)' }),
+          stagger('50ms', animate('400ms cubic-bezier(0.165, 0.84, 0.44, 1)', style({ opacity: 1, transform: 'translateY(0)' })))
+        ], { optional: true })
       ])
     ])
   ]
@@ -44,6 +53,7 @@ export class EspecialidadesComponent {
 
   selectedCategory: string = 'all';
   selectedSubCategory: string = 'all';
+  searchTerm: string = '';
 
   categories: Category[] = [
     {
@@ -101,7 +111,13 @@ export class EspecialidadesComponent {
     return this.doctors.filter(doctor => {
       const categoryMatch = this.selectedCategory === 'all' || doctor.category === this.selectedCategory;
       const subCategoryMatch = this.selectedSubCategory === 'all' || doctor.subCategory === this.selectedSubCategory;
-      return categoryMatch && subCategoryMatch;
+
+      const searchStr = this.searchTerm.toLowerCase();
+      const searchMatch = !this.searchTerm ||
+        doctor.name.toLowerCase().includes(searchStr) ||
+        doctor.specialty.toLowerCase().includes(searchStr);
+
+      return categoryMatch && subCategoryMatch && searchMatch;
     });
   }
 

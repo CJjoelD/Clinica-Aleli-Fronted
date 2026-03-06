@@ -29,7 +29,11 @@ export class MedicoDetailComponent implements OnInit {
                 .find((m: any) => m.id === id);
 
             if (cmsDoctor) {
-                this.doctor = cmsDoctor;
+                // Normalizar objeto del CMS
+                this.doctor = {
+                    ...cmsDoctor,
+                    image: cmsDoctor.image || cmsDoctor.imageUrl
+                };
             } else {
                 // Fallback a datos estáticos
                 this.doctor = DOCTORS.find(d => d.id === id);
