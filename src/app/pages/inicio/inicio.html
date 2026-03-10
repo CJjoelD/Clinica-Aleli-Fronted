@@ -28,7 +28,7 @@
         </div>
     </header>
 
-    <!-- Info Cards Section Dinámico -->
+    <!-- Sección de servicios -->
     <section id="servicios" class="info-section reveal" *ngIf="getSection('servicios') as section">
         <div class="section-header" *ngIf="section.enabled">
             <h2>{{section.content.title}}</h2>
@@ -47,7 +47,7 @@
         </div>
     </section>
 
-    <!-- About Section Dinámico -->
+    <!-- Sección sobre nosotros -->
     <section id="nosotros" class="about-section reveal" *ngIf="getSection('nosotros') as section">
         <div class="container" *ngIf="section.enabled">
             <div class="centered-about">
@@ -65,7 +65,7 @@
         <div class="purple-bar" *ngIf="section.enabled"></div>
     </section>
 
-    <!-- Benefits Section Dinámico -->
+    <!-- Sección de beneficios -->
     <section class="benefits-section reveal" *ngIf="getSection('beneficios') as section">
         <div class="container" *ngIf="section.enabled">
             <div class="section-header">
@@ -130,7 +130,7 @@
         </div>
     </section>
 
-    <!-- Quick Actions Section Dinámico -->
+    <!-- Acciones rápidas -->
     <section class="quick-actions-section reveal" *ngIf="getSection('acciones_rapidas') as section">
         <div class="container" *ngIf="section.enabled">
             <div class="actions-wrapper">
@@ -166,8 +166,9 @@
         </div>
     </section>
 
-    <!-- Specialists Section Dinámico -->
-    <section id="especialidades" class="specialists-section reveal" *ngIf="getSection('especialidades_destacadas') as section">
+    <!-- Sección de especialistas -->
+    <section id="especialidades" class="specialists-section reveal"
+        *ngIf="getSection('especialidades_destacadas') as section">
         <div class="container" *ngIf="section.enabled">
             <div class="section-header">
                 <h2>{{section.content.title}}</h2>
@@ -188,7 +189,7 @@
         </div>
     </section>
 
-    <!-- Blog Section Dinámico -->
+    <!-- Sección de blog -->
     <section class="blog-section" *ngIf="paginaService.getPage('blog') as blogPage">
         <div class="container">
             <div class="section-header">
@@ -211,7 +212,7 @@
         </div>
     </section>
 
-    <!-- FAQ Section Dinámico -->
+    <!-- Preguntas frecuentes -->
     <section class="faq-section" *ngIf="getSection('faq') as section">
         <div class="container" *ngIf="section.enabled">
             <div class="section-header">
@@ -236,7 +237,7 @@
         </div>
     </section>
 
-    <!-- Social Media Section (Static) -->
+    <!-- Redes sociales -->
     <section class="social-section">
         <div class="container">
             <h3 class="social-title">Siguenos</h3>

@@ -28,7 +28,7 @@
         <div class="nav-actions">
             <!-- Botón Perfil -->
             <div class="user-profile-wrapper">
-                <!-- If not logged in -->
+                <!-- Si no ha iniciado sesión -->
                 <a *ngIf="!currentUser()" routerLink="/auth" class="user-icon-btn" title="Iniciar Sesión"
                     (click)="closeMenus()">
                     <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
@@ -37,7 +37,7 @@
                     </svg>
                 </a>
 
-                <!-- If logged in -->
+                <!-- Si ha iniciado sesión -->
                 <div *ngIf="currentUser()" class="user-profile-trigger" (click)="toggleProfileMenu($event)">
                     <div class="user-initials">{{currentUser()?.nombre?.charAt(0)}}</div>
                 </div>

@@ -52,9 +52,8 @@ import { ActivatedRoute, Router } from '@angular/router';
               </div>
             </div>
           </div>
-        </aside>
 
-        <!-- Main Workspace -->
+        <!-- Espacio de trabajo -->
         <main class="sections-editor" *ngIf="selectedPage() as page">
           <div class="page-info-header">
             <div class="title-area">
@@ -82,7 +81,7 @@ import { ActivatedRoute, Router } from '@angular/router';
             </div>
 
             <div class="section-body" *ngIf="section.enabled">
-              <!-- Renderiza diferentes campos según el ID de la sección -->
+              <!-- Secciones dinámicas según el ID -->
               
               <!-- Caso: Hero / Banner Genérico (Instalaciones) -->
               <div *ngIf="['hero', 'banner', 'nosotros_hero'].includes(section.id)" class="edit-mode-container">
@@ -131,7 +130,7 @@ import { ActivatedRoute, Router } from '@angular/router';
                 </div>
               </div>
 
-              <!-- Caso: Grilla de Items Genéricos (Blog, Galería, etc) -->
+              <!-- Sección de lista de elementos -->
               <div *ngIf="['articulos', 'lista_especialidades', 'galeria_instalaciones'].includes(section.id) || section.content.items" class="items-grid-container">
                  <div class="items-header" *ngIf="section.id === 'articulos'">
                     <h4>Gestión de Entradas del Blog</h4>
@@ -148,7 +147,7 @@ import { ActivatedRoute, Router } from '@angular/router';
                  
                  <div class="visual-items-grid">
                     <div *ngFor="let item of section.content.items; let j = index" class="visual-item-card">
-                       <!-- Preview para Contenido con Imagen -->
+                       <!-- Vista previa con imagen -->
                        <div class="item-preview" *ngIf="item.imageUrl || item.image">
                           <img [src]="item.imageUrl || item.image || 'assets/images/placeholder.jpg'" alt="Preview" class="item-img">
                           <div class="item-overlay-info">
@@ -157,7 +156,7 @@ import { ActivatedRoute, Router } from '@angular/router';
                           </div>
                        </div>
                        
-                       <!-- Preview para Contenido sin Imagen (Servicios) -->
+                       <!-- Vista previa sin imagen -->
                        <div class="item-preview" *ngIf="!item.imageUrl && !item.image">
                           <div class="service-preview-header">
                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="service-icon"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
@@ -166,7 +165,7 @@ import { ActivatedRoute, Router } from '@angular/router';
                           <p class="p-3">{{item.description || item.excerpt}}</p>
                        </div>
                        
-                       <!-- Formulario de Edición (Modal/Inline) -->
+                       <!-- Formulario de edición -->
                        <div class="item-edit-form" *ngIf="isEditingItem(section.id, j)">
                           <div class="form-group p-3">
                               <div *ngIf="item.imageUrl !== undefined">
@@ -225,7 +224,7 @@ import { ActivatedRoute, Router } from '@angular/router';
               <!-- Los casos especializados fueron integrados en la grilla genérica superior -->
 
 
-              <!-- Caso: FAQ -->
+              <!-- Preguntas frecuentes -->
               <div *ngIf="section.id === 'faq'" class="form-group">
                 <div class="faq-list">
                   <div *ngFor="let item of section.content.items; let j = index" class="faq-item-simple">
@@ -243,7 +242,7 @@ import { ActivatedRoute, Router } from '@angular/router';
                 <button class="add-btn" (click)="addItem(section, 'faq')">+ Nueva Pregunta FRECUENTE</button>
               </div>
 
-              <!-- Caso Genérico / Otros -->
+              <!-- Sección genérica -->
               <div class="generic-content">
                 <div *ngIf="section.content.category !== undefined" class="form-group">
                     <label>Categoría / Subtítulo Superior</label>

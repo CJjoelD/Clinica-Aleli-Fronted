@@ -21,7 +21,7 @@ export class ServicioDetailComponent implements OnInit {
 
     serviceId = signal<string | null>(null);
 
-    // Dynamic service data computed from the CMS or fallback
+    // Datos dinamicos del CMS o predefinidos
     service = computed(() => {
         const id = this.serviceId();
         if (!id) return undefined;

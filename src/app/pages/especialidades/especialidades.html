@@ -2,11 +2,10 @@
     <!-- Navbar -->
     <app-navbar></app-navbar>
 
-    <!-- Especialidades Banner Mejorado -->
+    <!-- Especialidades Banner -->
     <section class="especialidades-header" *ngIf="getSection('banner') as section" [hidden]="!section.enabled">
         <div class="banner-dynamic-container">
             <div class="banner-content-overlay">
-                <!-- Se mantiene el overlay para el degradado, pero sin texto ya que está en la imagen -->
                 <div class="container text-less-banner">
                 </div>
             </div>
@@ -14,11 +13,11 @@
         </div>
     </section>
 
-    <!-- Specialists Search Section -->
+    <!-- Sección de búsqueda de especialistas -->
     <section class="specialists-search">
         <div class="container">
             <div class="search-layout">
-                <!-- Sidebar: Filtros y Buscador -->
+                <!-- Filtros y Buscador -->
                 <aside class="search-sidebar">
                     <div class="sidebar-sticky-content">
                         <!-- Buscador en tiempo real -->
@@ -96,7 +95,7 @@
                     </div>
                 </aside>
 
-                <!-- Specialists Grid -->
+                <!-- Cuadrícula de especialistas -->
                 <div class="specialists-results">
                     <div class="results-header" *ngIf="searchTerm || isFilterActive()">
                         <p>Mostrando {{filteredDoctors.length}} especialistas</p>
@@ -132,7 +131,7 @@
                         </div>
                     </div>
 
-                    <!-- No Results -->
+                    <!-- Sin resultados -->
                     <div class="no-results-premium" *ngIf="filteredDoctors.length === 0" [@fadeInOut]>
                         <div class="no-results-icon">
                             <svg viewBox="0 0 24 24" width="64" height="64" fill="none" stroke="currentColor"
@@ -152,7 +151,7 @@
         </div>
     </section>
 
-    <!-- Dynamic CMS Sections (Sections not hardcoded) -->
+    <!-- Secciones dinámicas del CMS -->
     <ng-container *ngFor="let section of pageConfig()?.sections">
         <section class="dynamic-cms-section"
             *ngIf="section.enabled && !['banner', 'search_header'].includes(section.id)">
@@ -162,7 +161,7 @@
                     <p class="sub-description" *ngIf="section.content.subtitle">{{section.content.subtitle}}</p>
                 </div>
 
-                <!-- Generic Items Grid if any -->
+                <!-- Lista de servicios genéricos -->
                 <div class="services-grid" *ngIf="section.content.items">
                     <div class="service-card" *ngFor="let item of section.content.items">
                         <div class="service-icon-wrapper">
@@ -179,7 +178,7 @@
                     </div>
                 </div>
 
-                <!-- Simple Text if no items -->
+                <!-- Texto adicional -->
                 <div class="text-center" *ngIf="!section.content.items && section.content.description">
                     <p>{{section.content.description}}</p>
                 </div>

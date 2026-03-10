@@ -2,10 +2,10 @@
     <!-- Navbar -->
     <app-navbar></app-navbar>
 
-    <!-- Dynamic Sections -->
+    <!-- Secciones dinámicas -->
     <ng-container *ngIf="pageConfig() as page">
 
-        <!-- Services Hero Section -->
+        <!-- Sección Hero de servicios -->
         <section class="services-hero" *ngIf="getSection('hero') as section">
             <div class="container" *ngIf="section.enabled">
                 <div class="section-header">
@@ -26,7 +26,7 @@
             </div>
         </section>
 
-        <!-- Specialties Grid Section -->
+        <!-- Cuadrícula de especialidades -->
         <section class="specialties-section" *ngIf="getSection('servicios') as section">
             <div class="container" *ngIf="section.enabled">
                 <div class="specialties-intro">
@@ -54,7 +54,7 @@
             </div>
         </section>
 
-        <!-- Facilities Section -->
+        <!-- Sección de instalaciones -->
         <section class="facilities-section" *ngIf="getSection('nosotros_hero') as section">
             <div class="container" *ngIf="section.enabled">
                 <h2 class="section-title">{{section.content.title}}</h2>

@@ -3,7 +3,7 @@ import { Router, CanActivateFn } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
 /**
- * Guard para proteger rutas administrativas.
+ * Guarda para proteger rutas administrativas.
  * Solo permite el acceso si el usuario está logueado y tiene el rol de 'Admin'.
  */
 export const adminGuard: CanActivateFn = () => {

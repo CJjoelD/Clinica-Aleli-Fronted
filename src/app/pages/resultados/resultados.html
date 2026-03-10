@@ -2,7 +2,7 @@
 
 <main class="resultados-page">
     <div class="container fade-in">
-        <!-- LOOKUP VIEW -->
+        <!-- VISTA DE BÚSQUEDA -->
         <div class="lookup-container" *ngIf="viewState() === 'LOOKUP'">
             <div class="card main-lookup-card shadow-premium border-radiant">
                 <div class="lookup-header" *ngIf="getSection('lookup_header') as section" [hidden]="!section.enabled">
@@ -39,9 +39,14 @@
                         </div>
                     </div>
 
-                    <!-- Error Alert -->
+                    <!-- Alerta de error -->
                     <div class="error-alert" *ngIf="errorMessage()">
-                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor"
+                            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="8" x2="12" y2="12"></line>
+                            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                        </svg>
                         <span>{{errorMessage()}}</span>
                     </div>
 
@@ -64,17 +69,19 @@
             </div>
         </div>
 
-        <!-- LOADING OVERLAY -->
+        <!-- CAPA DE CARGA -->
         <div class="loading-overlay" *ngIf="isLoading()">
             <div class="search-loader">
                 <div class="loading-bars">
-                    <div></div><div></div><div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
                 </div>
                 <p>Consultando base de datos médica...</p>
             </div>
         </div>
 
-        <!-- RESULTS VIEW -->
+        <!-- VISTA DE RESULTADOS -->
         <div class="results-view-container fade-in" *ngIf="viewState() === 'RESULTS'">
             <div class="print-actions">
                 <button (click)="printResults()" class="btn-action print shadow-btn">
@@ -93,7 +100,7 @@
 
             <div class="results-content reveal">
                 <div class="doc-style shadow-premium relative">
-                    <!-- Marca de Agua -->
+                    <!-- Marca de agua -->
                     <div class="watermark">CLÍNICA ALELÍ</div>
 
                     <div class="doc-header">
@@ -161,7 +168,7 @@
                                 </tr>
                             </tbody>
                         </table>
-                        
+
                         <div class="observations-section" *ngIf="foundResult?.observaciones">
                             <div class="obs-title">NOTAS ADICIONALES:</div>
                             <p>{{ foundResult.observaciones }}</p>
@@ -188,7 +195,8 @@
             </div>
 
             <div class="portal-actions-footer">
-                <p>¿Necesita ayuda con sus resultados? <a href="https://wa.me/593995500139" target="_blank">Contactar con Soporte Médico</a></p>
+                <p>¿Necesita ayuda con sus resultados? <a href="https://wa.me/593995500139" target="_blank">Contactar
+                        con Soporte Médico</a></p>
             </div>
         </div>
     </div>

@@ -10,20 +10,20 @@ export class PaginaService {
     private readonly VERSION_KEY = 'clinica_aleli_cms_version';
     private readonly CURRENT_VERSION = '5.0.0';
 
-    // State
+    // Estado de las páginas
     pages = signal<PageConfig[]>([]);
 
     constructor() {
         this.checkVersionAndLoad();
 
-        // Auto-save to localStorage whenever pages signal changes
+        // Guarda en localStorage al cambiar
         effect(() => {
             const data = JSON.stringify(this.pages());
             localStorage.setItem(this.STORAGE_KEY, data);
             console.log('CMS: Configuración guardada en localStorage');
         });
 
-        // Sync between tabs
+        // Sincroniza entre pestañas
         window.addEventListener('storage', (e) => {
             if (e.key === this.STORAGE_KEY && e.newValue) {
                 try {
@@ -68,11 +68,9 @@ export class PaginaService {
                 savedPages.forEach(savedPage => {
                     const index = mergedPages.findIndex(p => p.id === savedPage.id);
                     if (index !== -1) {
-                        // Merged fix removed as it was overwriting IDs by position
-                        // which corrupted data when adding/removing items.
-                        // Now we trust the saved page content.
+                        // Se confía en el contenido guardado
 
-                        // Existing blog merge logic...
+                        // Lógica de mezcla del blog
                         if (savedPage.id === 'blog') {
                             const initialArticulos = mergedPages[index].sections.find((s: SectionConfig) => s.id === 'articulos');
                             const savedArticulos = savedPage.sections.find((s: SectionConfig) => s.id === 'articulos');

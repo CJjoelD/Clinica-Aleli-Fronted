@@ -2,10 +2,10 @@
     <!-- Navbar -->
     <app-navbar></app-navbar>
 
-    <!-- Dynamic Sections -->
+    <!-- Secciones dinámicas -->
     <ng-container *ngIf="pageConfig() as page">
 
-        <!-- Header Section -->
+        <!-- Sección de cabecera -->
         <header class="page-header" *ngIf="getSection('hero') as section">
             <div class="container" *ngIf="section.enabled">
                 <h1 class="page-title">{{section.content.title}}</h1>
@@ -13,7 +13,7 @@
             </div>
         </header>
 
-        <!-- Gallery Section -->
+        <!-- Sección de galería -->
         <section class="gallery-section" *ngIf="getSection('galeria_instalaciones') as section">
             <div class="container" *ngIf="section.enabled">
                 <div class="gallery-grid">
@@ -25,7 +25,7 @@
             </div>
         </section>
 
-        <!-- Detailed Feature Rows -->
+        <!-- Detalles de instalaciones -->
         <section class="details-section" *ngIf="getSection('detalles_instalaciones') as section">
             <div class="container" *ngIf="section.enabled">
                 <div class="detail-row" *ngFor="let item of section.content.items">
@@ -42,7 +42,7 @@
             </div>
         </section>
 
-        <!-- Summary Grid Section -->
+        <!-- Cuadrícula de resumen -->
         <section class="summary-section" *ngIf="getSection('resumen_caracteristicas') as section">
             <div class="container" *ngIf="section.enabled">
                 <h2 class="section-title">{{section.content.title}}</h2>
@@ -61,7 +61,4 @@
             </div>
         </section>
     </ng-container>
-
-    <!-- Footer -->
-    <app-footer></app-footer>
 </div>
