@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Consulta } from '../models/consulta.model';
@@ -7,10 +7,15 @@ import { Consulta } from '../models/consulta.model';
   providedIn: 'root'
 })
 export class ConsultaService {
+  private apiUrl = 'http://localhost:3000/api/consultas';
+  private http = inject(HttpClient);
 
-  private apiUrl = 'http://localhost:3000/consultas'; // backend
+  constructor() {}
 
-  constructor(private http: HttpClient) {}
+  // Obtener todas las consultas (admin)
+  getConsultas(): Observable<Consulta[]> {
+    return this.http.get<Consulta[]>(this.apiUrl);
+  }
 
   // Obtener consultas del paciente
   getConsultasPorUsuario(usuarioId: number): Observable<Consulta[]> {
@@ -19,11 +24,11 @@ export class ConsultaService {
 
   // Obtener una consulta por id
   getConsultaById(id: number): Observable<Consulta> {
-    return this.http.get<Consulta>(`${this.apiUrl}/${id}`);
+    return this.http.get<any>(`${this.apiUrl}/${id}`);
   }
 
   // Crear nueva consulta
-  crearConsulta(consulta: Consulta): Observable<Consulta> {
-    return this.http.post<Consulta>(this.apiUrl, consulta);
+  crearConsulta(consulta: any): Observable<any> {
+    return this.http.post<any>(this.apiUrl, consulta);
   }
 }

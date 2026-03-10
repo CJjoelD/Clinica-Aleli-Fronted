@@ -1,10 +1,12 @@
 import { Routes } from '@angular/router';
 import { AdminLayoutComponent } from './layout/layout';
+import { adminGuard } from '../guards/admin.guard';
 
 export const ADMIN_ROUTES: Routes = [
     {
         path: '',
         component: AdminLayoutComponent,
+        canActivate: [adminGuard],
         children: [
             {
                 path: 'dashboard',
@@ -21,6 +23,10 @@ export const ADMIN_ROUTES: Routes = [
             {
                 path: 'usuarios',
                 loadComponent: () => import('./usuarios/usuarios').then(m => m.UsuariosComponent)
+            },
+            {
+                path: 'cms',
+                loadComponent: () => import('./cms/cms').then(m => m.CmsContentComponent)
             },
             {
                 path: '',

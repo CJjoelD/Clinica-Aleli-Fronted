@@ -70,5 +70,10 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/resultados/resultados').then(m => m.ResultadosComponent),
         data: { animation: 'ResultadosPage' }
     },
+    {
+        path: 'forbidden',
+        loadComponent: () => import('./pages/forbidden/forbidden').then(m => m.ForbiddenComponent),
+        data: { animation: 'ForbiddenPage' }
+    },
     { path: '', redirectTo: 'inicio', pathMatch: 'full' },
 ];

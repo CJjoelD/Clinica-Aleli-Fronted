@@ -7,75 +7,55 @@
 
         <!-- Header Section -->
         <header class="page-header" *ngIf="getSection('hero') as section">
-            <div class="container container-content" *ngIf="section.enabled">
+            <div class="container" *ngIf="section.enabled">
                 <h1 class="page-title">{{section.content.title}}</h1>
                 <p class="page-subtitle">{{section.content.description}}</p>
             </div>
         </header>
 
         <!-- Gallery Section -->
-        <section class="gallery-intro" *ngIf="getSection('galeria_instalaciones') as section">
-            <div class="container gallery-container" *ngIf="section.enabled">
-                <div class="gallery-staggered">
-                    <div class="gallery-item large" *ngIf="section.content.items[0]">
-                        <img [src]="section.content.items[0].imageUrl" [alt]="section.content.items[0].title">
-                    </div>
-                    <div class="gallery-item vertical" *ngIf="section.content.items[1]">
-                        <img [src]="section.content.items[1].imageUrl" [alt]="section.content.items[1].title">
-                    </div>
-                    <div class="gallery-item medium" *ngIf="section.content.items[2]">
-                        <img [src]="section.content.items[2].imageUrl" [alt]="section.content.items[2].title">
-                    </div>
-                    <div class="gallery-item medium" *ngIf="section.content.items[3]">
-                        <img [src]="section.content.items[3].imageUrl" [alt]="section.content.items[3].title">
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Detailed Sections (Using hero contents if needed or standard text) -->
-        <section class="details-section" *ngIf="getSection('hero') as hero">
-            <div class="container" *ngIf="hero.enabled">
-                <div class="detail-row">
-                    <div class="detail-image">
-                        <img [src]="hero.content.imageUrl" [alt]="hero.content.title">
-                    </div>
-                    <div class="detail-text">
-                        <h2>{{hero.content.title}}</h2>
-                        <p>{{hero.content.description}}</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Summary Section (Dynamic with Mision/Vision) -->
-        <section class="facilities-summary" *ngIf="getSection('mision_vision') as section">
+        <section class="gallery-section" *ngIf="getSection('galeria_instalaciones') as section">
             <div class="container" *ngIf="section.enabled">
-                <h2 class="section-main-title">Valores y Metas</h2>
-                <div class="summary-grid">
-                    <div class="summary-item">
-                        <div class="summary-header">
-                            <span class="check-icon">
-                                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
-                                    stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                                    <polyline points="20 6 9 17 4 12"></polyline>
-                                </svg>
-                            </span>
-                            <h3>{{section.content.mision_title}}</h3>
-                        </div>
-                        <p>{{section.content.mision_text}}</p>
+                <div class="gallery-grid">
+                    <div class="gallery-item" *ngFor="let item of section.content.items; let i = index"
+                        [class.large]="i === 0">
+                        <img [src]="item.imageUrl" [alt]="item.title">
                     </div>
-                    <div class="summary-item">
-                        <div class="summary-header">
-                            <span class="check-icon">
-                                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
-                                    stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                                    <polyline points="20 6 9 17 4 12"></polyline>
-                                </svg>
-                            </span>
-                            <h3>{{section.content.vision_title}}</h3>
+                </div>
+            </div>
+        </section>
+
+        <!-- Detailed Feature Rows -->
+        <section class="details-section" *ngIf="getSection('detalles_instalaciones') as section">
+            <div class="container" *ngIf="section.enabled">
+                <div class="detail-row" *ngFor="let item of section.content.items">
+                    <div class="detail-image">
+                        <img [src]="item.imageUrl" [alt]="item.title">
+                    </div>
+                    <div class="detail-content">
+                        <h2>{{item.title}}</h2>
+                        <ul class="points-list">
+                            <li *ngFor="let point of item.points">{{point}}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Summary Grid Section -->
+        <section class="summary-section" *ngIf="getSection('resumen_caracteristicas') as section">
+            <div class="container" *ngIf="section.enabled">
+                <h2 class="section-title">{{section.content.title}}</h2>
+                <div class="summary-grid">
+                    <div class="summary-card" *ngFor="let item of section.content.items">
+                        <div class="icon-circle">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor"
+                                stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
                         </div>
-                        <p>{{section.content.vision_text}}</p>
+                        <h3>{{item.title}}</h3>
+                        <p>{{item.description}}</p>
                     </div>
                 </div>
             </div>

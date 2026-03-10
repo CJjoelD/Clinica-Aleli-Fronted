@@ -152,6 +152,41 @@
         </div>
     </section>
 
+    <!-- Dynamic CMS Sections (Sections not hardcoded) -->
+    <ng-container *ngFor="let section of pageConfig()?.sections">
+        <section class="dynamic-cms-section"
+            *ngIf="section.enabled && !['banner', 'search_header'].includes(section.id)">
+            <div class="container">
+                <div class="section-intro text-center mb-5" *ngIf="section.content.title">
+                    <h2 class="sub-title">{{section.content.title}}</h2>
+                    <p class="sub-description" *ngIf="section.content.subtitle">{{section.content.subtitle}}</p>
+                </div>
+
+                <!-- Generic Items Grid if any -->
+                <div class="services-grid" *ngIf="section.content.items">
+                    <div class="service-card" *ngFor="let item of section.content.items">
+                        <div class="service-icon-wrapper">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M12 21a9 9 0 100-18 9 9 0 000 18z M12 8v8M8 12h8"></path>
+                            </svg>
+                        </div>
+                        <div class="card-body">
+                            <h3>{{item.title || item.name}}</h3>
+                            <p>{{item.description || item.bio || item.excerpt}}</p>
+                            <a [routerLink]="['/medico', item.id]" class="view-more-link" *ngIf="item.specialty">VER
+                                PERFIL →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Simple Text if no items -->
+                <div class="text-center" *ngIf="!section.content.items && section.content.description">
+                    <p>{{section.content.description}}</p>
+                </div>
+            </div>
+        </section>
+    </ng-container>
+
     <!-- Footer -->
     <app-footer></app-footer>
 </div>

@@ -16,15 +16,30 @@ export class NavbarComponent {
 
   currentUser = this.authService.currentUser;
   isProfileMenuOpen = signal(false);
+  isMobileMenuOpen = signal(false);
+
+  isAdmin(): boolean {
+    return this.authService.isAdmin();
+  }
 
   toggleProfileMenu(event?: Event) {
     if (event) event.stopPropagation();
     this.isProfileMenuOpen.update(v => !v);
   }
 
+  toggleMobileMenu(event?: Event) {
+    if (event) event.stopPropagation();
+    this.isMobileMenuOpen.update(v => !v);
+  }
+
+  closeMenus() {
+    this.isProfileMenuOpen.set(false);
+    this.isMobileMenuOpen.set(false);
+  }
+
   logout() {
     this.authService.logout();
-    this.isProfileMenuOpen.set(false);
-    this.router.navigate(['/inicio']);
+    this.closeMenus();
+    window.location.href = '/inicio';
   }
 }

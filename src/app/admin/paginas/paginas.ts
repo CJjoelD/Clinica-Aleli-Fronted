@@ -27,15 +27,30 @@ import { ActivatedRoute, Router } from '@angular/router';
         <!-- Sidebar: Lista de Páginas Categorizada -->
         <aside class="pages-list" [class.collapsed]="!isSidebarVisible()">
           <div class="sidebar-header-simple">
-            <h4>Páginas</h4>
+            <h4>Gestión de Páginas</h4>
           </div>
-          <div 
-            *ngFor="let page of filteredPages()" 
-            class="page-selector"
-            [class.active]="selectedPage()?.id === page.id"
-            (click)="selectPage(page)">
-            <span class="page-dot"></span>
-            {{ page.id === 'nosotros' ? 'Instalaciones' : page.title }}
+          <div class="sidebar-scroll">
+            <div class="sidebar-section">
+              <h3 class="sidebar-category">Páginas Principales</h3>
+              <div *ngFor="let page of mainPages()" 
+                   class="page-item" 
+                   [class.active]="selectedPage()?.id === page.id"
+                   (click)="selectPage(page)">
+                <span class="page-dot"></span>
+                <span class="page-title">{{page.title}}</span>
+              </div>
+            </div>
+
+            <div class="sidebar-section" *ngIf="servicePages().length > 0">
+              <h3 class="sidebar-category">Servicios (Detalle)</h3>
+              <div *ngFor="let page of servicePages()" 
+                   class="page-item" 
+                   [class.active]="selectedPage()?.id === page.id"
+                   (click)="selectPage(page)">
+                <span class="page-dot srv"></span>
+                <span class="page-title">{{page.title.replace('Pág: ', '')}}</span>
+              </div>
+            </div>
           </div>
         </aside>
 
@@ -229,14 +244,22 @@ import { ActivatedRoute, Router } from '@angular/router';
               </div>
 
               <!-- Caso Genérico / Otros -->
-              <div *ngIf="!['hero', 'banner', 'nosotros_hero', 'articulos', 'lista_medicos', 'servicios', 'faq', 'datos_contacto'].includes(section.id)" class="generic-content">
+              <div class="generic-content">
+                <div *ngIf="section.content.category !== undefined" class="form-group">
+                    <label>Categoría / Subtítulo Superior</label>
+                    <input type="text" [(ngModel)]="section.content.category" (change)="saveChange()" class="form-control">
+                </div>
                 <div *ngIf="section.content.title !== undefined" class="form-group">
                     <label>Título</label>
                     <input type="text" [(ngModel)]="section.content.title" (change)="saveChange()" class="form-control">
                 </div>
                 <div *ngIf="section.content.description !== undefined" class="form-group">
-                    <label>Descripción</label>
-                    <textarea [(ngModel)]="section.content.description" (change)="saveChange()" class="form-control"></textarea>
+                    <label>Descripción / Contenido de Texto</label>
+                    <textarea [(ngModel)]="section.content.description" (change)="saveChange()" class="form-control" rows="4"></textarea>
+                </div>
+                <div *ngIf="section.content.imageUrl !== undefined" class="form-group">
+                    <label>Imagen (URL)</label>
+                    <input type="text" [(ngModel)]="section.content.imageUrl" (change)="saveChange()" class="form-control">
                 </div>
               </div>
             </div>
@@ -328,10 +351,26 @@ import { ActivatedRoute, Router } from '@angular/router';
       font-size: 0.95rem;
     }
 
-    .page-dot { width: 8px; height: 8px; border-radius: 50%; background: #e2e8f0; transition: all 0.3s; }
-    .page-selector:hover { background: #f8fafc; color: #6a1b9a; }
-    .page-selector.active { background: #f5edfa; color: #6a1b9a; }
-    .page-selector.active .page-dot { background: #6a1b9a; transform: scale(1.5); box-shadow: 0 0 10px rgba(106, 27, 154, 0.4); }
+    .sidebar-scroll { max-height: calc(100vh - 150px); overflow-y: auto; padding-right: 5px; }
+    .sidebar-scroll::-webkit-scrollbar { width: 4px; }
+    .sidebar-scroll::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
+
+    .sidebar-category { 
+      font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1.5px; 
+      color: #94a3b8; font-weight: 800; margin: 1.5rem 0 0.8rem 0.5rem; 
+    }
+
+    .page-item {
+      display: flex; align-items: center; gap: 12px; padding: 12px 16px; 
+      border-radius: 14px; cursor: pointer; transition: all 0.2s;
+      color: #475569; font-weight: 600; font-size: 0.9rem; margin-bottom: 4px;
+    }
+    .page-item:hover { background: #f8fafc; color: #6a1b9a; }
+    .page-item.active { background: #f5edfa; color: #6a1b9a; }
+
+    .page-dot { width: 6px; height: 6px; border-radius: 50%; background: #cbd5e1; }
+    .page-dot.srv { background: #26C6B2; }
+    .page-item.active .page-dot { background: #6a1b9a; transform: scale(1.3); }
 
     .sections-editor { flex: 1; display: flex; flex-direction: column; gap: 2rem; }
 
@@ -499,7 +538,8 @@ export class PaginaEditorComponent {
 
   pages = this.paginaService.pages;
   mainPageIds = ['inicio', 'servicios', 'especialidades', 'nosotros', 'contacto'];
-  filteredPages = computed(() => this.pages().filter(p => this.mainPageIds.includes(p.id)));
+  mainPages = computed(() => this.pages().filter(p => this.mainPageIds.includes(p.id)));
+  servicePages = computed(() => this.pages().filter(p => p.id.startsWith('srv_')));
 
   selectedPage = signal<PageConfig | null>(null);
   isSidebarVisible = signal(true);
@@ -590,6 +630,8 @@ export class PaginaEditorComponent {
       newItem = { ...newItem, title: 'Nueva Instalación', excerpt: 'Descripción...', imageUrl: 'assets/images/placeholder.jpg' };
     } else if (type === 'faq') {
       newItem = { question: 'Nueva Pregunta', answer: 'Nueva Respuesta' };
+    } else if (this.selectedPage()?.id.startsWith('srv_')) {
+      newItem = { ...newItem, title: 'Nuevo punto o detalle' };
     } else {
       newItem = { title: 'Nuevo Item' };
     }

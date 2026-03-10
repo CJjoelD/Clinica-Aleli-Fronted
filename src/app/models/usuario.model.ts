@@ -1,8 +1,9 @@
 export interface Usuario {
-  id: number;
+  id?: number;
   nombre: string;
   email: string;
-  password?: string; // Opcional en el frontend por seguridad
+  password?: string;
   tipo: 'ADMIN' | 'PACIENTE';
-  rolId: number;
+  rolId?: number;
+  cedula?: string;
 }

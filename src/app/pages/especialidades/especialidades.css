@@ -314,9 +314,9 @@
     background: #fff;
     border-radius: 30px;
     overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+    box-shadow: 0 15px 45px rgba(106, 76, 139, 0.1); /* Efecto recuadro destacado */
     transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
-    border: 1px solid rgba(106, 76, 139, 0.03);
+    border: 1px solid rgba(106, 76, 139, 0.05);
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -398,9 +398,9 @@
 }
 
 .doctor-card-body h3 {
-    font-size: 1.4rem;
-    color: #1e293b;
-    font-weight: 800;
+    font-size: 1.45rem;
+    color: #1e1b4b; /* Azul-púrpura muy oscuro para legibilidad */
+    font-weight: 900;
     margin-bottom: 1.5rem;
     line-height: 1.2;
 }

@@ -1,22 +1,48 @@
 import { Injectable, signal, effect } from '@angular/core';
 import { PageConfig, SectionConfig } from '../models/cms.model';
+import { SERVICES_DATA } from '../pages/servicios/servicios-data';
 
 @Injectable({
     providedIn: 'root'
 })
 export class PaginaService {
     private readonly STORAGE_KEY = 'clinica_aleli_cms_config';
+    private readonly VERSION_KEY = 'clinica_aleli_cms_version';
+    private readonly CURRENT_VERSION = '5.0.0';
 
     // State
     pages = signal<PageConfig[]>([]);
 
     constructor() {
-        this.loadInitialConfig();
+        this.checkVersionAndLoad();
 
         // Auto-save to localStorage whenever pages signal changes
         effect(() => {
-            localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.pages()));
+            const data = JSON.stringify(this.pages());
+            localStorage.setItem(this.STORAGE_KEY, data);
+            console.log('CMS: Configuración guardada en localStorage');
         });
+
+        // Sync between tabs
+        window.addEventListener('storage', (e) => {
+            if (e.key === this.STORAGE_KEY && e.newValue) {
+                try {
+                    console.log('CMS: Detectado cambio en otra pestaña, sincronizando...');
+                    this.pages.set(JSON.parse(e.newValue));
+                } catch (err) {
+                    console.error('Error al sincronizar CMS entre pestañas', err);
+                }
+            }
+        });
+    }
+
+    private checkVersionAndLoad() {
+        const savedVersion = localStorage.getItem(this.VERSION_KEY);
+        if (savedVersion !== this.CURRENT_VERSION) {
+            localStorage.removeItem(this.STORAGE_KEY);
+            localStorage.setItem(this.VERSION_KEY, this.CURRENT_VERSION);
+        }
+        this.loadInitialConfig();
     }
 
     private loadInitialConfig() {
@@ -29,25 +55,29 @@ export class PaginaService {
             this.getInitialBlogConfig(),
             this.getInitialResultadosConfig(),
             this.getInitialNosotrosConfig(),
-            this.getInitialContactoConfig()
+            this.getInitialContactoConfig(),
+            this.getInitialInstalacionesConfig(),
+            ...this.getInitialAllServicesDetails()
         ];
 
         if (saved) {
             try {
                 const savedPages: PageConfig[] = JSON.parse(saved);
-                // Merge logic: keep saved pages, but add missing ones from initialConfig
                 const mergedPages = [...initialConfig];
 
                 savedPages.forEach(savedPage => {
                     const index = mergedPages.findIndex(p => p.id === savedPage.id);
                     if (index !== -1) {
-                        // Special merge for blog articles to ensure new ones appear
+                        // Merged fix removed as it was overwriting IDs by position
+                        // which corrupted data when adding/removing items.
+                        // Now we trust the saved page content.
+
+                        // Existing blog merge logic...
                         if (savedPage.id === 'blog') {
                             const initialArticulos = mergedPages[index].sections.find((s: SectionConfig) => s.id === 'articulos');
                             const savedArticulos = savedPage.sections.find((s: SectionConfig) => s.id === 'articulos');
 
                             if (initialArticulos && savedArticulos) {
-                                // Keep saved items but add any new ones from initial that aren't there
                                 initialArticulos.content.items.forEach((initialItem: any) => {
                                     if (!savedArticulos.content.items.find((savedItem: any) => savedItem.id === initialItem.id)) {
                                         savedArticulos.content.items.push(initialItem);
@@ -169,7 +199,7 @@ export class PaginaService {
     getInitialNosotrosConfig(): PageConfig {
         return {
             id: 'nosotros',
-            title: 'Instalaciones',
+            title: 'Nosotros',
             sections: [
                 {
                     id: 'nosotros_hero',
@@ -178,7 +208,8 @@ export class PaginaService {
                     content: {
                         title: 'Nosotros',
                         subtitle: 'Cuidamos tu salud con compromiso y vocación',
-                        imageUrl: 'assets/images/NOSOTROS/nosotros_banner.webp'
+                        description: 'Somos una Clínica de especialidades, con personal altamente capacitado, los cuales brindan sus servicios a las personas que lo necesiten.',
+                        imageUrl: 'assets/images/NOSOTROS/nosotros_banner.png'
                     }
                 },
                 {
@@ -187,19 +218,21 @@ export class PaginaService {
                     enabled: true,
                     content: {
                         mision_title: 'Misión',
-                        mision_text: 'Brindar atención médica de excelencia con calidez humana.',
+                        mision_text: 'Nuestra misión es ser un referente de salud, reconocido por la población como un centro de calidad, basado en principios y valores éticos, que usa alta tecnología, infraestructura de primera y recursos eficientes, garantizando una atención centrada en el paciente, oportuna, segura y de calidad.',
                         vision_title: 'Visión',
-                        vision_text: 'Ser la clínica líder en especialidades médicas en la región.'
+                        vision_text: 'La visión de la institución es ser un referente en salud regional y nacional, certificado y acreditado con normas internacionales, que brinde servicios de excelencia y con ética profesional, manteniendo la mejora continua.'
                     }
                 },
                 {
-                    id: 'galeria_instalaciones',
-                    name: 'Galería de Fotos',
+                    id: 'instalaciones_primer_nivel',
+                    name: 'Instalaciones de Primer Nivel',
                     enabled: true,
                     content: {
+                        title: 'Nuestras Instalaciones de Primer Nivel',
+                        description: 'La Clínica Alelí en la ciudad de Cuenca ofrece instalaciones de primer nivel con tecnología avanzada y un ambiente moderno y cómodo, brindando atención integral y personalizada para el bienestar de nuestros pacientes.',
                         items: [
                             { title: 'Quirófano', imageUrl: 'assets/images/INSTALACIONES/ESPACIODETRABAJO.png' },
-                            { title: 'Entrada', imageUrl: 'assets/images/INSTALACIONES/ACENSOR.png' },
+                            { title: 'Elevador', imageUrl: 'assets/images/INSTALACIONES/ACENSOR.png' },
                             { title: 'Habitación', imageUrl: 'assets/images/INSTALACIONES/CAMILLAMORADA.png' },
                             { title: 'Recepción', imageUrl: 'assets/images/INSTALACIONES/PEOPLE.png' }
                         ]
@@ -220,7 +253,7 @@ export class PaginaService {
                     enabled: true,
                     content: {
                         title: 'Bienvenidos a la Clínica Alelí',
-                        description: 'Cuidamos de ti con profesionalismo y calidez. Especialidades médicas de alto nivel, tecnología avanzada y atención personalizada para el bienestar de su familia.',
+                        description: 'Atención médica de excelencia con calidez humana. Especialidades de alto nivel y tecnología avanzada al servicio de tu bienestar.',
                         buttonText: 'AGENDAR CITA',
                         secondaryButtonText: 'CONÓCENOS'
                     }
@@ -262,7 +295,7 @@ export class PaginaService {
                     enabled: true,
                     content: {
                         title: 'Comprometidos con tu salud, con el cuidado que mereces',
-                        description: 'Te brindamos los mejores servicios médicos en el Austro cuencano, con personal altamente capacitado y disponibles para tus necesidades.',
+                        description: 'Somos una Clínica de especialidades, con personal altamente capacitado, los cuales brindan sus servicios a las personas que lo necesiten.',
                         imageUrl: 'assets/images/Imagen_general.webp'
                     }
                 },
@@ -345,12 +378,15 @@ export class PaginaService {
                         title: 'Especialidades Médicas',
                         subtitle: 'Nuestra clínica ofrece estos servicios médicos',
                         items: [
-                            { title: 'CIRUGÍA GENERAL', description: 'Nuestro equipo de cirujanos altamente capacitados utiliza las técnicas más avanzadas para ofrecer soluciones efectivas y seguras.' },
-                            { title: 'GINECOLOGÍA Y OBSTETRICIA', description: 'Cuidado integral de la salud de la mujer en todas sus etapas, con un enfoque cálido, profesional y especializado.' },
-                            { title: 'PEDIATRÍA', description: 'Atención médica dedicada al crecimiento y bienestar de los más pequeños, brindando tranquilidad a toda la familia.' },
-                            { title: 'PSICOLOGÍA CLÍNICA', description: 'Apoyo emocional y herramientas profesionales para fortalecer la salud mental y el equilibrio personal.' },
-                            { title: 'OTORRINOLARINGOLOGÍA', description: 'Especialistas en el diagnóstico y tratamiento de afecciones de oído, nariz y garganta.' },
-                            { title: 'CARDIOLOGÍA', description: 'Monitoreo y cuidado avanzado de la salud cardiovascular, previniendo enfermedades del corazón.' }
+                            { id: 'cirugia-general', title: 'CIRUGÍA GENERAL', description: 'Nuestro equipo de cirujanos altamente capacitados utiliza las técnicas más avanzadas para ofrecer soluciones efectivas y seguras.', link: 'cirugia-general' },
+                            { id: 'ginecologia-y-obstetricia', title: 'GINECOLOGÍA Y OBSTETRICIA', description: 'Cuidado integral de la salud de la mujer en todas sus etapas, con un enfoque cálido, profesional y especializado.', link: 'ginecologia-y-obstetricia' },
+                            { id: 'pediatria', title: 'PEDIATRÍA INTEGRAL', description: 'Atención médica dedicada al crecimiento y bienestar de los más pequeños, brindando tranquilidad a toda la familia.', link: 'pediatria' },
+                            { id: 'psicologia-clinica', title: 'PSICOLOGÍA CLÍNICA', description: 'Apoyo emocional y herramientas profesionales para fortalecer la salud mental y el equilibrio personal.', link: 'psicologia-clinica' },
+                            { id: 'otorrinolaringologia', title: 'OTORRINOLARINGOLOGÍA', description: 'Especialistas en el diagnóstico y tratamiento de afecciones de oído, nariz y garganta.', link: 'otorrinolaringologia' },
+                            { id: 'cardiologia', title: 'CARDIOLOGÍA PREVENTIVA', description: 'Monitoreo y cuidado avanzado de la salud cardiovascular, previniendo enfermedades del corazón.', link: 'cardiologia' },
+                            { id: 'medicina-familiar', title: 'MEDICINA FAMILIAR', description: 'Atención médica integral y continua a toda la familia, enfocada en la prevención y el bienestar.', link: 'medicina-familiar' },
+                            { id: 'traumatologia-y-ortopedia', title: 'TRAUMATOLOGÍA Y FISIOTERAPIA', description: 'Prevención y tratamiento de lesiones musculoesqueléticas con técnicas modernas de rehabilitación.', link: 'traumatologia-y-ortopedia' },
+                            { id: 'laboratorios-clinicos', title: 'LABORATORIOS CLÍNICOS', description: 'Análisis clínicos con resultados precisos y rápidos utilizando tecnología de vanguardia.', link: 'laboratorios-clinicos' }
                         ]
                     }
                 },
@@ -524,5 +560,152 @@ export class PaginaService {
                 }
             ]
         };
+    }
+
+    getInitialInstalacionesConfig(): PageConfig {
+        return {
+            id: 'instalaciones',
+            title: 'Instalaciones',
+            sections: [
+                {
+                    id: 'hero',
+                    name: 'Banner Principal',
+                    enabled: true,
+                    content: {
+                        title: 'Instalaciones',
+                        description: 'Espacios diseñados para tu bienestar'
+                    }
+                },
+                {
+                    id: 'galeria_instalaciones',
+                    name: 'Galería de Fotos',
+                    enabled: true,
+                    content: {
+                        items: [
+                            { title: 'Quirófano', imageUrl: 'assets/images/INSTALACIONES/ESPACIODETRABAJO.png' },
+                            { title: 'Elevador', imageUrl: 'assets/images/INSTALACIONES/ACENSOR.png' },
+                            { title: 'Habitación', imageUrl: 'assets/images/INSTALACIONES/CAMILLAMORADA.png' },
+                            { title: 'Recepción', imageUrl: 'assets/images/INSTALACIONES/PEOPLE.png' }
+                        ]
+                    }
+                },
+                {
+                    id: 'detalles_instalaciones',
+                    name: 'Detalle de Espacios',
+                    enabled: true,
+                    content: {
+                        items: [
+                            {
+                                id: 'quirofanos',
+                                title: 'NUESTROS QUIRÓFANOS EN LA CLÍNICA ALELÍ EN CUENCA',
+                                imageUrl: 'assets/images/INSTALACIONES/ESPACIODETRABAJO.png',
+                                points: [
+                                    'Equipados con tecnología de última generación para garantizar precisión y seguridad en cada procedimiento.',
+                                    'Personal médico altamente capacitado y especializado en diversas áreas quirúrgicas.',
+                                    'Estrictos protocolos de higiene y esterilización para asegurar un entorno seguro.'
+                                ]
+                            },
+                            {
+                                id: 'recuperacion',
+                                title: 'SALAS DE RECUPERACION',
+                                imageUrl: 'assets/images/INSTALACIONES/CAMILLAMORADA.png',
+                                points: [
+                                    'Equipamiento avanzado para el monitoreo continuo de los pacientes.',
+                                    'Ambientes diseñados para favorecer el descanso y la pronta recuperación.',
+                                    'Espacios confortables y privados para una recuperación tranquila y segura.'
+                                ]
+                            },
+                            {
+                                id: 'consultorios',
+                                title: 'CONSULTORIOS DE PRIMERA',
+                                imageUrl: 'assets/images/INSTALACIONES/CONSULTA.png',
+                                points: [
+                                    'Consultorios modernos y equipados con tecnología avanzada para un diagnóstico preciso.',
+                                    'Amplia variedad de especialidades médicas en un solo lugar.',
+                                    'Gestión eficiente de citas para minimizar los tiempos de espera.'
+                                ]
+                            },
+                            {
+                                id: 'sonrisa',
+                                title: 'TEN LA MEJOR SONRISA',
+                                imageUrl: 'assets/images/INSTALACIONES/SONRISA.png',
+                                points: [
+                                    'Consultorios modernos y equipados con tecnología avanzada para un diagnóstico preciso.',
+                                    'Amplia variedad de especialidades médicas en un solo lugar.',
+                                    'Gestión eficiente de citas para minimizar los tiempos de espera.'
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {
+                    id: 'resumen_caracteristicas',
+                    name: 'Resumen de Características',
+                    enabled: true,
+                    content: {
+                        title: 'Nuestras Instalaciones',
+                        items: [
+                            {
+                                id: 1,
+                                title: 'Nuestras Modernas',
+                                description: 'Instalaciones modernas y tecnológicamente avanzadas que garantizan una atención médica de calidad.',
+                                icon: 'check-circle'
+                            },
+                            {
+                                id: 2,
+                                title: 'Especialidades',
+                                description: 'Amplia gama de especialidades y servicios en un entorno cómodo y seguro.',
+                                icon: 'check-circle'
+                            },
+                            {
+                                id: 3,
+                                title: 'Equipamiento',
+                                description: 'Quirófanos equipados con tecnologías de punta para realizar procedimientos con máxima precisión y seguridad.',
+                                icon: 'check-circle'
+                            }
+                        ]
+                    }
+                }
+            ]
+        };
+    }
+
+    getInitialAllServicesDetails(): PageConfig[] {
+        return SERVICES_DATA.map((s: any) => ({
+            id: `srv_${s.id}`,
+            title: `Pág: ${s.title.substring(0, 15)}...`,
+            sections: [
+                {
+                    id: 'hero',
+                    name: 'Cabecera del Servicio',
+                    enabled: true,
+                    content: {
+                        category: s.category,
+                        title: s.title,
+                        description: s.description,
+                        imageUrl: s.image
+                    }
+                },
+                {
+                    id: 'points',
+                    name: 'Puntos Clave / Características',
+                    enabled: true,
+                    content: {
+                        title: s.pointsTitle,
+                        items: s.points.map((p: string) => ({ title: p }))
+                    }
+                },
+                ...(s.extraSections || []).map((extra: any, index: number) => ({
+                    id: `extra_${index}`,
+                    name: `Sección: ${extra.title}`,
+                    enabled: true,
+                    content: {
+                        title: extra.title,
+                        description: extra.content,
+                        items: (extra.items || []).map((it: string) => ({ title: it }))
+                    }
+                }))
+            ]
+        }));
     }
 }

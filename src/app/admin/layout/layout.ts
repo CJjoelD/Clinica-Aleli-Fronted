@@ -22,25 +22,18 @@ import { CommonModule } from '@angular/common';
         </div>
         
         <nav class="admin-nav">
+          <a routerLink="/inicio" class="nav-item web-link" title="Ver Sitio Web">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+            <span *ngIf="!isSidebarCollapsed()">Ir al Sitio Web</span>
+          </a>
+          <div class="nav-divider"></div>
           <a routerLink="./dashboard" routerLinkActive="active" class="nav-item" title="Inicio">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
             <span *ngIf="!isSidebarCollapsed()">Inicio</span>
           </a>
-          <a routerLink="./paginas/servicios" routerLinkActive="active" class="nav-item" title="Servicios">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
-            <span *ngIf="!isSidebarCollapsed()">Servicios</span>
-          </a>
-          <a routerLink="./paginas/especialidades" routerLinkActive="active" class="nav-item" title="Especialidades">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-            <span *ngIf="!isSidebarCollapsed()">Especialidades</span>
-          </a>
-          <a routerLink="./paginas/nosotros" routerLinkActive="active" class="nav-item" title="Instalaciones">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
-            <span *ngIf="!isSidebarCollapsed()">Instalaciones</span>
-          </a>
-          <a routerLink="./paginas/contacto" routerLinkActive="active" class="nav-item" title="Contacto">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-            <span *ngIf="!isSidebarCollapsed()">Contacto</span>
+          <a routerLink="./cms" routerLinkActive="active" class="nav-item" title="Contenido Web">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+            <span *ngIf="!isSidebarCollapsed()">Servicios y Textos</span>
           </a>
           <a routerLink="./usuarios" routerLinkActive="active" class="nav-item" title="Usuarios">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
@@ -85,14 +78,14 @@ import { CommonModule } from '@angular/common';
               </div>
               
               <div class="dropdown-menu">
-                <button class="menu-item">
+                <a class="menu-item" [routerLink]="['/paciente']">
                   <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                  Mi Perfil
-                </button>
+                  Mi Portal Paciente
+                </a>
                 <div class="menu-divider"></div>
                 <button class="menu-item logout" (click)="logout()">
                   <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-                  Cerrar Sesión
+                  Cerrar Sesión Real
                 </button>
               </div>
             </div>
@@ -157,12 +150,24 @@ import { CommonModule } from '@angular/common';
     }
 
     .admin-logo {
-      height: 35px;
+      height: 55px;
       width: auto;
       transition: all 0.3s ease;
     }
 
-    .logo-small { height: 25px; }
+    .logo-small { height: 35px; }
+
+    .nav-divider {
+      height: 1px;
+      background: rgba(255,255,255,0.1);
+      margin: 0.5rem 1.2rem;
+    }
+
+    .web-link {
+        margin-bottom: 0.5rem;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255,255,255,0.1);
+    }
 
     .admin-title {
       font-weight: 800;
@@ -386,6 +391,7 @@ export class AdminLayoutComponent {
 
   logout() {
     this.authService.logout();
-    this.router.navigate(['/inicio']);
+    // Forzamos una recarga completa al inicio para limpiar cualquier residuo de estado
+    window.location.href = '/inicio';
   }
 }

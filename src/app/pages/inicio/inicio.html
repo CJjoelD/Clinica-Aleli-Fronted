@@ -2,8 +2,14 @@
     <!-- Navbar -->
     <app-navbar></app-navbar>
 
-    <!-- Hero Section Dinámico -->
+    <!-- Hero Section con Slider -->
     <header class="hero" *ngIf="getSection('hero') as section">
+        <div class="hero-slider" *ngIf="section.enabled">
+            <div class="hero-slide transition-slide" *ngFor="let img of heroImages; let i = index"
+                [class.active]="currentSlide() === i" [style.background-image]="'url(' + img + ')'">
+            </div>
+        </div>
+
         <div class="hero-shape" *ngIf="section.enabled"></div>
         <div class="hero-container full-width-hero" *ngIf="section.enabled">
             <div class="hero-welcome centered-hero-content">
@@ -23,7 +29,7 @@
     </header>
 
     <!-- Info Cards Section Dinámico -->
-    <section id="servicios" class="info-section" *ngIf="getSection('servicios') as section">
+    <section id="servicios" class="info-section reveal" *ngIf="getSection('servicios') as section">
         <div class="section-header" *ngIf="section.enabled">
             <h2>{{section.content.title}}</h2>
             <div class="header-line"></div>
@@ -42,24 +48,25 @@
     </section>
 
     <!-- About Section Dinámico -->
-    <section id="nosotros" class="about-section" *ngIf="getSection('nosotros') as section">
+    <section id="nosotros" class="about-section reveal" *ngIf="getSection('nosotros') as section">
         <div class="container" *ngIf="section.enabled">
             <div class="centered-about">
                 <h2>{{section.content.title}}</h2>
 
-                <div class="team-image-wrapper">
-                    <img [src]="section.content.imageUrl" alt="Equipo Médico" class="team-main-img">
-                </div>
-
                 <p class="team-description">
                     {{section.content.description}}
                 </p>
+
+                <div class="team-image-wrapper">
+                    <img [src]="section.content.imageUrl" alt="Equipo Médico" class="team-main-img">
+                </div>
             </div>
         </div>
+        <div class="purple-bar" *ngIf="section.enabled"></div>
     </section>
 
     <!-- Benefits Section Dinámico -->
-    <section class="benefits-section" *ngIf="getSection('beneficios') as section">
+    <section class="benefits-section reveal" *ngIf="getSection('beneficios') as section">
         <div class="container" *ngIf="section.enabled">
             <div class="section-header">
                 <span class="section-subtitle">{{section.content.subtitle}}</span>
@@ -124,7 +131,7 @@
     </section>
 
     <!-- Quick Actions Section Dinámico -->
-    <section class="quick-actions-section" *ngIf="getSection('acciones_rapidas') as section">
+    <section class="quick-actions-section reveal" *ngIf="getSection('acciones_rapidas') as section">
         <div class="container" *ngIf="section.enabled">
             <div class="actions-wrapper">
                 <div class="action-card" *ngFor="let item of section.content.items"
@@ -160,7 +167,7 @@
     </section>
 
     <!-- Specialists Section Dinámico -->
-    <section id="especialidades" class="specialists-section" *ngIf="getSection('especialidades_destacadas') as section">
+    <section id="especialidades" class="specialists-section reveal" *ngIf="getSection('especialidades_destacadas') as section">
         <div class="container" *ngIf="section.enabled">
             <div class="section-header">
                 <h2>{{section.content.title}}</h2>

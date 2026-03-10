@@ -14,8 +14,8 @@ import { PaginaService } from '../../services/pagina.service';
 })
 export class Instalaciones {
   private paginaService = inject(PaginaService);
-  // En el servicio, 'nosotros' fue renombrado y configurado para ser 'Instalaciones'
-  pageConfig = computed(() => this.paginaService.getPage('nosotros'));
+  // Usar la configuración específica de 'instalaciones'
+  pageConfig = computed(() => this.paginaService.getPage('instalaciones'));
 
   getSection(id: string) {
     return this.pageConfig()?.sections.find(s => s.id === id);

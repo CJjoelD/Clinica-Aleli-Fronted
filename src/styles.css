@@ -32,9 +32,21 @@ body {
     padding: 0 !important;
     font-family: 'Outfit', sans-serif;
     color: var(--text-main);
-    background-color: var(--white);
+    background-color: #f1f5f9; /* Fondo más opaco para resaltar contenedores */
     line-height: 1.6;
     overflow-x: hidden;
+}
+
+/* Animaciones de aparición al hacer scroll */
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 h1,
@@ -129,4 +141,50 @@ h6 {
 .cta-button:active,
 .btn-primary:active {
     transform: translateY(-2px) scale(0.98) !important;
+}
+
+/* Global Responsive Fixes */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 1.25rem;
+    }
+
+    h1 {
+        font-size: 2rem !important;
+    }
+
+    h2 {
+        font-size: 1.75rem !important;
+    }
+
+    h3 {
+        font-size: 1.5rem !important;
+    }
+
+    .cta-button,
+    .btn-primary,
+    .btn-action {
+        padding: 0.8rem 2rem !important;
+        font-size: 0.9rem !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0 1rem;
+    }
+
+    h1 {
+        font-size: 1.8rem !important;
+        line-height: 1.2 !important;
+    }
+
+    h2 {
+        font-size: 1.5rem !important;
+    }
+
+    .cta-button {
+        width: 100% !important;
+        padding: 0.8rem 1.5rem !important;
+    }
 }

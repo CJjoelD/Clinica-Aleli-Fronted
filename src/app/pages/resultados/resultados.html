@@ -1,55 +1,63 @@
 <app-navbar></app-navbar>
 
 <main class="resultados-page">
-    <div class="container">
+    <div class="container fade-in">
         <!-- LOOKUP VIEW -->
-        <div class="lookup-container" *ngIf="viewState === 'LOOKUP'">
-            <div class="card main-lookup-card">
+        <div class="lookup-container" *ngIf="viewState() === 'LOOKUP'">
+            <div class="card main-lookup-card shadow-premium border-radiant">
                 <div class="lookup-header" *ngIf="getSection('lookup_header') as section" [hidden]="!section.enabled">
                     <img [src]="section.content.logoUrl" alt="Aleli Logo" class="header-logo">
-                    <h2>{{section.content.title}}</h2>
+                    <h2 class="gradient-text">{{section.content.title}}</h2>
                     <p class="subtitle">{{section.content.subtitle}}</p>
                 </div>
 
                 <div class="instructions" *ngIf="getSection('instructions') as section" [hidden]="!section.enabled">
-                    <p>{{section.content.title}}</p>
-                    <ul>
-                        <li *ngFor="let step of section.content.steps">
-                            <span class="step-num">{{step.num}}</span> {{step.text}}
+                    <p class="instr-title">{{section.content.title}}</p>
+                    <ul class="steps-list">
+                        <li *ngFor="let step of section.content.steps" class="step-item">
+                            <span class="step-num shadow-soft">{{step.num}}</span> {{step.text}}
                         </li>
                     </ul>
                 </div>
 
                 <form class="lookup-form">
                     <div class="input-group">
-                        <label for="cedula">Cédula de Identidad</label>
-                        <div class="input-wrapper">
-                            <input type="text" id="cedula" name="cedula" [(ngModel)]="cedula" placeholder="010XXXXXXX"
+                        <label for="cedula">1. Cédula de Identidad</label>
+                        <div class="input-wrapper shadow-input">
+                            <i class="icon-id"></i>
+                            <input type="text" id="cedula" name="cedula" [(ngModel)]="cedula" placeholder="17XXXXXXXX"
                                 maxlength="10">
                         </div>
                     </div>
 
                     <div class="input-group">
-                        <label for="order">Número de Orden</label>
-                        <div class="input-wrapper">
+                        <label for="order">2. Número de Orden</label>
+                        <div class="input-wrapper shadow-input">
+                            <i class="icon-file"></i>
                             <input type="text" id="order" name="order" [(ngModel)]="orderNumber"
-                                placeholder="ORD-XXXX-XXX">
+                                placeholder="Ej: ORD-2024-001">
                         </div>
                     </div>
 
+                    <!-- Error Alert -->
+                    <div class="error-alert" *ngIf="errorMessage()">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                        <span>{{errorMessage()}}</span>
+                    </div>
+
                     <div class="actions">
-                        <button type="button" class="btn-confirmar" (click)="confirmLookup()"
-                            [disabled]="!cedula || !orderNumber">
-                            CONFIRMAR IDENTIDAD
+                        <button type="button" class="btn-confirmar shadow-btn" (click)="confirmLookup()"
+                            *ngIf="!isConfirmed()">
+                            CONFIRMAR MIS DATOS
                         </button>
 
-                        <div class="results-action-wrapper" *ngIf="isConfirmed">
-                            <button type="button" class="btn-ver-resultados" (click)="viewResults()"
-                                [disabled]="isLoading">
-                                <span *ngIf="!isLoading">VER RESULTADOS ONLINE</span>
-                                <div class="spinner" *ngIf="isLoading"></div>
+                        <div class="results-action-wrapper" *ngIf="isConfirmed()">
+                            <button type="button" class="btn-ver-resultados shadow-btn pulse" (click)="viewResults()"
+                                [disabled]="isLoading()">
+                                <span *ngIf="!isLoading()">VER RESULTADOS AHORA</span>
+                                <div class="spinner" *ngIf="isLoading()"></div>
                             </button>
-                            <p class="success-hint">¡Identidad confirmada exitosamente!</p>
+                            <p class="success-hint">Identidad confirmada. Pulse para ver su reporte.</p>
                         </div>
                     </div>
                 </form>
@@ -57,106 +65,130 @@
         </div>
 
         <!-- LOADING OVERLAY -->
-        <div class="loading-overlay" *ngIf="isLoading">
+        <div class="loading-overlay" *ngIf="isLoading()">
             <div class="search-loader">
-                <div class="search-circle"></div>
-                <p>Buscando sus resultados en la base de datos...</p>
+                <div class="loading-bars">
+                    <div></div><div></div><div></div>
+                </div>
+                <p>Consultando base de datos médica...</p>
             </div>
         </div>
 
         <!-- RESULTS VIEW -->
-        <div class="results-view-container" *ngIf="viewState === 'RESULTS'">
+        <div class="results-view-container fade-in" *ngIf="viewState() === 'RESULTS'">
             <div class="print-actions">
-                <button (click)="printResults()" class="btn-action print">
+                <button (click)="printResults()" class="btn-action print shadow-btn">
                     <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5"
                         stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="6 9 6 2 18 2 18 9"></polyline>
                         <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
                         <rect x="6" y="14" width="12" height="8"></rect>
                     </svg>
-                    DESCARGAR RESULTADOS
+                    IMPRIMIR / DESCARGAR PDF
                 </button>
                 <button (click)="goBack()" class="btn-action exit">
-                    CERRAR SESIÓN
+                    NUEVA CONSULTA
                 </button>
             </div>
 
-            <div class="results-content card doc-style">
-                <div class="results-header-doc">
-                    <div class="header-left">
-                        <img src="assets/images/Logo-negro-aleli.png" alt="Aleli Logo" class="header-logo-small">
-                        <div class="clinic-text">
-                            <h3>Clínica Alelí</h3>
-                            <p>Especialidades Médicas & Laboratorio</p>
+            <div class="results-content reveal">
+                <div class="doc-style shadow-premium relative">
+                    <!-- Marca de Agua -->
+                    <div class="watermark">CLÍNICA ALELÍ</div>
+
+                    <div class="doc-header">
+                        <div class="header-left">
+                            <img src="assets/images/Logo-negro-aleli.png" alt="Logo Clínica Alelí" class="doc-logo">
+                            <div class="clinic-info">
+                                <h3>CLÍNICA ALELÍ</h3>
+                                <p>Centro de Especialidades Médicas</p>
+                                <p class="clinic-subtext">Quito - Ecuador | Tel: (02) 234-5678</p>
+                            </div>
+                        </div>
+                        <div class="header-right">
+                            <div class="doc-type-badge">REPORTE OFICIAL DE RESULTADOS</div>
+                            <div class="doc-id">Orden #: <strong>{{ patientDetails.order }}</strong></div>
                         </div>
                     </div>
-                    <div class="header-right">
-                        <div class="doc-tag">INFORME DE LABORATORIO</div>
-                    </div>
-                </div>
 
-                <div class="patient-card">
-                    <div class="patient-header">
-                        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="12" cy="7" r="4"></circle>
-                        </svg>
-                        INFORMACIÓN DEL PACIENTE
+                    <div class="patient-details-box">
+                        <div class="details-title">DATOS DEL PACIENTE</div>
+                        <div class="details-grid">
+                            <div class="detail-group">
+                                <span class="d-label">NOMBRE COMPLETO</span>
+                                <span class="d-value">{{ patientDetails.name }}</span>
+                            </div>
+                            <div class="detail-group">
+                                <span class="d-label">NÚMERO DE CÉDULA</span>
+                                <span class="d-value">{{ patientDetails.id }}</span>
+                            </div>
+                            <div class="detail-group">
+                                <span class="d-label">FECHA DE EMISIÓN</span>
+                                <span class="d-value">{{ patientDetails.date }}</span>
+                            </div>
+                            <div class="detail-group">
+                                <span class="d-label">ESTADO DEL REPORTE</span>
+                                <span class="d-value highlight">VALIDADO</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="patient-info-grid">
-                        <div class="info-item"><span class="label">NOMBRE EXPLICADO:</span><span class="value">{{
-                                patient.name }}</span></div>
-                        <div class="info-item"><span class="label">CÉDULA/ID:</span><span class="value">{{ patient.id
-                                }}</span></div>
-                        <div class="info-item"><span class="label">FECHA NACIMIENTO:</span><span class="value">{{
-                                patient.birthDate }}</span></div>
-                        <div class="info-item"><span class="label">EDAD ACTUAL:</span><span class="value">{{ patient.age
-                                }}</span></div>
-                        <div class="info-item"><span class="label">NÚMERO ORDEN:</span><span class="value">{{
-                                patient.orderNumber }}</span></div>
-                        <div class="info-item"><span class="label">MÉDICO TRATANTE:</span><span class="value">{{
-                                patient.doctor }}</span></div>
-                        <div class="info-item"><span class="label">SERVICIO/DEPTO:</span><span class="value">{{
-                                patient.service }}</span></div>
-                        <div class="info-item"><span class="label">FECHA REPORTE:</span><span class="value">{{
-                                patient.date }}</span></div>
-                    </div>
-                </div>
 
-                <div class="results-table-main">
-                    <table class="results-table">
-                        <thead>
-                            <tr>
-                                <th>PRUEBA / ANÁLISIS</th>
-                                <th>RESULTADO OBTENIDO</th>
-                                <th>VALORES DE REFERENCIA</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let res of results">
-                                <td class="item-name">{{ res.item }}</td>
-                                <td class="item-value highlight">{{ res.result }}</td>
-                                <td class="item-ref">{{ res.reference }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="doc-footer">
-                    <div class="qr-placeholder">
-                        <div class="qr-box">Validar Documento</div>
+                    <div class="results-report-content">
+                        <div class="table-title">DETALLE DE ANÁLISIS REALIZADOS</div>
+                        <table class="clinical-table">
+                            <thead>
+                                <tr>
+                                    <th>PARÁMETRO / ESTUDIO</th>
+                                    <th>RESULTADO</th>
+                                    <th>VALORES DE REFERENCIA</th>
+                                    <th>ESTADO</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Si existen estudios detallados -->
+                                <tr *ngFor="let estudio of foundResult?.estudios">
+                                    <td class="st-name">{{ estudio.nombre }}</td>
+                                    <td class="st-res"><strong>{{ estudio.resultado }}</strong></td>
+                                    <td class="st-ref">{{ estudio.referencia }}</td>
+                                    <td><span class="st-badge ok">NORMAL</span></td>
+                                </tr>
+                                <!-- Si solo hay descripción general -->
+                                <tr *ngIf="!foundResult?.estudios || foundResult.estudios.length === 0">
+                                    <td colspan="4" class="full-description">
+                                        <div class="desc-header">OBSERVACIONES MÉDICAS:</div>
+                                        <div class="desc-body">{{ foundResult?.descripcion }}</div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                        <div class="observations-section" *ngIf="foundResult?.observaciones">
+                            <div class="obs-title">NOTAS ADICIONALES:</div>
+                            <p>{{ foundResult.observaciones }}</p>
+                        </div>
                     </div>
-                    <div class="signatures">
-                        <div class="sign-line">Firma del Responsable Médico</div>
-                        <p>Documento digital emitido por Clínica Alelí</p>
+
+                    <div class="doc-footer-clinical">
+                        <div class="footer-left">
+                            <div class="qr-code">
+                                <div class="qr-mock">QR VALIDACIÓN</div>
+                            </div>
+                            <p class="verification-text">Escanee para verificar autenticidad</p>
+                        </div>
+                        <div class="footer-right">
+                            <div class="signature-area">
+                                <div class="digital-seal">SELLO DIGITAL ALELÍ</div>
+                                <div class="sign-line"></div>
+                                <p class="sign-name">DEPARTAMENTO MÉDICO</p>
+                                <p class="sign-auth">Documento Autorizado Electrónicamente</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="print-actions footer-actions">
-                <button (click)="printResults()" class="btn-action print">IMPRIMIR INFORME</button>
-                <button (click)="goBack()" class="btn-action exit">SALIR DEL PORTAL</button>
+            <div class="portal-actions-footer">
+                <p>¿Necesita ayuda con sus resultados? <a href="https://wa.me/593995500139" target="_blank">Contactar con Soporte Médico</a></p>
             </div>
         </div>
     </div>

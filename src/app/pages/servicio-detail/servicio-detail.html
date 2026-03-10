@@ -1,4 +1,4 @@
-<div class="landing-page" *ngIf="service">
+<div class="landing-page" *ngIf="service()">
     <!-- Navbar -->
     <app-navbar></app-navbar>
 
@@ -12,18 +12,18 @@
 
         <div class="content-wrapper">
             <div class="text-section">
-                <span class="category-tag">{{ service.category }}</span>
-                <h1 class="service-title">{{ service.title }}</h1>
-                <p class="service-description">{{ service.description }}</p>
+                <span class="category-tag">{{ service()?.category }}</span>
+                <h1 class="service-title">{{ service()?.title }}</h1>
+                <p class="service-description">{{ service()?.description }}</p>
 
                 <div class="image-section-mobile">
-                    <img [src]="service.image" [alt]="service.title" class="service-img">
+                    <img [src]="service()?.image" [alt]="service()?.title" class="service-img">
                 </div>
 
                 <div class="atencion-section">
-                    <h3>{{ service.pointsTitle }}</h3>
+                    <h3>{{ service()?.pointsTitle }}</h3>
                     <ul class="points-list">
-                        <li *ngFor="let point of service.points">
+                        <li *ngFor="let point of service()?.points">
                             <span class="bullet">•</span> {{ point }}
                         </li>
                     </ul>
@@ -31,7 +31,21 @@
             </div>
 
             <div class="image-section-desktop">
-                <img [src]="service.image" [alt]="service.title" class="service-img">
+                <img [src]="service()?.image" [alt]="service()?.title" class="service-img">
+            </div>
+        </div>
+
+        <!-- Dynamic Extra Sections from Data (transcribed from images) -->
+        <div class="extra-sections-wrapper"
+            *ngIf="service()?.extraSections && (service()?.extraSections?.length || 0) > 0">
+            <div class="extra-section" *ngFor="let section of service()?.extraSections">
+                <h2 class="extra-section-title">{{ section.title }}</h2>
+                <p class="extra-section-content">{{ section.content }}</p>
+                <ul class="extra-items-list" *ngIf="section.items && section.items.length > 0">
+                    <li *ngFor="let item of section.items">
+                        <span class="check-bullet">✓</span> {{ item }}
+                    </li>
+                </ul>
             </div>
         </div>
 
