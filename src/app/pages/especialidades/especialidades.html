@@ -60,7 +60,7 @@
                                             </svg>
                                         </div>
                                         <span class="dept-name">Todas</span>
-                                        <span class="dept-count">{{doctors.length}}</span>
+                                        <span class="dept-count">{{allDoctors().length}}</span>
                                     </div>
                                 </li>
 
@@ -154,7 +154,7 @@
     <!-- Secciones dinámicas del CMS -->
     <ng-container *ngFor="let section of pageConfig()?.sections">
         <section class="dynamic-cms-section"
-            *ngIf="section.enabled && !['banner', 'search_header'].includes(section.id)">
+            *ngIf="section.enabled && !['banner', 'search_header', 'lista_medicos'].includes(section.id)">
             <div class="container">
                 <div class="section-intro text-center mb-5" *ngIf="section.content.title">
                     <h2 class="sub-title">{{section.content.title}}</h2>

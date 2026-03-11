@@ -1,6 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap');
+
 .landing-page {
     color: var(--text-main);
-    background-color: var(--white);
+    /* Degradado suave de fondo */
+    background: linear-gradient(180deg, #FFFFFF 0%, #F8F9FA 100%);
     overflow-x: hidden;
     margin: 0;
     padding: 0;
@@ -109,7 +112,8 @@ app-footer {
     display: flex;
     flex-direction: column;
     align-items: center;
-    box-shadow: 0 25px 60px rgba(106, 76, 139, 0.15); /* Sombra Premium */
+    box-shadow: 0 25px 60px rgba(106, 76, 139, 0.15);
+    /* Sombra Premium */
 }
 
 .benefit-card:hover {
@@ -296,12 +300,12 @@ app-footer {
 /* Hero Banner Section */
 .hero {
     position: relative;
-    min-height: 85vh;
+    min-height: 90vh;
     display: flex;
     justify-content: flex-start;
     align-items: center;
     overflow: hidden;
-    padding: 4rem 8% 2rem;
+    padding: 4rem 8% 6rem;
     background-color: var(--white);
 }
 
@@ -309,11 +313,16 @@ app-footer {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(to right,
-            var(--white) 0%,
-            var(--white) 35%,
-            rgba(255, 255, 255, 0.9) 45%,
-            rgba(255, 255, 255, 0) 100%);
+    /* Degradado de transparencia: blanco sólido a la izquierda, nítido a la derecha */
+    background:
+        linear-gradient(to right,
+            rgba(255, 255, 255, 1) 0%,
+            rgba(255, 255, 255, 1) 25%,
+            rgba(255, 255, 255, 0.4) 60%,
+            rgba(255, 255, 255, 0) 100%),
+        linear-gradient(to top,
+            #F8F9FA 0%,
+            rgba(248, 249, 250, 0) 15%);
     z-index: 5;
 }
 
@@ -336,6 +345,9 @@ app-footer {
     visibility: hidden;
     transition: opacity 1s ease-in-out, visibility 1s;
     animation: slowZoom 30s infinite alternate ease-in-out;
+    /* Mantener nitidez y contraste natural */
+    filter: none;
+    transform: none;
 }
 
 .hero-slide.active {
@@ -399,13 +411,36 @@ app-footer {
     height: 28px;
 }
 
+/* Shape Divider (Onda en la parte inferior) */
+.hero-wave-divider {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    transform: rotate(180deg);
+    z-index: 10;
+}
+
+.hero-wave-divider svg {
+    position: relative;
+    display: block;
+    width: calc(150% + 1.3px);
+    height: 100px;
+}
+
+.hero-wave-divider .shape-fill {
+    fill: #F8F9FA;
+}
+
 .hero-shape {
     position: absolute;
     top: -10%;
     left: -10%;
     width: 45%;
     height: 65%;
-    background: radial-gradient(circle, rgba(38, 198, 178, 0.08) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(106, 76, 139, 0.1) 0%, transparent 70%);
     z-index: 1;
     border-radius: 50%;
     filter: blur(60px);
@@ -446,14 +481,27 @@ app-footer {
     align-items: flex-start;
 }
 
-.hero-welcome h1 {
+/* Estilos Título Principal con Animación fadeInUp */
+.titulo-principal {
     font-size: 3.8rem;
     line-height: 1.1;
     color: var(--primary-color);
     font-weight: 850;
     margin-bottom: 1.5rem;
     letter-spacing: -2px;
-    animation: titleReveal 1s cubic-bezier(0.165, 0.84, 0.44, 1);
+    animation: fadeInUp 1.5s ease-out both;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translate3d(0, 30px, 0);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
 }
 
 @keyframes titleReveal {
@@ -573,8 +621,8 @@ app-footer {
     .hero::after {
         background: linear-gradient(to bottom,
                 rgba(255, 255, 255, 0) 0%,
-                rgba(255, 255, 255, 0.95) 45%,
-                var(--white) 65%);
+                rgba(255, 255, 255, 0.8) 40%,
+                #F8F9FA 100%);
     }
 
     .centered-hero-content {
@@ -659,7 +707,7 @@ app-footer {
 /* Info Cards Section */
 .info-section {
     padding: 8rem 0;
-    background-color: #fff;
+    background-color: #F8F9FA;
 }
 
 .cards-container {
@@ -678,7 +726,8 @@ app-footer {
     text-align: center;
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     border: 1px solid rgba(0, 0, 0, 0.03);
-    box-shadow: 0 25px 50px rgba(106, 76, 139, 0.12); /* Sombra Premium */
+    box-shadow: 0 25px 50px rgba(106, 76, 139, 0.12);
+    /* Sombra Premium */
 }
 
 .info-card:hover {
@@ -706,7 +755,8 @@ app-footer {
     font-weight: 850;
     font-size: 1.5rem;
     margin-bottom: 1.5rem;
-    color: #1e1b4b; /* Más oscuro */
+    color: #1e1b4b;
+    /* Más oscuro */
 }
 
 .info-card p {
@@ -756,7 +806,8 @@ app-footer {
     padding: 3.5rem 2.5rem;
     border-radius: 40px;
     text-align: center;
-    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.07); /* Destacado Premium */
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.07);
+    /* Destacado Premium */
     transition: var(--transition);
     border: 1px solid rgba(106, 76, 139, 0.05);
 }
@@ -794,7 +845,8 @@ app-footer {
     font-size: 1.6rem;
     font-weight: 950;
     margin-bottom: 0.8rem;
-    color: #1a0b2e; /* Ultra oscuro para máximo contraste */
+    color: #1a0b2e;
+    /* Ultra oscuro para máximo contraste */
 }
 
 .specialty {

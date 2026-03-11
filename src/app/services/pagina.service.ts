@@ -1,6 +1,7 @@
 import { Injectable, signal, effect } from '@angular/core';
 import { PageConfig, SectionConfig } from '../models/cms.model';
 import { SERVICES_DATA } from '../pages/servicios/servicios-data';
+import { DOCTORS } from '../data/doctor-data';
 
 @Injectable({
     providedIn: 'root'
@@ -8,7 +9,7 @@ import { SERVICES_DATA } from '../pages/servicios/servicios-data';
 export class PaginaService {
     private readonly STORAGE_KEY = 'clinica_aleli_cms_config';
     private readonly VERSION_KEY = 'clinica_aleli_cms_version';
-    private readonly CURRENT_VERSION = '5.0.0';
+    private readonly CURRENT_VERSION = '8.0.0';
 
     // Estado de las páginas
     pages = signal<PageConfig[]>([]);
@@ -95,6 +96,34 @@ export class PaginaService {
         } else {
             this.pages.set(initialConfig);
         }
+    }
+
+    savePages() {
+        const currentPages = this.pages();
+        
+        // Sincronización de lista_medicos: Buscar si hay alguna sección con este ID
+        let masterDoctorList: any[] | null = null;
+        
+        // Encontramos la lista que acaba de ser editada (asumimos la primera que tenga items)
+        for(const page of currentPages) {
+            const docSection = page.sections.find((s: SectionConfig) => s.id === 'lista_medicos');
+            if (docSection && docSection.content && docSection.content.items) {
+                masterDoctorList = docSection.content.items;
+                break;
+            }
+        }
+
+        // Si encontramos una lista de médicos, la sincronizamos en todas las páginas que la usen
+        if (masterDoctorList) {
+            currentPages.forEach(page => {
+                const docSection = page.sections.find((s: SectionConfig) => s.id === 'lista_medicos');
+                if (docSection && docSection.content) {
+                    docSection.content.items = JSON.parse(JSON.stringify(masterDoctorList));
+                }
+            });
+        }
+
+        this.pages.set([...currentPages]);
     }
 
     getInitialBlogConfig(): PageConfig {
@@ -349,6 +378,15 @@ export class PaginaService {
                             { name: 'Dra. Ligia Naranjo Bernal', specialty: 'Anestesiología', description: 'Dedicada a proporcionar el máximo confort y seguridad a nuestros pacientes.', imageUrl: 'assets/images/DRA-LIGIA.jpg' }
                         ]
                     }
+                },
+                {
+                    id: 'blog_home',
+                    name: 'Sección Blog Portada',
+                    enabled: true,
+                    content: {
+                        title: 'NUESTRO BLOG',
+                        subtitle: 'Consejos de salud y bienestar para ti'
+                    }
                 }
             ]
         };
@@ -396,6 +434,30 @@ export class PaginaService {
                         title: 'Nuestras Instalaciones',
                         description: 'Contamos con espacios modernos y equipados para tu comodidad y seguridad.'
                     }
+                },
+                {
+                    id: 'lista_especialidades_servicios',
+                    name: 'Listado de Especialidades',
+                    enabled: true,
+                    content: {
+                        items: [
+                            { title: 'CIRUGÍA GENERAL', description: 'Especialidad médica que abarca las operaciones del aparato digestivo.' },
+                            { title: 'GINECOLOGÍA', description: 'Atención a la salud del sistema reproductor femenino.' },
+                            { title: 'PEDIATRÍA', description: 'Especialidad médica que estudia al niño y sus enfermedades.' },
+                            { title: 'CARDIOLOGÍA', description: 'Rama de la medicina que se encarga del estudio del corazón.' }
+                        ]
+                    }
+                },
+                {
+                    id: 'seccion_detalle',
+                    name: 'Información Detallada de Servicios',
+                    enabled: true,
+                    content: {
+                        items: [
+                            { id: 'cirugia-general', title: 'Cirugía General', pointsTitle: 'LA MEJOR ATENCIÓN QUIRÚRGICA', description: 'El servicio de cirugía general de la Clínica Alelí...', points: ['Cirugía laparoscópica...', 'Cirugías menores...'] },
+                            { id: 'pediatria', title: 'Pediatría', pointsTitle: 'TEN LA ATENCIÓN PARA TU BEBÉ', description: 'Cuidado integral para los más pequeños...', points: ['Cuidado integral...', 'Control de crecimiento...'] }
+                        ]
+                    }
                 }
             ]
         };
@@ -425,16 +487,25 @@ export class PaginaService {
                     }
                 },
                 {
-                    id: 'servicios',
-                    name: 'Listado de Especialidades',
+                    id: 'lista_medicos',
+                    name: 'Gestión de Doctores',
                     enabled: true,
                     content: {
-                        items: [
-                            { title: 'CIRUGÍA GENERAL', description: 'Especialidad médica que abarca las operaciones del aparato digestivo.' },
-                            { title: 'GINECOLOGÍA', description: 'Atención a la salud del sistema reproductor femenino.' },
-                            { title: 'PEDIATRÍA', description: 'Especialidad médica que estudia al niño y sus enfermedades.' },
-                            { title: 'CARDIOLOGÍA', description: 'Rama de la medicina que se encarga del estudio del corazón.' }
-                        ]
+                        items: DOCTORS.map(d => ({
+                            id: d.id,
+                            name: d.name,
+                            specialty: d.specialty,
+                            category: d.category,
+                            subCategory: d.subCategory,
+                            image: d.image || d.imageUrl,
+                            bio: d.bio,
+                            services: d.services || [],
+                            experience: d.experience || [],
+                            education: d.education || [],
+                            contact: d.contact,
+                            email: d.email,
+                            schedules: d.schedules
+                        }))
                     }
                 }
             ]
@@ -523,17 +594,21 @@ export class PaginaService {
                     name: 'Lista de Médicos',
                     enabled: true,
                     content: {
-                        items: [
-                            {
-                                id: 'pablo-chica',
-                                name: 'Dr. Pablo Adrian Chica Alvarracin',
-                                specialty: 'Cirujano general y Laparoscópico',
-                                bio: 'El Dr. Chica Alvarracín comprende la importancia de brindar un cuidado centrado en el paciente...',
-                                image: 'assets/images/DR.-PABLO-ADRIAN-CHICA-ALVARRACIN.jpg',
-                                imageUrl: 'assets/images/ESPECIALIDADES/DR_PABLO_ADRIA_CHICA_ALVARACIN.png',
-                                services: ['Cirugía de la vesícula', 'Hernias abdominales']
-                            }
-                        ]
+                        items: DOCTORS.map(d => ({
+                            id: d.id,
+                            name: d.name,
+                            specialty: d.specialty,
+                            category: d.category,
+                            subCategory: d.subCategory,
+                            image: d.image || d.imageUrl,
+                            bio: d.bio,
+                            services: d.services || [],
+                            experience: d.experience || [],
+                            education: d.education || [],
+                            contact: d.contact,
+                            email: d.email,
+                            schedules: d.schedules
+                        }))
                     }
                 }
             ]

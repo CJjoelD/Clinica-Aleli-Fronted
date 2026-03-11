@@ -18,24 +18,10 @@
         <div class="container" *ngIf="section.enabled">
             <div class="mision-vision-grid">
                 <div class="mv-card shadow-premium">
-                    <div class="mv-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
-                        </svg>
-                    </div>
                     <h3>{{section.content.mision_title}}</h3>
                     <p>{{section.content.mision_text}}</p>
                 </div>
                 <div class="mv-card shadow-premium">
-                    <div class="mv-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <line x1="22" y1="12" x2="18" y2="12"></line>
-                            <line x1="6" y1="12" x2="2" y2="12"></line>
-                            <line x1="12" y1="6" x2="12" y2="2"></line>
-                            <line x1="12" y1="22" x2="12" y2="18"></line>
-                        </svg>
-                    </div>
                     <h3>{{section.content.vision_title}}</h3>
                     <p>{{section.content.vision_text}}</p>
                 </div>
@@ -55,9 +41,9 @@
                 </div>
                 <div class="carousel-display">
                     <div class="carousel-track">
-                        <div class="slide" *ngFor="let item of section.content.items; let i = index" 
-                             [class.active]="activeSlide() === i"
-                             [style.background-image]="'url(' + item.imageUrl + ')'">
+                        <div class="slide" *ngFor="let item of section.content.items; let i = index"
+                            [class.active]="activeSlide() === i"
+                            [style.background-image]="'url(' + item.imageUrl + ')'">
                             <div class="slide-caption">
                                 <span>{{item.title}}</span>
                             </div>
@@ -65,15 +51,18 @@
                     </div>
                     <div class="carousel-controls">
                         <button (click)="prevSlide(section.content.items.length)" class="control-btn prev">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="15 18 9 12 15 6"></polyline>
+                            </svg>
                         </button>
                         <div class="carousel-dots">
-                            <span *ngFor="let dot of section.content.items; let i = index" 
-                                  [class.active]="activeSlide() === i"
-                                  (click)="activeSlide.set(i)"></span>
+                            <span *ngFor="let dot of section.content.items; let i = index"
+                                [class.active]="activeSlide() === i" (click)="activeSlide.set(i)"></span>
                         </div>
                         <button (click)="nextSlide(section.content.items.length)" class="control-btn next">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="9 18 15 12 9 6"></polyline>
+                            </svg>
                         </button>
                     </div>
                 </div>

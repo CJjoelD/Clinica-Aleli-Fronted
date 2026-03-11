@@ -3,6 +3,7 @@ export interface SectionConfig {
     name: string;
     enabled: boolean;
     content: any;
+    isExpanded?: boolean;
 }
 
 export interface PageConfig {

@@ -2,35 +2,30 @@
     max-width: 1200px;
     margin: 0 auto;
     animation: dashboardFadeIn 0.5s ease-out;
+    color: #e2e8f0;
 }
 
 @keyframes dashboardFadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 .dashboard-header {
-    margin-bottom: 3rem;
+    margin-bottom: 3.5rem;
+    padding-top: 2rem;
 }
 
 .dashboard-header h1 {
-    font-size: 2.2rem;
-    color: #1a1a1a;
+    font-size: 2.8rem;
+    color: #f8fafc;
     font-weight: 800;
-    margin-bottom: 0.5rem;
-    letter-spacing: -0.5px;
+    margin-bottom: 0.8rem;
+    letter-spacing: -1px;
 }
 
 .dashboard-header p {
-    color: #64748b;
-    font-size: 1.1rem;
+    color: #94a3b8;
+    font-size: 1.2rem;
     font-weight: 500;
 }
 
@@ -45,21 +40,22 @@
 .action-card {
     display: flex;
     flex-direction: column;
-    padding: 2.5rem;
-    background: white;
-    border-radius: 24px;
+    padding: 2.8rem;
+    background: #0a0f1d;
+    border-radius: 30px;
     text-decoration: none;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    border: 2px solid #f1f5f9;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(255,255,255,0.05);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
     position: relative;
     overflow: hidden;
 }
 
 .action-card:hover {
-    transform: translateY(-8px);
-    border-color: #6a1b9a;
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.08);
+    transform: translateY(-12px);
+    border-color: #6366f1;
+    box-shadow: 0 30px 60px rgba(99, 102, 241, 0.2);
+    background: rgba(10, 15, 29, 0.8);
 }
 
 .card-icon {
@@ -74,17 +70,17 @@
 }
 
 .action-card h3 {
-    font-size: 1.4rem;
-    color: #1e293b;
+    font-size: 1.5rem;
+    color: #f8fafc;
     font-weight: 800;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.8rem;
 }
 
 .action-card p {
-    color: #64748b;
-    font-size: 0.95rem;
+    color: #94a3b8;
+    font-size: 1rem;
     line-height: 1.6;
-    font-weight: 500;
+    font-weight: 400;
 }
 
 .card-arrow {
@@ -190,10 +186,11 @@
 }
 
 .help-section {
-    background: #f1f5f9;
-    padding: 1.5rem;
-    border-radius: 16px;
+    background: rgba(255,255,255,0.02);
+    padding: 2rem;
+    border-radius: 24px;
     display: inline-block;
+    border: 1px solid rgba(255,255,255,0.05);
 }
 
 .help-content {

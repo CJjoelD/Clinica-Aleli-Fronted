@@ -223,37 +223,29 @@ app-footer {
 }
 
 .mv-card:hover {
-    transform: translateY(-15px);
-    background: rgba(255, 255, 255, 0.08);
-    border-color: var(--accent-color);
+    transform: translateY(-8px);
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
 }
 
-.mv-icon {
-    width: 80px;
-    height: 80px;
-    background: var(--accent-color);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 2rem;
-    color: white;
-    box-shadow: 0 15px 30px rgba(38, 198, 178, 0.3);
-}
+/* mv-icon removido por solicitud del usuario */
 
 .mv-card h3 {
-    color: var(--accent-light);
+    color: #ffffff;
+    /* Color blanco, menos llamativo que el turquesas */
     font-size: 2.2rem;
-    margin-bottom: 1.5rem;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    font-weight: 900;
+    margin-bottom: 2rem;
+    text-transform: capitalize;
+    /* Cambiado de uppercase a Capitalizado */
+    letter-spacing: 1px;
+    font-weight: 800;
 }
 
 .mv-card p {
-    font-size: 1.2rem;
-    line-height: 1.8;
-    opacity: 0.9;
+    font-size: 1.15rem;
+    line-height: 2;
+    opacity: 0.95;
+    font-weight: 400;
 }
 
 /* Instalaciones Carousel Section */
@@ -333,7 +325,7 @@ app-footer {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(rgba(0,0,0,0) 60%, rgba(0,0,0,0.6));
+    background: linear-gradient(rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.6));
 }
 
 .slide-caption {

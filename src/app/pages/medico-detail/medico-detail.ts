@@ -24,9 +24,21 @@ export class MedicoDetailComponent implements OnInit {
         if (id) {
             // Intentar buscar en el CMS primero
             const directorio = this.paginaService.getPage('directorio');
-            const cmsDoctor = directorio?.sections
-                .find(s => s.id === 'lista_medicos')?.content.items
-                .find((m: any) => m.id === id);
+            const especialidades = this.paginaService.getPage('especialidades');
+            
+            // Buscar en las secciones de lista_medicos de ambas páginas
+            const searchPages = [directorio, especialidades];
+            let cmsDoctor = null;
+
+            for (const page of searchPages) {
+                if (page) {
+                    const section = page.sections.find(s => s.id === 'lista_medicos');
+                    if (section && section.content.items) {
+                        cmsDoctor = section.content.items.find((m: any) => m.id === id);
+                        if (cmsDoctor) break;
+                    }
+                }
+            }
 
             if (cmsDoctor) {
                 // Normalizar objeto del CMS

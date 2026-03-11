@@ -105,10 +105,14 @@ export class EspecialidadesComponent {
     }
   ];
 
-  doctors: Doctor[] = DOCTORS;
+  allDoctors = computed(() => {
+    const config = this.pageConfig();
+    const section = config?.sections.find(s => s.id === 'lista_medicos');
+    return (section?.content?.items as Doctor[]) || DOCTORS;
+  });
 
   get filteredDoctors() {
-    return this.doctors.filter(doctor => {
+    return this.allDoctors().filter(doctor => {
       const categoryMatch = this.selectedCategory === 'all' || doctor.category === this.selectedCategory;
       const subCategoryMatch = this.selectedSubCategory === 'all' || doctor.subCategory === this.selectedSubCategory;
 
