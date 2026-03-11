@@ -20,15 +20,6 @@ export class ContactoComponent implements OnInit {
 
   pageConfig = computed(() => this.paginaService.getPage('contacto'));
 
-  contactoImages = [
-    '/assets/images/INSTALACIONES/ESPACIODETRABAJO.png',
-    '/assets/images/INSTALACIONES/ACENSOR.png',
-    '/assets/images/INSTALACIONES/CAMILLAMORADA.png',
-    '/assets/images/INSTALACIONES/CONSULTA.png'
-  ];
-
-  activeSlide = signal(0);
-  
   contactoData = {
     nombre: '',
     apellido: '',
@@ -40,18 +31,6 @@ export class ContactoComponent implements OnInit {
   errorMessage = signal('');
 
   ngOnInit() {
-    this.startSlider();
-  }
-
-  startSlider() {
-    const interval = setInterval(() => {
-      this.nextSlide();
-    }, 5000);
-    this.destroyRef.onDestroy(() => clearInterval(interval));
-  }
-
-  nextSlide() {
-    this.activeSlide.update(v => (v + 1) % this.contactoImages.length);
   }
 
   getSection(id: string) {
