@@ -16,10 +16,7 @@
         "build": {
           "builder": "@angular/build:application",
           "options": {
-            "outputPath": {
-              "base": "dist/clinica-aleli-fronted",
-              "browser": ""
-            },
+            "outputPath": "dist/clinica-aleli-fronted",
             "browser": "src/main.ts",
             "tsConfig": "tsconfig.app.json",
             "assets": [
