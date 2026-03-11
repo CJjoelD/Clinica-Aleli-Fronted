@@ -69,7 +69,7 @@ export class LoginComponent {
         if (this.authService.isAdmin()) {
           this.router.navigate(['/admin']);
         } else {
-          this.router.navigate(['/paciente']);
+          this.router.navigate(['/inicio']);
         }
       }
     } catch (error: any) {

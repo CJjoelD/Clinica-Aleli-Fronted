@@ -49,7 +49,7 @@
                         <span class="user-role">{{isAdmin() ? 'Admin' : 'Paciente'}}</span>
                     </div>
                     <div class="dropdown-content">
-                        <a [routerLink]="isAdmin() ? '/admin' : '/paciente/dashboard'" (click)="closeMenus()"
+                        <a [routerLink]="isAdmin() ? '/admin' : '/paciente'" (click)="closeMenus()"
                             class="dropdown-item">
                             Mi Perfil
                         </a>

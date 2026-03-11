@@ -18,7 +18,7 @@ import { RouterLink } from '@angular/router';
         <p>Lo sentimos, no tienes los permisos necesarios para acceder a este apartado de administración.</p>
         <div class="actions">
           <a routerLink="/inicio" class="btn-home">Volver al Inicio</a>
-          <a routerLink="/paciente/dashboard" class="btn-dashboard">Ir a mi Perfil</a>
+          <a routerLink="/paciente" class="btn-dashboard">Ir a mi Perfil</a>
         </div>
       </div>
     </div>
