@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build && npx shx cp -r dist/clinica-aleli-fronted/browser/* dist/clinica-aleli-fronted/ && npx shx rm -rf dist/clinica-aleli-fronted/browser",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
