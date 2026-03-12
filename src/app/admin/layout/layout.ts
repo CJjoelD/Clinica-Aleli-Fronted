@@ -72,7 +72,7 @@ import { CommonModule } from '@angular/common';
                   <div class="large-avatar">{{currentUser()?.nombre?.charAt(0)}}</div>
                   <div class="text-info">
                     <span class="full-name">{{currentUser()?.nombre}}</span>
-                    <span class="email-address">admin@clinicaaleli.com</span>
+                    <span class="email-address">{{currentUser()?.email}}</span>
                   </div>
                 </div>
               </div>
