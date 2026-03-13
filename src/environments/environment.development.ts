@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  apiUrl: 'https://pztgvxar.up.railway.app/api'
+  apiUrl: 'https://backend-clinica-aleli-production.up.railway.app/api'
 };
