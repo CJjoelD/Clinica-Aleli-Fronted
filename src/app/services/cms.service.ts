@@ -1,6 +1,7 @@
 import { Injectable, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, firstValueFrom } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 export interface CMSItem {
     id?: number;
@@ -15,7 +16,7 @@ export interface CMSItem {
     providedIn: 'root'
 })
 export class CmsService {
-    private apiUrl = 'http://localhost:3000/api/cms';
+    private apiUrl = `${environment.apiUrl}/cms`;
     private http = inject(HttpClient);
     
     cmsItems = signal<CMSItem[]>([]);

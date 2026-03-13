@@ -21,7 +21,7 @@ export const SERVICES_DATA: ServiceInfo[] = [
         category: 'CIRUGÍA GENERAL',
         title: 'Cirugía general',
         description: 'El servicio de cirugía general de la Clínica Alelí te ofrece servicios de cirugía enfocados en intervenciones de alta complejidad y los principales procedimientos quirúrgicos que nuestro equipo de profesionales realiza.',
-        image: 'assets/images/BLOG/imagen1.png',
+        image: 'assets/images/BLOG/cirugia_general_v2.png',
         pointsTitle: 'LA MEJOR ATENCIÓN QUIRÚRGICA',
         points: [
             'Cirugía laparoscópica para tratar estas condiciones de manera efectiva',
@@ -52,7 +52,7 @@ export const SERVICES_DATA: ServiceInfo[] = [
         category: 'MEDICINA INTEGRAL',
         title: 'Ginecología y obstetricia',
         description: 'El servicio de ginecología y obstetricia de la Clínica Alelí ofrece atención de las mujeres durante el embarazo y el parto, y en el diagnóstico y tratamiento de enfermedades de los órganos reproductivos femeninos',
-        image: 'assets/images/BLOG/imagen2.png',
+        image: 'assets/images/BLOG/ginecologia_v2.png',
         pointsTitle: 'ATIÉNDETE CON NOSOTROS',
         points: [
             'Tratamientos para trastornos menstruales, síndrome premenstrual y menopausia.',
@@ -65,7 +65,7 @@ export const SERVICES_DATA: ServiceInfo[] = [
         category: 'SERVICIO PEDIATRICO',
         title: 'Atención Integral y Especializada en Pediatría',
         description: 'El servicio de pediatría de la Clínica Alelí está dedicado a ofrecer una atención integral y especializada para los más pequeños.',
-        image: 'assets/images/BLOG/imagen3.png',
+        image: 'assets/images/BLOG/pediatria_v2.png',
         pointsTitle: 'TEN LA ATENCIÓN PARA TU BEBÉ',
         points: [
             'Cuidado integral y personalizado para tu hijo desde su nacimiento.',
@@ -94,7 +94,7 @@ export const SERVICES_DATA: ServiceInfo[] = [
         category: 'MEDICINA GENERAL',
         title: 'Psicología Clínica',
         description: 'En Clínica Alelí te ofrecemos servicios de Psicología Clínica para ayudarte a superar dificultades emocionales y psicológicas. Nuestro equipo de psicólogos brinda apoyo en trastornos como ansiedad, depresión, estrés, y problemas de relación, utilizando enfoques terapéuticos adaptados a tus necesidades.',
-        image: 'assets/images/BLOG/imagen4.png',
+        image: 'assets/images/BLOG/psicologia_v2.png',
         pointsTitle: 'PSICOLOGÍA CLÍNICA',
         points: [
             'Terapias personalizadas para mejorar tu bienestar emocional.',
@@ -132,7 +132,7 @@ export const SERVICES_DATA: ServiceInfo[] = [
         category: 'CIRUGÍA GENERAL',
         title: 'Otorrinolaringología',
         description: 'En Clínica Alelí, nuestro servicio de Otorrinolaringología está especializado en el diagnóstico y tratamiento de enfermedades del oído, nariz y garganta. Contamos con un equipo de expertos que atiende condiciones como infecciones respiratorias, pérdida auditiva, alergias, problemas de voz y trastornos del equilibrio.',
-        image: 'assets/images/BLOG/imagen5.png',
+        image: 'assets/images/BLOG/otorrino_v2.png',
         pointsTitle: 'ATIÉNDETE CON NOSOTROS',
         points: [
             'Tratamiento experto para problemas de oído, nariz y garganta.',
@@ -145,7 +145,7 @@ export const SERVICES_DATA: ServiceInfo[] = [
         category: 'MEDICINA GENERAL',
         title: 'Cardiología',
         description: 'En Clínica Alelí, nuestro servicio de Cardiología está diseñado para ofrecer atención integral y especializada en el diagnóstico, tratamiento y prevención de enfermedades cardíacas. Contamos con un equipo de cardiólogos altamente capacitados que utilizan tecnología de vanguardia para ofrecer un cuidado completo a nuestros pacientes.',
-        image: 'assets/images/BLOG/imagen6.png',
+        image: 'assets/images/BLOG/cardiologia_v2.png',
         pointsTitle: 'ATIÉNDETE CON NOSOTROS',
         points: [
             'Consultas regulares para mantener tu salud cardiovascular en su mejor estado.',
@@ -170,7 +170,7 @@ export const SERVICES_DATA: ServiceInfo[] = [
         category: 'CIRUGÍA GENERAL',
         title: 'Cirugía coloproctología',
         description: 'El servicio de cirugía coloproctología de la Clínica Alelí está dedicado al diagnóstico y tratamiento quirúrgico de enfermedades intestinales y del colon.',
-        image: 'assets/images/BLOG/imagen7.png',
+        image: 'assets/images/BLOG/coloproctologia_v2.png',
         pointsTitle: 'ATIÉNDETE CON NOSOTROS DIAGNÓSTICO Y TRATAMIENTO',
         points: [
             'Cirugía laparoscópica para tratar estas condiciones de manera efectiva',
@@ -183,7 +183,7 @@ export const SERVICES_DATA: ServiceInfo[] = [
         category: 'MEDICINA GENERAL',
         title: 'Medicina Familiar',
         description: 'En Clínica Alelí, nuestro servicio de Medicina Familiar está orientado a brindar atención médica integral y continua a toda la familia, desde los más pequeños hasta los adultos mayores. Nuestros médicos de familia son profesionales altamente capacitados que se enfocan en la prevención, diagnóstico y tratamiento de diversas condiciones de salud.',
-        image: 'assets/images/BLOG/imagen8.png',
+        image: 'assets/images/BLOG/medicina_familiar_v2.png',
         pointsTitle: 'ATIÉNDETE CON NOSOTROS MEDICINA FAMILIAR',
         points: [
             'Cuidado integral y personalizado para toda la familia, desde niños hasta adultos mayores.',
@@ -216,7 +216,7 @@ export const SERVICES_DATA: ServiceInfo[] = [
         category: 'MEDICINA INTEGRAL',
         title: 'Traumatología y Ortopedia',
         description: 'El servicio de traumatología y ortopedia de la Clínica Alelí te ofrece distintos servicios especializados en prevenir, diagnosticar y tratar enfermedades o lesiones en el sistema musculoesquelético',
-        image: 'assets/images/BLOG/imagen9.png',
+        image: 'assets/images/BLOG/traumatologia_v2.png',
         pointsTitle: 'ATIÉNDETE CON NOSOTROS MEDICINA FAMILIAR',
         points: [
             'Evaluación y tratamiento para dolores crónicos en huesos, músculos y articulaciones.',
@@ -245,7 +245,7 @@ export const SERVICES_DATA: ServiceInfo[] = [
         category: 'DIAGNÓSTICO',
         title: 'Laboratorios Clínicos',
         description: 'Realizarse laboratorios clínicos con regularidad es una inversión en tu bienestar y calidad de vida. Contamos con tecnología avanzada para resultados confiables.',
-        image: 'assets/images/BLOG/imagen1.png',
+        image: 'assets/images/BLOG/laboratorio_v2.png',
         pointsTitle: 'BENEFICIOS DE LOS ANÁLISIS',
         points: [
             'Detección temprana de enfermedades antes de que presenten síntomas.',

@@ -2,6 +2,7 @@ import { Injectable, signal, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Usuario } from '../models/usuario.model';
 import { firstValueFrom } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 /**
  * Servicio para la gestión administrativa de usuarios (CRUD).
@@ -10,7 +11,7 @@ import { firstValueFrom } from 'rxjs';
     providedIn: 'root'
 })
 export class UsuarioService {
-    private apiUrl = 'http://localhost:3000/api/usuarios';
+    private apiUrl = `${environment.apiUrl}/usuarios`;
     private http = inject(HttpClient);
     
     /** Almacena la lista de usuarios recuperada de la API */

@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Usuario } from '../models/usuario.model';
 import { tap } from 'rxjs/operators';
 import { firstValueFrom } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 /**
  * Servicio encargado de la gestión de autenticación de usuarios.
@@ -12,7 +13,7 @@ import { firstValueFrom } from 'rxjs';
     providedIn: 'root'
 })
 export class AuthService {
-    private apiUrl = 'http://localhost:3000/api';
+    private apiUrl = environment.apiUrl;
     private http = inject(HttpClient);
     
     /** Señal reactiva que almacena los datos del usuario logueado actualmente */
